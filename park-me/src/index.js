@@ -1,8 +1,8 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
-import './index.css';
-import App from './App';
-import * as serviceWorker from './serviceWorker';
+import React from 'react'; //library from node_modules folder
+import ReactDOM from 'react-dom'; //library from node_modules folder
+import './index.css';     
+import App from './App'; //subcomponent
+import * as serviceWorker from './serviceWorker'; //make application modern and compatible with mobile devices
 
 ReactDOM.render(
   <React.StrictMode>
