@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import firebase from './Firebase'
-import {Router, navigate} from '@reach/router'
+import {Router} from '@reach/router'
 import Register from './Register'
 import Navigation from './Navigation';
 
@@ -22,19 +22,6 @@ class App extends Component {
     this.setState ({user:FBUser});
   })
 } 
-  logoutUser = e => {
-    e.preventDefault();
-    this.setState({
-      user: null
-    })
-
-    firebase
-    .auth()
-    .signout()
-    .then(() => {
-      navigate('/login');
-    });
-  }
 
   render(){ 
     
@@ -74,6 +61,12 @@ usersRef.set({
         Find parking, reserve and pay in advance.
       </p>
 
+      <a href="/register" className="btn btn-outline-primary mr-2">
+        Register
+      </a>
+      <a href="/login" className="btn btn-outline-primary mr-2">
+        Log In
+      </a>
       <Router>
         <Register path="/register" registerUser= {this.registerUser}/>
       </Router>
