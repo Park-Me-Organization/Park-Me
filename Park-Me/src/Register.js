@@ -1,11 +1,16 @@
 import React, {Component} from 'react';
 import FormError from './FormError';
 import firebase from './Firebase'
+import {navigate} from '@reach/router';
+
 
 class Register extends Component {
 
     constructor(props) {
+        
         super(props);
+        console.log(this.props)
+
         this.state = {
             fname: '',
             lname:'',
@@ -49,19 +54,21 @@ class Register extends Component {
         firebase
         .auth()
         .createUserWithEmailAndPassword(
-            registrationInfo.email,registrationInfo.passOne
-        ).then(()=>{
-            this.props.registerUser(registrationInfo.fname);
-        })
+            registrationInfo.email,
+            registrationInfo.passOne
+        ).then(() => {
+            navigate('/app');
+          })
         .catch(error =>{
             if (error.message !== null){
                 this.setState({errorMessage: error.message});
             } else{
                 this.setState({errorMessage: null});
+                this.props.registerUser(registrationInfo.fname);
+                
             }
         })
     }
-
     
     render(){        
         return (
@@ -74,7 +81,8 @@ class Register extends Component {
                                     <h3 className="font-weight-light mb-3">Register</h3>
                                     <div className="form-row">
                                             {this.state.errorMessage !== null ? (
-                                            <FormError theMessage = {this.state.errorMessage}
+                                            <FormError 
+                                            theMessage = {this.state.errorMessage}
                                             />
                                             ): null}
                                         <section className="col-sm-6 form-group">

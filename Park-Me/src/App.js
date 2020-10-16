@@ -2,52 +2,60 @@ import React, {Component} from 'react';
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 import firebase from './Firebase'
-import {Router} from '@reach/router'
+import {navigate, Router} from '@reach/router'
 import Register from './Register'
 import Navigation from './Navigation';
+import Login from './Login';
 
 class App extends Component {
 
-  constructor(){
-    super();
-    this.state = {
-      user:null
+
+  constructor(props){
+    super(props);
+    this.state = {    //state object
+      user: null      
     };
   }
 
+
   componentDidMount() {
-  const ref = firebase.database().ref('user'); //reference to DB 
-  ref.on('value', snapshot => {
-    let FBUser = snapshot.val();
-    this.setState ({user:FBUser});
-  })
-} 
+/*     firebase.auth().onAuthStateChanged(FBUser => {
+      if (FBUser) {
+        this.setState({
+          user: FBUser
+        });
+      }
+    }) */
+  }
+
+registerUser = username => {
+  firebase.auth().onAuthStateChanged(FBUser => {
+    FBUser.updateProfile({
+      displayName: username
+    }).then(() => {
+      this.setState({
+        user: FBUser
+      });
+    });
+  });
+};
+
+logOutUser = e => {
+  e.preventDefault();
+  this.setState({
+    user: null
+  });
+
+  firebase
+    .auth()
+    .signOut();
+};
 
   render(){ 
     
-/*     // Import Admin SDK
-var admin = require("firebase-admin");
-
-// Get a database reference to our blog
-var db = admin.database();
-var ref = db.ref("park-me-web/user");
-
-var usersRef = ref.child("users");
-usersRef.set({
-  alanisawesome: {
-    date_of_birth: "June 23, 1912",
-    full_name: "Alan Turing"
-  },
-  gracehop: {
-    date_of_birth: "December 9, 1906",
-    full_name: "Grace Hopper"
-  }
-});
- */
-
     return (
     <div>
-      <div><Navigation/></div>
+      <div><Navigation user={this.state.user}/></div>
     <div className="container text-center">
      
     <div className="row justify-content-center">
@@ -60,15 +68,10 @@ usersRef.set({
       <p className="lead">
         Find parking, reserve and pay in advance.
       </p>
-
-      <a href="/register" className="btn btn-outline-primary mr-2">
-        Register
-      </a>
-      <a href="/login" className="btn btn-outline-primary mr-2">
-        Log In
-      </a>
+      
       <Router>
-        <Register path="/register" registerUser= {this.registerUser}/>
+      <Login path="/login" user= {this.state.user}/>
+        <Register path="/register" user= {this.registerUser}/>
       </Router>
     </div>
   </div>
