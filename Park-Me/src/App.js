@@ -7,6 +7,7 @@ import Register from './Register'
 import Navigation from './Navigation';
 import Login from './Login';
 import Mapbox from './Mapbox';
+
 class App extends Component {
 
 
@@ -68,25 +69,19 @@ logOutUser = e => {
     return (
     <div>
 
-        <div >
-          <Mapbox/>
+        <div><Navigation user={this.state.user} logOutUser={this.logOutUser}/></div>
+        <div><Mapbox/>
         </div>
-        <div><Navigation user={this.state.user} logOutUser={this.logOutUser}/>
-        </div>
-    <div className="container text-center">
-     
-    <div className="row justify-content-center">
-      
-    <div className="col-10 col-md-10 col-lg-8 col-xl-7">
+ 
+  
     
       <Router>
       <Login path="/login" user= {this.state.user}/>
         <Register path="/register" user= {this.registerUser}/>
+        <Mapbox path='/mapbox'/>
       </Router>
     </div>
-  </div>
-</div>
-</div>
+
   );
 }
 }

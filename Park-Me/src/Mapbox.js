@@ -7,9 +7,9 @@ class Mapbox extends Component {
     constructor(props) {
         super(props);
         this.state = {
-        lng: 5,
-        lat: 34,
-        zoom: 2
+        lng: -84.387,
+        lat: 33.749,
+        zoom:13
         };
         }
         
@@ -26,8 +26,12 @@ class Mapbox extends Component {
     render(){
 
      return(
+
         <div>
-            <div ref={el => this.mapContainer = el} className="mapContainer"/>
+            <div class='sidebar pad2'>
+                Listing
+            </div>
+            <div ref={el => this.mapContainer = el} className="map pad2" />
         </div>
      )
      }
