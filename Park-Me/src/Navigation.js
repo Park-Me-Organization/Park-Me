@@ -5,7 +5,8 @@ class Navigation extends Component {
 
 render(){
 
-  const {user} = this.props;
+  const {user, logOutUser} = this.props;
+
 
         return(
 <nav className="site-nav family-sans navbar navbar-expand bg-primary navbar-dark higher">
@@ -15,7 +16,7 @@ render(){
     </a>
     <div className="navbar-nav ml-auto">
     <a className="nav-item nav-link" href="/login">
-          {user}
+          {this.props.user}
         </a>
         {user == null && (<a className="nav-item nav-link" href="/login">
           Log in
@@ -25,7 +26,7 @@ render(){
           Register
         </a>
         )}
-        {user &&(<a className="nav-item nav-link" href="/login">
+        {user &&(<a className="nav-item nav-link" href="/login" onClick ={e => logOutUser(e)}>
           Log out
         </a>)}
     </div>

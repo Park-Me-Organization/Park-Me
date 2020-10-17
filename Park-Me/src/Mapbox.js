@@ -1,0 +1,37 @@
+import React, { Component } from 'react';
+import ReactDOM from 'react-dom';
+import mapboxgl from 'mapbox-gl';
+
+class Mapbox extends Component {
+    
+    constructor(props) {
+        super(props);
+        this.state = {
+        lng: 5,
+        lat: 34,
+        zoom: 2
+        };
+        }
+        
+    componentDidMount() {
+    mapboxgl.accessToken = 
+    'pk.eyJ1IjoicmFmYWVsaGR6YSIsImEiOiJjazhtNDN3bjQwanM3M2ZxeHBwMzQwb2N4In0.RWPT0miQILyaM0B5aYTnjg';
+    const map = new mapboxgl.Map({
+    container: this.mapContainer,
+    style: 'mapbox://styles/mapbox/streets-v11',
+    center: [this.state.lng, this.state.lat],
+    zoom: this.state.zoom
+    });
+    }
+    render(){
+
+     return(
+        <div>
+            <div ref={el => this.mapContainer = el} className="mapContainer"/>
+        </div>
+     )
+     }
+    
+}
+ReactDOM.render(<Mapbox />, document.getElementById('root'));
+export default Mapbox;

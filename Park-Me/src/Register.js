@@ -9,15 +9,15 @@ class Register extends Component {
     constructor(props) {
         
         super(props);
-        console.log(this.props)
 
         this.state = {
-            fname: '',
+            displayName: '',
             lname:'',
             email: '',
             phonenumber:'',
             passOne: '',
             passTwo: '',
+            registerUser:null, 
             errorMessage: null
             };
             this.handleChange = this.handleChange.bind(this); //constructor <-handle change
@@ -41,7 +41,7 @@ class Register extends Component {
 
     handleSubmit(e){
         var registrationInfo = {
-        fname : this.state.fname, 
+        displayName : this.state.displayName, 
         lname: this.state.lname,
         email: this.state.email,
         phonenumber : this.state.phonenumber,
@@ -53,23 +53,33 @@ class Register extends Component {
         
         firebase
         .auth()
+        
         .createUserWithEmailAndPassword(
             registrationInfo.email,
             registrationInfo.passOne
-        ).then(() => {
+        )
+        .then(() => {
+            console.log(this.props);
+            //this.props.registerUser(registrationInfo.displayName);  //cause error
             navigate('/app');
           })
+        
         .catch(error =>{
             if (error.message !== null){
                 this.setState({errorMessage: error.message});
             } else{
                 this.setState({errorMessage: null});
-                this.props.registerUser(registrationInfo.fname);
+                
                 
             }
         })
     }
     
+    addInformation = userInfo => {
+        const ref = firebase
+        .database
+    }
+
     render(){        
         return (
             <form className="mt-3" onSubmit={this.handleSubmit}>
@@ -88,18 +98,18 @@ class Register extends Component {
                                         <section className="col-sm-6 form-group">
                                             <label
                                                 className="form-control-label sr-only"
-                                                htmlFor="fname"
+                                                htmlFor="displayName"
                                             >
                                                 Name
                                             </label>
                                             <input
                                                 className="form-control"
                                                 type="text"
-                                                id="fname"
+                                                id="displayName"
                                                 placeholder="First Name"
-                                                name="fname"
+                                                name="displayName"
                                                 required
-                                                value = {this.state.fname}
+                                                value = {this.state.displayName}
                                                 onChange = {this.handleChange}
                                                 />
                                         </section>
