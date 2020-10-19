@@ -22,13 +22,25 @@ class Mapbox extends Component {
     center: [this.state.lng, this.state.lat],
     zoom: this.state.zoom
     });
+
+    map.addControl(
+        new mapboxgl.GeolocateControl({
+        positionOptions: {
+        enableHighAccuracy: true
+        },
+        trackUserLocation: true,
+        showUserLocation: true,
+        showAccuracyCircle: true 
+        })
+        );
+        
     }
     render(){
 
      return(
 
-        <div>
-            <div class='sidebar pad2'>
+        <div className="listmap" >
+            <div className ='sidebar pad2'>
                 Listing
             </div>
             <div ref={el => this.mapContainer = el} className="map pad2" />

@@ -7,7 +7,6 @@ render(){
 
   const {user, logOutUser} = this.props;
 
-
         return(
 <nav className="site-nav family-sans navbar navbar-expand bg-primary navbar-dark higher">
   <div className="container-fluid">

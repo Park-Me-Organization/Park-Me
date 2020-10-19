@@ -70,8 +70,7 @@ logOutUser = e => {
     <div>
 
         <div><Navigation user={this.state.user} logOutUser={this.logOutUser}/></div>
-        <div><Mapbox/>
-        </div>
+        <Mapbox/>
  
   
     
