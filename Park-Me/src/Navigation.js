@@ -9,6 +9,16 @@ render(){
 
         return(
 <nav className="site-nav family-sans navbar navbar-expand bg-primary navbar-dark higher">
+<style>
+            {
+              "\
+        .bg-primary{\
+          background-color: black;\
+        }\
+      "
+  
+            }
+          </style>
   <div className="container-fluid">
     <a href="/" className="navbar-brand">
       Park Me
