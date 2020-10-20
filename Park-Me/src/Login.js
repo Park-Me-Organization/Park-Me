@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import firebase from './Firebase';
 import FormError from './FormError';
 import {navigate} from '@reach/router';
+import './App.css';
 
 class Login extends Component {
 
@@ -15,14 +16,14 @@ class Login extends Component {
             this.handleChange = this.handleChange.bind(this); //constructor <-handle change
             this.handleSubmit = this.handleSubmit.bind(this);
         }
-    
+
     handleChange(e){        //Collects the value for each item name
-    
+
         const itemName = e.target.name;
         const itemValue = e.target.value;
 
         this.setState({[itemName]: itemValue});
-    }    
+    }
 
     handleSubmit(e){
         var registrationInfo = {
@@ -32,7 +33,7 @@ class Login extends Component {
 
         e.preventDefault();
         //push an authentication event into the fireabse database
-        
+
         firebase
         .auth()
         .signInWithEmailAndPassword(

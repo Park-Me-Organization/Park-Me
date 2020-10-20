@@ -15,10 +15,10 @@ class Mapbox extends Component {
 
   componentDidMount() {
     mapboxgl.accessToken =
-      "pk.eyJ1IjoicmFmYWVsaGR6YSIsImEiOiJjazhtNDN3bjQwanM3M2ZxeHBwMzQwb2N4In0.RWPT0miQILyaM0B5aYTnjg";
+      "pk.eyJ1IjoibmFkaW1rMSIsImEiOiJja2doaGh5dWowM292MnpudW03MHc2MzdwIn0.TU9JkM8-F3FZ5RKTTO3n9A";
     const map = new mapboxgl.Map({
       container: this.mapContainer,
-      style: "mapbox://styles/mapbox/streets-v11",
+      style: "mapbox://styles/nadimk1/ckghhntfd19g51ao0zjbqcu65",
       center: [this.state.lng, this.state.lat],
       zoom: this.state.zoom,
     });
@@ -42,28 +42,39 @@ class Mapbox extends Component {
   }
   render() {
     return (
-      <div className="listmap">
+      <div className="container-fluid">
+        <div className="row">
           <style>
             {
               "\
-        .input-side{\
+        #input-side{\
           height: 92vh;\
-          padding: 20px;\
+          padding-top: 15%;\
+          padding-bottom: 25%;\
+          justify-content: center;\
+          align-items: center;\
+          text-align: center;\
         }\
       "
-  
             }
           </style>
-        <div className="input-side">
-          <h1>This is an input: {this.state.input}</h1>
-          <input
-            type="text"
-            value={this.state.input}
-            onChange={this.newInput.bind(this)}
-          />
-          
+          <div className="col-lg-4" id="input-side">
+            <div id="Text">
+              <h1>Where Do You Want To Go? {this.state.input}</h1>
+            </div>
+            <div id="Usr-Input">
+              <input
+                type="text"
+                value={this.state.input}
+                onChange={this.newInput.bind(this)}
+              />
+            </div>
+          </div>
+          <div ref={(el) => (this.mapContainer = el)} className="col-lg-8" />
+          <div className="">
+           
+          </div>
         </div>
-        <div ref={(el) => (this.mapContainer = el)} className="map pad2" />
       </div>
     );
   }
