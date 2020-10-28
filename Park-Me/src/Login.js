@@ -41,11 +41,12 @@ class Login extends Component {
             registrationInfo.password
         )
         .then(()=>{
-            navigate('/app');
+            navigate('/');
         })
         .catch(error =>{
             if (error.message !== null){
                 this.setState({errorMessage: error.message});
+                
             } else{
                 this.setState({errorMessage: null});
             }

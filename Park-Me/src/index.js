@@ -3,10 +3,13 @@ import ReactDOM from 'react-dom'; //library from node_modules folder
 import './index.css';     
 import App from './App'; //subcomponent
 import * as serviceWorker from './serviceWorker'; //make application modern and compatible with mobile devices
+import { BrowserRouter } from 'react-router-dom';
 
 ReactDOM.render(
   <React.StrictMode>
+    <BrowserRouter>
     <App />
+    </BrowserRouter>
   </React.StrictMode>,
   document.getElementById('root')
 );

@@ -60,7 +60,7 @@ class Register extends Component {
         )
         .then(() => {
             console.log(this.props);
-            //this.props.registerUser(registrationInfo.displayName);  //cause error
+            this.props.registerUser(registrationInfo.displayName);  //cause error
             navigate('/app');
           })
         

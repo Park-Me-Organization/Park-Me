@@ -60,7 +60,7 @@ class Mapbox extends Component {
           </style>
           <div className="col-lg-4" id="input-side">
             <div id="Text">
-              <h1>Where Do You Want To Go? {this.state.input}</h1>
+              <h1>Where Do You Want To Go?</h1>
             </div>
             <div id="Usr-Input">
               <input

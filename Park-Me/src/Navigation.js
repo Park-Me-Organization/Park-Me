@@ -1,8 +1,10 @@
 import React, { Component } from "react";
 import Logo from "./Parking-Logo.svg";
+import {Link} from '@reach/router';
 
 class Navigation extends Component {
   render() {
+    
     const { user, logOutUser } = this.props;
 
     return (
@@ -17,37 +19,26 @@ class Navigation extends Component {
           }
         </style>
         <div className="container-fluid">
-          <a className="navbar-brand" href="#">
+          <Link className="navbar-brand" to="/">
             <img
               src={Logo}
               width="30"
               height="30"
             />
-          </a>
+          </Link>
 
           <div className="navbar-nav ml-auto">
-            <a className="nav-item nav-link" href="/login">
-              {this.props.user}
-            </a>
+            <Link className="nav-item nav-link" to="/account">{this.props.user}</Link>
+            
             {user == null && (
-              <a className="nav-item nav-link" href="/login">
-                Log in
-              </a>
+              <Link className="nav-item nav-link" to="/login">Log In</Link>
             )}
 
             {user == null && (
-              <a className="nav-item nav-link" href="/register">
-                Register
-              </a>
+              <Link className="nav-item nav-link" to="/register">Register</Link>
             )}
             {user && (
-              <a
-                className="nav-item nav-link"
-                href="/login"
-                onClick={(e) => logOutUser(e)}
-              >
-                Log out
-              </a>
+              <Link className="nav-item nav-link" to="/login" onClick={(e) => logOutUser(e)}>Log Out</Link>
             )}
           </div>
         </div>

@@ -1,15 +1,16 @@
 import React, {Component} from 'react';
+import firebase from './Firebase'
+import {navigate} from '@reach/router'
+import {Switch,Route} from "react-router-dom";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-import firebase from './Firebase'
-import {navigate, Router} from '@reach/router'
-import Register from './Register'
+
 import Navigation from './Navigation';
 import Login from './Login';
 import Mapbox from './Mapbox';
+import Register from './Register'
 
 class App extends Component {
-
 
   constructor(props){
     super(props);
@@ -60,7 +61,7 @@ logOutUser = e => {
   firebase
     .auth()
     .signOut().then(() =>{
-      navigate('./app');
+      navigate('./');
     });
 };
 
@@ -69,16 +70,14 @@ logOutUser = e => {
     return (
     <div>
 
-        <div><Navigation user={this.state.user} logOutUser={this.logOutUser}/></div>
-        <Mapbox/>
- 
-  
-    
-      <Router>
-      <Login path="/login" user= {this.state.user}/>
-        <Register path="/register" user= {this.registerUser}/>
-        <Mapbox path='/mapbox'/>
-      </Router>
+         <div>
+         <Navigation user={this.state.user} logOutUser={this.logOutUser}/>
+          </div>
+       <Switch>
+        <Route exact path="/" component={Mapbox}/>
+        <Route path="/login" component={Login} user= {this.state.user}/>
+        <Route path="/register" component={Register} user= {this.registerUser}/>
+        </Switch>
     </div>
 
   );
