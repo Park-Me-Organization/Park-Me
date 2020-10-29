@@ -1,6 +1,7 @@
 import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import mapboxgl from "mapbox-gl";
+import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
 
 class Mapbox extends Component {
   constructor(props) {
@@ -13,6 +14,7 @@ class Mapbox extends Component {
     };
   }
 
+  
   componentDidMount() {
     mapboxgl.accessToken =
       "pk.eyJ1IjoibmFkaW1rMSIsImEiOiJja2doaGh5dWowM292MnpudW03MHc2MzdwIn0.TU9JkM8-F3FZ5RKTTO3n9A";
@@ -21,8 +23,19 @@ class Mapbox extends Component {
       style: "mapbox://styles/nadimk1/ckghhntfd19g51ao0zjbqcu65",
       center: [this.state.lng, this.state.lat],
       zoom: this.state.zoom,
+      placeholder: 'Search for parking lots',
+      bbox: [-84.401037,33.745468,-84.370436,33.768017]  //min long, min lag, max long, max lat
     });
 
+     const geocoder = new MapboxGeocoder({ // Initialize the geocoder
+      accessToken: mapboxgl.accessToken, // Set the access token
+      mapboxgl: mapboxgl, // Set the mapbox-gl instance
+      marker: false, // Do not use the default marker style
+    });
+    
+    // Add the geocoder to the map
+    map.addControl(geocoder);
+    
     map.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
@@ -33,6 +46,35 @@ class Mapbox extends Component {
         showAccuracyCircle: true,
       })
     );
+
+    // After the map style has loaded on the page,
+// add a source layer and default styling for a single point
+map.on('load', function() {
+  map.addSource('single-point', {
+    type: 'geojson',
+    data: {
+      type: 'FeatureCollection',
+      features: []
+    }
+  });
+
+  map.addLayer({
+    id: 'point',
+    source: 'single-point',
+    type: 'circle',
+    paint: {
+      'circle-radius': 10,
+      'circle-color': '#448ee4'
+    }
+  });
+
+  // Listen for the `result` event from the Geocoder
+  // `result` event is triggered when a user makes a selection
+  //  Add a marker at the result's coordinates
+  geocoder.on('result', function(e) {
+    map.getSource('single-point').setData(e.result.geometry);
+  });
+});
   }
 
   newInput(event) {
@@ -40,8 +82,10 @@ class Mapbox extends Component {
       input: event.target.value,
     });
   }
+
   render() {
     return (
+      
       <div className="container-fluid">
         <div className="row">
           <style>
@@ -59,6 +103,9 @@ class Mapbox extends Component {
             }
           </style>
           <div className="col-lg-4" id="input-side">
+
+         
+
             <div id="Text">
               <h1>Where Do You Want To Go?</h1>
             </div>
@@ -68,6 +115,7 @@ class Mapbox extends Component {
                 value={this.state.input}
                 onChange={this.newInput.bind(this)}
               />
+              
             </div>
           </div>
           <div ref={(el) => (this.mapContainer = el)} className="col-lg-8" />
@@ -77,6 +125,8 @@ class Mapbox extends Component {
         </div>
       </div>
     );
+
+    
   }
 }
 ReactDOM.render(<Mapbox />, document.getElementById("root"));

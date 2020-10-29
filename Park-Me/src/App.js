@@ -15,7 +15,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {    //state object
-      user: null,
+      user: 'Michael',
       displayName: null,
       userID: null    
     };
