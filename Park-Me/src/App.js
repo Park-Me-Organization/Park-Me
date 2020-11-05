@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
-import firebase from './Firebase'
-import {navigate} from '@reach/router'
-import {Switch,Route} from "react-router-dom";
+import firebase from './Firebase';
+import {navigate} from '@reach/router'; //move from different pages
+import {Switch,Route, BrowserRouter as Router} from "react-router-dom";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -15,7 +15,7 @@ class App extends Component {
   constructor(props){
     super(props);
     this.state = {    //state object
-      user: 'Michael',
+      user: null,
       displayName: null,
       userID: null    
     };
@@ -37,7 +37,7 @@ class App extends Component {
     })
   }
 
-registerUser = username => {
+  registerUser = username => {
   firebase.auth().onAuthStateChanged(FBUser => {
     FBUser.updateProfile({
       displayName: username
@@ -47,6 +47,7 @@ registerUser = username => {
         displayName: FBUser.displayName,
         userID: FBUser.uid});
     });
+    navigate('/');
   });
 };
 
@@ -71,13 +72,16 @@ logOutUser = e => {
     <div>
 
          <div>
-         <Navigation user={this.state.user} logOutUser={this.logOutUser}/>
+         <Navigation user={this.state.displayName} logOutUser={this.logOutUser}/>
           </div>
+
+          <Router>
        <Switch>
         <Route exact path="/" component={Mapbox}/>
-        <Route path="/login" component={Login} user= {this.state.user}/>
-        <Route path="/register" component={Register} user= {this.registerUser}/>
+        <Route path="/login" component={Login} user= {this.state.displayName}/>
+        <Route path="/register" component={Register} registerUser= {this.registerUser}/> 
         </Switch>
+        </Router>
     </div>
 
   );

@@ -22,3 +22,12 @@
   padding-top: 60px;
   width: 1200px;
 }
+
+.geocoder {
+  position: absolute;
+  z-index: 1;
+  width: 50%;
+  left: 50%;
+  margin-left: -25%;
+  top: 55%;
+}

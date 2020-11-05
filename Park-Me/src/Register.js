@@ -2,7 +2,7 @@ import React, {Component} from 'react';
 import FormError from './FormError';
 import firebase from './Firebase'
 import {navigate} from '@reach/router';
-
+import {registerUser} from './App';
 
 class Register extends Component {
 
@@ -17,7 +17,6 @@ class Register extends Component {
             phonenumber:'',
             passOne: '',
             passTwo: '',
-            registerUser:null, 
             errorMessage: null
             };
             this.handleChange = this.handleChange.bind(this); //constructor <-handle change
@@ -40,6 +39,7 @@ class Register extends Component {
     }    
 
     handleSubmit(e){
+
         var registrationInfo = {
         displayName : this.state.displayName, 
         lname: this.state.lname,
@@ -47,32 +47,26 @@ class Register extends Component {
         phonenumber : this.state.phonenumber,
         passOne : this.state.passOne
         }
-
         e.preventDefault();
         //push an authentication event into the fireabse database
         
         firebase
         .auth()
-        
         .createUserWithEmailAndPassword(
             registrationInfo.email,
             registrationInfo.passOne
         )
-        .then(() => {
+        .then(()=> {
             console.log(this.props);
             this.props.registerUser(registrationInfo.displayName);  //cause error
-            navigate('/app');
           })
-        
         .catch(error =>{
             if (error.message !== null){
                 this.setState({errorMessage: error.message});
             } else{
                 this.setState({errorMessage: null});
-                
-                
             }
-        })
+        });
     }
     
     addInformation = userInfo => {

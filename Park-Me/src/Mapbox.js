@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import ReactDOM from "react-dom";
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from '@mapbox/mapbox-gl-geocoder';
+import './App.css';
 
 class Mapbox extends Component {
   constructor(props) {
@@ -34,8 +35,9 @@ class Mapbox extends Component {
     });
     
     // Add the geocoder to the map
-    map.addControl(geocoder);
-    
+    //map.addControl(geocoder);
+    document.getElementById('geocoder').appendChild(geocoder.onAdd(map));
+
     map.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
@@ -88,40 +90,18 @@ map.on('load', function() {
       
       <div className="container-fluid">
         <div className="row">
-          <style>
-            {
-              "\
-        #input-side{\
-          height: 92vh;\
-          padding-top: 15%;\
-          padding-bottom: 25%;\
-          justify-content: center;\
-          align-items: center;\
-          text-align: center;\
-        }\
-      "
-            }
-          </style>
           <div className="col-lg-4" id="input-side">
-
-         
 
             <div id="Text">
               <h1>Where Do You Want To Go?</h1>
             </div>
-            <div id="Usr-Input">
-              <input
-                type="text"
-                value={this.state.input}
-                onChange={this.newInput.bind(this)}
-              />
-              
-            </div>
+            <div id="geocoder" class="geocoder"></div>
+         
           </div>
+
           <div ref={(el) => (this.mapContainer = el)} className="col-lg-8" />
-          <div className="">
-           
-          </div>
+          
+
         </div>
       </div>
     );

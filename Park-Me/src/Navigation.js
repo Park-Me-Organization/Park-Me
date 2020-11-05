@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import Logo from "./Parking-Logo.svg";
 import {Link} from '@reach/router';
 
+
 class Navigation extends Component {
   render() {
     
@@ -18,6 +19,8 @@ class Navigation extends Component {
       "
           }
         </style>
+
+    
         <div className="container-fluid">
           <Link className="navbar-brand" to="/">
             <img
@@ -28,17 +31,17 @@ class Navigation extends Component {
           </Link>
 
           <div className="navbar-nav ml-auto">
-            <Link className="nav-item nav-link" to="/account">{this.props.user}</Link>
+            <Link className="nav-item nav-link" to="/account"> {this.props.user}</Link>
             
             {user == null && (
               <Link className="nav-item nav-link" to="/login">Log In</Link>
             )}
 
             {user == null && (
-              <Link className="nav-item nav-link" to="/register">Register</Link>
+              <Link className="nav-item nav-link" to="/register" >Register</Link>
             )}
             {user && (
-              <Link className="nav-item nav-link" to="/login" onClick={(e) => logOutUser(e)}>Log Out</Link>
+              <Link className="nav-item nav-link" to="/" onClick={(e) => logOutUser(e)}>Log Out</Link>
             )}
           </div>
         </div>
