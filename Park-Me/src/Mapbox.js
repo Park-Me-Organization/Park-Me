@@ -90,7 +90,10 @@ map.on('load', function() {
       
       <div className="container-fluid">
         <div className="row">
+
           <div className="col-lg-4" id="input-side">
+
+         
 
             <div id="Text">
               <h1>Where Do You Want To Go?</h1>

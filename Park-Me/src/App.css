@@ -31,3 +31,11 @@
   margin-left: -25%;
   top: 55%;
 }
+#input-side{
+  height: 92vh;
+  padding-top: 15%;
+  padding-bottom: 25%;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
