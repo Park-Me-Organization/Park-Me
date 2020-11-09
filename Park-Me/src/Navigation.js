@@ -1,5 +1,6 @@
 import React, { Component } from "react";
-import Logo from "./Parking-Logo.svg";
+// import Logo from "./Parking-Logo.svg";
+import Logo from "./Assets/Parking-Logo.svg"
 import {Link} from '@reach/router';
 
 
@@ -27,6 +28,7 @@ class Navigation extends Component {
               src={Logo}
               width="30"
               height="30"
+              alt="Logo"
             />
           </Link>
 

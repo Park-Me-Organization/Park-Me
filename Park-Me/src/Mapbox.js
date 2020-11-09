@@ -105,9 +105,15 @@ map.on('load', function() {
   // `result` event is triggered when a user makes a selection
   //  Add a marker at the result's coordinates
   
-  geocoder.on('result', function(e) {
-    map.getSource('single-point').setData(e.result.geometry);
-  });
+  // geocoder.on('result', function(e) {
+  //   map.getSource('single-point').setData(e.result.geometry);
+    
+  // });
+
+  geocoder.on('result', function(result) {
+    console.log("_____\nName\n", result.result.place_name);
+    console.log("Lat/Long", result.result.center[1], ",", result.result.center[0], "\n_____");
+ });
   
 });
   }
@@ -120,14 +126,15 @@ map.on('load', function() {
 
   
   render() {
+
     return (
       
       <div className="container-fluid">
         <div className="row">
 
            <div className="col-lg-4" id="input-side"> {/*Sidebar*/}
-            <div id="Text">
-              <h1>Where Do You Want To Go?</h1>
+            <div>
+              <h1 id="Title">Where Do You Want To Go?</h1>
             </div>
             <div id="geocoder" className="geocoder"></div>
             {/* <div id='listings' className='listings'></div> */}

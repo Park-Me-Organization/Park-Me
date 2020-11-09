@@ -76,11 +76,10 @@ class Register extends Component {
 
     render(){        
         return (
-            <form className="mt-3" onSubmit={this.handleSubmit}>
-                <div className="container">
-                    <div className="row justify-content-center">
-                        <div className="col-lg-8">
-                            <div className="card bg-light">
+            <form className="main-form" style={{marginTop: "2%"}} onSubmit={this.handleSubmit}>
+                <div className="container" style={{padding: "0px"}}>
+                    <div className="row">
+                            <div className="card bg-light" style={{marginLeft: "auto", marginRight: "auto", width: "650px"}}>
                                 <div className="card-body">
                                     <h3 className="font-weight-light mb-3">Register</h3>
                                     <div className="form-row">
@@ -193,7 +192,7 @@ class Register extends Component {
                                 </div>
                             </div>
                         </div>
-                    </div>
+                    
                 </div>
             </form>
         );
