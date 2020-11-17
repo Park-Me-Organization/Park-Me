@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 // import Logo from "./Parking-Logo.svg";
 import Logo from "./Assets/Parking-Logo.svg"
-import {Link} from '@reach/router';
+import {NavLink} from "react-router-dom";
 
 
 class Navigation extends Component {
@@ -10,7 +10,7 @@ class Navigation extends Component {
     const { user, logOutUser } = this.props;
 
     return (
-      <nav className="site-nav family-sans navbar navbar-expand navbar-dark higher">
+     <div> <nav className="site-nav family-sans navbar navbar-expand navbar-dark higher">
         <style>
           {
             "\
@@ -23,31 +23,33 @@ class Navigation extends Component {
 
     
         <div className="container-fluid">
-          <Link className="navbar-brand" to="/">
+          <NavLink className="navbar-brand" to="/">
             <img
               src={Logo}
               width="30"
               height="30"
               alt="Logo"
             />
-          </Link>
+          </NavLink>
 
           <div className="navbar-nav ml-auto">
-            <Link className="nav-item nav-link" to="/account"> {this.props.user}</Link>
+            <NavLink className="nav-item nav-link" to="/account"> {this.props.user}</NavLink>
             
             {user == null && (
-              <Link className="nav-item nav-link" to="/login">Log In</Link>
+              <NavLink className="nav-item nav-link" to="/login">Log In</NavLink>
             )}
 
             {user == null && (
-              <Link className="nav-item nav-link" to="/register" >Register</Link>
+              <NavLink className="nav-item nav-link" to="/register" >Register</NavLink>
             )}
             {user && (
-              <Link className="nav-item nav-link" to="/" onClick={(e) => logOutUser(e)}>Log Out</Link>
+              <NavLink className="nav-item nav-link" to="/" onClick={(e) => logOutUser(e)}>Log Out</NavLink>
             )}
           </div>
         </div>
+       
       </nav>
+      </div>
     );
   }
 }

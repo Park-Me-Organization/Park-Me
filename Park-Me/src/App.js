@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import firebase from './Firebase';
 import {navigate} from '@reach/router'; //move from different pages
-import {Switch,Route, BrowserRouter as Router} from "react-router-dom";
+import {Switch,Route, BrowserRouter} from "react-router-dom";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
 
@@ -70,18 +70,16 @@ logOutUser = e => {
     
     return (
     <div>
-
-         <div>
+          <BrowserRouter>
+          <div>
          <Navigation user={this.state.displayName} logOutUser={this.logOutUser}/>
           </div>
-
-          <Router>
        <Switch>
         <Route exact path="/" component={Mapbox}/>
         <Route path="/login" component={Login} user= {this.state.displayName}/>
         <Route path="/register" component={Register} registerUser= {this.registerUser}/> 
         </Switch>
-        </Router>
+        </BrowserRouter>
     </div>
 
   );
