@@ -41,7 +41,6 @@ class Mapbox extends Component {
       mapboxgl: mapboxgl, // Set the mapbox-gl instance
       placeholder: "Address, Place, City or Venue",
       marker: false, // Do not use the default marker style
-<<<<<<< HEAD
       limit: 10,  //limits the search suggestion results
       types: 'poi',
       filter: function (item) {
@@ -63,9 +62,6 @@ class Mapbox extends Component {
             );
           }
         },
-=======
-      limit: 5, //limits the search suggestion results
->>>>>>> 560079c96fed46bd73c73662f3dcc3e61a8874c5
     });
 
     // Add the geocoder to the map
@@ -85,7 +81,6 @@ class Mapbox extends Component {
     );
 
     // After the map style has loaded on the page,
-<<<<<<< HEAD
 // add a source layer and default styling for a single point
 map.on('load', function() {
   
@@ -109,17 +104,17 @@ map.on('load', function() {
   );
   
   map.addLayer({
-    "id": "locations",
-    "type": "symbol",
+    id: "locations",
+    type: "symbol",
     /* Add a GeoJSON source containing place coordinates and information. */
-    "source": {
-      "type": "geojson",
-      "data": parkingdata
+    source: {
+      type: "geojson",
+      data: parkingdata,
     },
-    "layout": {
+    layout: {
       "icon-image": "parking-15",
       "icon-allow-overlap": true,
-    }
+    },
   });
 
   // Listen for the `result` event from the Geocoder
@@ -144,62 +139,6 @@ map.on('load', function() {
 
 
 
-=======
-    // add a source layer and default styling for a single point
-    map.on("load", function () {
-      map.addSource("single-point", {
-        type: "geojson",
-        data: {
-          type: "FeatureCollection",
-          features: [],
-        },
-      });
-
-      map.addLayer({
-        id: "point",
-        source: "single-point",
-        type: "circle",
-        paint: {
-          "circle-radius": 10,
-          "circle-color": "#448ee4",
-        },
-      });
-
-      map.addLayer({
-        id: "locations",
-        type: "symbol",
-        /* Add a GeoJSON source containing place coordinates and information. */
-        source: {
-          type: "geojson",
-          data: parkingdata,
-        },
-        layout: {
-          "icon-image": "parking-15",
-          "icon-allow-overlap": true,
-        },
-      });
-
-      // Listen for the `result` event from the Geocoder
-      // `result` event is triggered when a user makes a selection
-      //  Add a marker at the result's coordinates
-
-      // geocoder.on('result', function(e) {
-      //   map.getSource('single-point').setData(e.result.geometry);
-
-      // });
-
-      geocoder.on("result", function (result) {
-        console.log("_____\nName\n", result.result.place_name);
-        console.log(
-          "Lat/Long",
-          result.result.center[1],
-          ",",
-          result.result.center[0],
-          "\n_____"
-        );
-      });
-    });
->>>>>>> 560079c96fed46bd73c73662f3dcc3e61a8874c5
   }
 
   newInput(event) {
