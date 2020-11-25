@@ -46,8 +46,8 @@ class App extends Component {
         user: FBUser,
         displayName: FBUser.displayName,
         userID: FBUser.uid});
-    });
-    navigate('/');
+    }, navigate('/'));
+    
   });
 };
 

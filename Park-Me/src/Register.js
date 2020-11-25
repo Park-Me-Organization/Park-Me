@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 import FormError from './FormError';
 import firebase from './Firebase'
 import {navigate} from '@reach/router';
-import {registerUser} from './App';
 
 class Register extends Component {
 
@@ -17,7 +16,8 @@ class Register extends Component {
             phonenumber:'',
             passOne: '',
             passTwo: '',
-            errorMessage: null
+            errorMessage: null,
+            registerUser: null
             };
             this.handleChange = this.handleChange.bind(this); //constructor <-handle change
             this.handleSubmit = this.handleSubmit.bind(this);
@@ -57,8 +57,9 @@ class Register extends Component {
             registrationInfo.passOne
         )
         .then(()=> {
-            console.log(this.props);
             this.props.registerUser(registrationInfo.displayName);  //cause error
+            console.log(this.props.registerUser);
+            navigate('/');
           })
         .catch(error =>{
             if (error.message !== null){

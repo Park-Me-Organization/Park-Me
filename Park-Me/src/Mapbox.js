@@ -40,8 +40,27 @@ class Mapbox extends Component {
       mapboxgl: mapboxgl, // Set the mapbox-gl instance
       placeholder: 'Address, Place, City or Venue',
       marker: false, // Do not use the default marker style
-      limit: 5  //limits the search suggestion results
-      
+      limit: 10,  //limits the search suggestion results
+      types: 'poi',
+      filter: function (item) {
+        // returns true if item contains New South Wales region
+        if (item.properties.category === "parking, parking lot") {
+        return item.context
+        }   
+    },
+      render: function (item) {
+        
+        var maki = item.properties.maki || 'marker';
+          {
+            return (
+            "<div class='geocoder-dropdown-item'><img class='geocoder-dropdown-icon' src='https://unpkg.com/@mapbox/maki@6.1.0/icons/" +
+            maki +
+            "-15.svg'><span class='geocoder-dropdown-text'> " +
+            item.text + "</span><span class='geocoder-dropdown-text'> <br>" + item.properties.address +
+            '</span></div>'
+            );
+          }
+        },
     });
     
     // Add the geocoder to the map
@@ -76,10 +95,10 @@ map.on('load', function() {
   map.addLayer({
     id: 'point',
     source: 'single-point',
-    type: 'circle',
-    paint: {
-      'circle-radius': 10,
-      'circle-color': '#448ee4'
+    type: 'symbol',
+    "layout": {
+      "icon-image": "parking-15",
+      "icon-allow-overlap": true,
     }
   }
   );
@@ -98,9 +117,6 @@ map.on('load', function() {
     }
   });
 
- 
-
-
   // Listen for the `result` event from the Geocoder
   // `result` event is triggered when a user makes a selection
   //  Add a marker at the result's coordinates
@@ -111,11 +127,18 @@ map.on('load', function() {
   // });
 
   geocoder.on('result', function(result) {
+    map.getSource('single-point').setData(result.result.geometry);
+
     console.log("_____\nName\n", result.result.place_name);
     console.log("Lat/Long", result.result.center[1], ",", result.result.center[0], "\n_____");
  });
   
 });
+
+
+
+
+
   }
 
   newInput(event) {
