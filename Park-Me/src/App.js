@@ -4,7 +4,6 @@ import {navigate} from '@reach/router'; //move from different pages
 import {Switch,Route, BrowserRouter} from "react-router-dom";
 import './App.css';
 import 'bootstrap/dist/css/bootstrap.css';
-
 import Navigation from './Navigation';
 import Login from './Login';
 import Mapbox from './Mapbox';
@@ -78,7 +77,7 @@ logOutUser = e => {
        <Switch>
         <Route exact path="/" component={Mapbox}/>
         <Route path="/login" component={Login} user= {this.state.user}/>
-        <Route path="/register" component={Register} registerUser= {this.registerUser.bind(this)}/> 
+        <Route path="/register" component={Register} registerUser= {this.registerUser}/> 
         </Switch>
         </BrowserRouter>
     </div>
