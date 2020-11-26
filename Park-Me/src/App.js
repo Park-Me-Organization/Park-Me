@@ -12,8 +12,8 @@ import Register from './Register'
 
 class App extends Component {
 
-  constructor(props){
-    super(props);
+  constructor(){
+    super();
     this.state = {    //state object
       user: null,
       displayName: null,
@@ -30,24 +30,25 @@ class App extends Component {
         this.setState({
           //this statement needs review
          // user: FBUser,
-          displayName: FBUser.displayName,
+          user: FBUser.displayName,
           userID: FBUser.uid
         });
       }
-    })
+    });
   }
 
-  registerUser = username => {
+  registerUser = userName => {
   firebase.auth().onAuthStateChanged(FBUser => {
     FBUser.updateProfile({
-      displayName: username
+      displayName: userName
     }).then(() => {
       this.setState({
         user: FBUser,
         displayName: FBUser.displayName,
-        userID: FBUser.uid});
-    }, navigate('/'));
-    
+        userID: FBUser.uid
+      });
+      navigate('/');
+    });
   });
 };
 
@@ -72,12 +73,12 @@ logOutUser = e => {
     <div>
           <BrowserRouter>
           <div>
-         <Navigation user={this.state.displayName} logOutUser={this.logOutUser}/>
+         <Navigation user={this.state.user} logOutUser={this.logOutUser}/>
           </div>
        <Switch>
         <Route exact path="/" component={Mapbox}/>
-        <Route path="/login" component={Login} user= {this.state.displayName}/>
-        <Route path="/register" component={Register} registerUser= {this.registerUser}/> 
+        <Route path="/login" component={Login} user= {this.state.user}/>
+        <Route path="/register" component={Register} registerUser= {this.registerUser.bind(this)}/> 
         </Switch>
         </BrowserRouter>
     </div>

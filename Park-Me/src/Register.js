@@ -1,26 +1,23 @@
 import React, {Component} from 'react';
 import FormError from './FormError';
 import firebase from './Firebase'
-import {navigate} from '@reach/router';
 
 class Register extends Component {
 
     constructor(props) {
-        
         super(props);
-
         this.state = {
-            displayName: '',
+            user: '',
             lname:'',
             email: '',
             phonenumber:'',
             passOne: '',
             passTwo: '',
-            errorMessage: null,
-            registerUser: null
+            errorMessage: null
             };
-            this.handleChange = this.handleChange.bind(this); //constructor <-handle change
-            this.handleSubmit = this.handleSubmit.bind(this);
+            
+        this.handleChange = this.handleChange.bind(this); //constructor <-handle change
+        this.handleSubmit = this.handleSubmit.bind(this);
         }
     
     handleChange(e){        //Collects the value for each item name
@@ -41,15 +38,15 @@ class Register extends Component {
     handleSubmit(e){
 
         var registrationInfo = {
-        displayName : this.state.displayName, 
+        user : this.state.user, 
         lname: this.state.lname,
         email: this.state.email,
         phonenumber : this.state.phonenumber,
         passOne : this.state.passOne
         }
         e.preventDefault();
-        //push an authentication event into the fireabse database
         
+        //push an authentication event into the fireabse database        
         firebase
         .auth()
         .createUserWithEmailAndPassword(
@@ -57,24 +54,18 @@ class Register extends Component {
             registrationInfo.passOne
         )
         .then(()=> {
-            this.props.registerUser(registrationInfo.displayName);  //cause error
-            console.log(this.props.registerUser);
-            navigate('/');
-          })
+            this.props.registerUser(registrationInfo.user);
+        })
         .catch(error =>{
             if (error.message !== null){
                 this.setState({errorMessage: error.message});
             } else{
+                
                 this.setState({errorMessage: null});
             }
         });
     }
     
-    addInformation = userInfo => {
-        const ref = firebase
-        .database
-    }
-
     render(){        
         return (
             <form className="main-form" style={{marginTop: "2%"}} onSubmit={this.handleSubmit}>
@@ -92,18 +83,18 @@ class Register extends Component {
                                         <section className="col-sm-6 form-group">
                                             <label
                                                 className="form-control-label sr-only"
-                                                htmlFor="displayName"
+                                                htmlFor="user"
                                             >
                                                 Name
                                             </label>
                                             <input
                                                 className="form-control"
                                                 type="text"
-                                                id="displayName"
+                                                id="user"
                                                 placeholder="First Name"
-                                                name="displayName"
+                                                name="user"
                                                 required
-                                                value = {this.state.displayName}
+                                                value = {this.state.user}
                                                 onChange = {this.handleChange}
                                                 />
                                         </section>
@@ -193,7 +184,6 @@ class Register extends Component {
                                 </div>
                             </div>
                         </div>
-                    
                 </div>
             </form>
         );

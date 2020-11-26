@@ -133,7 +133,7 @@ a:hover {
   background-color: #f8f8f8;
 }
 
-::-webkit-scrollbar {
+/* ::-webkit-scrollbar {
   width: 3px;
   height: 3px;
   border-left: 0;
@@ -147,7 +147,7 @@ a:hover {
 ::-webkit-scrollbar-thumb {
   background: #00853e;
   border-radius: 0;
-}
+} */
 
 .clearfix { display: block; }
 
