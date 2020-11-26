@@ -16,9 +16,9 @@
 .App-link {
   color: #61dafb;
 }
-.mt-3{
+.mt-3 {
   position: absolute;
-  top:0;
+  top: 0;
   padding-top: 60px;
   width: 1200px;
 }
@@ -31,7 +31,7 @@
   margin-left: -25%;
   top: 55%;
 }
-#input-side{
+#input-side {
   width: 33.3333%;
   height: 92vh;
   padding-top: 15%;
@@ -44,7 +44,7 @@
 /* Listing CSS */
 body {
   color: #404040;
-  font: 400 15px/22px 'Source Sans Pro', 'Helvetica Neue', Sans-serif;
+  font: 400 15px/22px "Source Sans Pro", "Helvetica Neue", Sans-serif;
   margin: 0;
   padding: 0;
   -webkit-font-smoothing: antialiased;
@@ -116,7 +116,9 @@ a:hover {
   text-decoration: none;
 }
 
-.listings .item:last-child { border-bottom: none; }
+.listings .item:last-child {
+  border-bottom: none;
+}
 
 .listings .item .title {
   display: block;
@@ -124,10 +126,19 @@ a:hover {
   font-weight: 700;
 }
 
-.listings .item .title small { font-weight: 400; }
+#Title {
+  font-family: "Roboto Slab";
+  font-size: 3rem;
+}
+
+.listings .item .title small {
+  font-weight: 400;
+}
 
 .listings .item.active .title,
-.listings .item .title:hover { color: #8cc63f; }
+.listings .item .title:hover {
+  color: #8cc63f;
+}
 
 .listings .item.active {
   background-color: #f8f8f8;
@@ -149,10 +160,12 @@ a:hover {
   border-radius: 0;
 } */
 
-.clearfix { display: block; }
+.clearfix {
+  display: block;
+}
 
 .clearfix::after {
-  content: '.';
+  content: ".";
   display: block;
   height: 0;
   clear: both;

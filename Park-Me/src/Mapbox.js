@@ -5,7 +5,10 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "./App.css";
 import * as parkingdata from "./parking.geojson";
 import getResults from './MapboxAJAX';
+import UserInput from "./UserInput";
 
+var geocoderGlobal = "";
+var mapGlobal = "";
 class Mapbox extends Component {
   constructor(props) {
     super(props);
@@ -15,7 +18,10 @@ class Mapbox extends Component {
       zoom: 13,
       input: "",
       geolat: null,
-      geolong: null
+      geolong: null,
+      currPage: "Search",
+      curLat: 0.0,
+      curLng: 0.0,
     };
   }
   //add markers from JSON file with some parking lot examples
@@ -23,6 +29,10 @@ class Mapbox extends Component {
     parkingdata.features.forEach(function (parking, i) {
       parking.properties.id = i;
     });
+  }
+  setLatLng(lat, lng) {
+    this.state.curLat = lat;
+    this.state.curLng = lng;
   }
 
   componentDidMount() {
@@ -56,24 +66,30 @@ class Mapbox extends Component {
     },
       //render geocoder for suggested list of items with logo,text and address
       render: function (item) {
-        
-        var maki = item.properties.maki || 'marker';
-          {
-            return (
+        var maki = item.properties.maki || "marker";
+        {
+          return (
             "<div class='geocoder-dropdown-item'><img class='geocoder-dropdown-icon' src='https://unpkg.com/@mapbox/maki@6.1.0/icons/" +
             maki +
             "-15.svg'><span class='geocoder-dropdown-text'> " +
-            item.text + "</span><span class='geocoder-dropdown-text'> <br>" + item.properties.address +
-            '</span></div>'
-            );
-          }
-        },
+            item.text +
+            "</span><span class='geocoder-dropdown-text'> <br>" +
+            item.properties.address +
+            "</span></div>"
+          );
+        }
+      },
     });
 
     // Add the geocoder to the map
     //map.addControl(geocoder);
-    document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
-   
+
+    const SearchBox = document.getElementById("geocoder");
+    if (SearchBox != null) {
+      SearchBox.appendChild(geocoder.onAdd(map));
+    }
+    // document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
+
     //Locate button
     map.addControl(
       new mapboxgl.GeolocateControl({
@@ -185,12 +201,12 @@ class Mapbox extends Component {
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-4" id="input-side">
-            {" "}
             {/*Sidebar*/}
-            <div>
-              <h1 id="Title">Where Do You Want To Go?</h1>
-            </div>
-            <div id="geocoder" className="geocoder"></div>
+            <UserInput
+              didMount={this.componentDidMount}
+              geocoder={geocoderGlobal}
+              map={mapGlobal}
+            />
             {/* <div id='listings' className='listings'></div> */}
           </div>
 
@@ -200,5 +216,5 @@ class Mapbox extends Component {
     );
   }
 }
-ReactDOM.render(<Mapbox />, document.getElementById("root"));
+
 export default Mapbox;
