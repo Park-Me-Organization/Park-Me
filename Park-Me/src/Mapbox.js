@@ -4,7 +4,10 @@ import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "./App.css";
 import * as parkingdata from "./parking.geojson";
+import UserInput from "./UserInput";
 
+var geocoderGlobal = "";
+var mapGlobal = "";
 class Mapbox extends Component {
   constructor(props) {
     super(props);
@@ -13,12 +16,19 @@ class Mapbox extends Component {
       lat: 33.749,
       zoom: 13,
       input: "",
+      currPage: "Search",
+      curLat: 0.0,
+      curLng: 0.0,
     };
   }
   addMarkers() {
     parkingdata.features.forEach(function (parking, i) {
       parking.properties.id = i;
     });
+  }
+  setLatLng(lat, lng) {
+    this.state.curLat = lat;
+    this.state.curLng = lng;
   }
 
   componentDidMount() {
@@ -41,32 +51,33 @@ class Mapbox extends Component {
       mapboxgl: mapboxgl, // Set the mapbox-gl instance
       placeholder: "Address, Place, City or Venue",
       marker: false, // Do not use the default marker style
-      limit: 10,  //limits the search suggestion results
-      types: 'poi',
-      filter: function (item) {
-        // returns true if item contains New South Wales region
-        if (item.properties.category === "parking, parking lot") {
-        return item.context
-        }   
-    },
+      limit: 10, //limits the search suggestion results
+      types: "poi",
+
       render: function (item) {
-        
-        var maki = item.properties.maki || 'marker';
-          {
-            return (
+        var maki = item.properties.maki || "marker";
+        {
+          return (
             "<div class='geocoder-dropdown-item'><img class='geocoder-dropdown-icon' src='https://unpkg.com/@mapbox/maki@6.1.0/icons/" +
             maki +
             "-15.svg'><span class='geocoder-dropdown-text'> " +
-            item.text + "</span><span class='geocoder-dropdown-text'> <br>" + item.properties.address +
-            '</span></div>'
-            );
-          }
-        },
+            item.text +
+            "</span><span class='geocoder-dropdown-text'> <br>" +
+            item.properties.address +
+            "</span></div>"
+          );
+        }
+      },
     });
 
     // Add the geocoder to the map
     //map.addControl(geocoder);
-    document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
+
+    const SearchBox = document.getElementById("geocoder");
+    if (SearchBox != null) {
+      SearchBox.appendChild(geocoder.onAdd(map));
+    }
+    // document.getElementById("geocoder").appendChild(geocoder.onAdd(map));
 
     //Locate button
     map.addControl(
@@ -81,64 +92,64 @@ class Mapbox extends Component {
     );
 
     // After the map style has loaded on the page,
-// add a source layer and default styling for a single point
-map.on('load', function() {
-  
-  map.addSource('single-point', {
-    type: 'geojson',
-    data: {
-      type: 'FeatureCollection',
-      features: []
-    }
-  });
+    // add a source layer and default styling for a single point
+    map.on("load", function () {
+      map.addSource("single-point", {
+        type: "geojson",
+        data: {
+          type: "FeatureCollection",
+          features: [],
+        },
+      });
 
-  map.addLayer({
-    id: 'point',
-    source: 'single-point',
-    type: 'symbol',
-    "layout": {
-      "icon-image": "parking-15",
-      "icon-allow-overlap": true,
-    }
-  }
-  );
-  
-  map.addLayer({
-    id: "locations",
-    type: "symbol",
-    /* Add a GeoJSON source containing place coordinates and information. */
-    source: {
-      type: "geojson",
-      data: parkingdata,
-    },
-    layout: {
-      "icon-image": "parking-15",
-      "icon-allow-overlap": true,
-    },
-  });
+      map.addLayer({
+        id: "point",
+        source: "single-point",
+        type: "symbol",
+        layout: {
+          "icon-image": "parking-15",
+          "icon-allow-overlap": true,
+        },
+      });
 
-  // Listen for the `result` event from the Geocoder
-  // `result` event is triggered when a user makes a selection
-  //  Add a marker at the result's coordinates
-  
-  // geocoder.on('result', function(e) {
-  //   map.getSource('single-point').setData(e.result.geometry);
-    
-  // });
+      map.addLayer({
+        id: "locations",
+        type: "symbol",
+        /* Add a GeoJSON source containing place coordinates and information. */
+        source: {
+          type: "geojson",
+          data: parkingdata,
+        },
+        layout: {
+          "icon-image": "parking-15",
+          "icon-allow-overlap": true,
+        },
+      });
 
-  geocoder.on('result', function(result) {
-    map.getSource('single-point').setData(result.result.geometry);
+      // Listen for the `result` event from the Geocoder
+      // `result` event is triggered when a user makes a selection
+      //  Add a marker at the result's coordinates
 
-    console.log("_____\nName\n", result.result.place_name);
-    console.log("Lat/Long", result.result.center[1], ",", result.result.center[0], "\n_____");
- });
-  
-});
+      // geocoder.on('result', function(e) {
+      //   map.getSource('single-point').setData(e.result.geometry);
 
+      // });
 
+      console.log("Original");
+      console.log(geocoder);
+      console.log(map);
+      geocoderGlobal = geocoder;
+      mapGlobal = map;
+      geocoder.on("result", function (result) {
+        const lat = result.result.center[1];
+        const lng = result.result.center[0];
+        map.getSource("single-point").setData(result.result.geometry);
 
+        console.log("_____\nName\n", result.result.place_name);
 
-
+        console.log("Lat/Long", lat, ",", lng, "\n_____");
+      });
+    });
   }
 
   newInput(event) {
@@ -152,12 +163,12 @@ map.on('load', function() {
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-4" id="input-side">
-            {" "}
             {/*Sidebar*/}
-            <div>
-              <h1 id="Title">Where Do You Want To Go?</h1>
-            </div>
-            <div id="geocoder" className="geocoder"></div>
+            <UserInput
+              didMount={this.componentDidMount}
+              geocoder={geocoderGlobal}
+              map={mapGlobal}
+            />
             {/* <div id='listings' className='listings'></div> */}
           </div>
 
@@ -167,5 +178,5 @@ map.on('load', function() {
     );
   }
 }
-ReactDOM.render(<Mapbox />, document.getElementById("root"));
+
 export default Mapbox;

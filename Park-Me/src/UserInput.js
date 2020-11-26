@@ -1,44 +1,45 @@
-import React, { Component } from "react";
+import React, { useState } from "react";
 // import Slider from "@material-ui/core/Slider";
 import Slider from "./Slider.js";
 import Button from "react-bootstrap/Button";
 import ReactDOM from "react-dom";
 
-function showRadius() {
-  const selectRadius = (
-    <div>
-      <p
-        style={{
-          marginTop: "10px",
-          fontFamily: "Roboto",
-          fontSize: "1.5rem",
-        }}
-      >
-        What is your radius?
-      </p>
-      <Slider
-        style={{ marginLeft: "auto", marginRight: "auto", width: "50%" }}
-      />
-    </div>
-  );
-  ReactDOM.render(selectRadius, document.getElementById("root"));
-}
+function UserInput(props) {
+  const [currPage, setCurrPage] = useState(["Search"]);
+  const geocoder = props.geocoder;
+  const map = props.map;
+  console.log("GeoCoder: ", geocoder);
+  console.log("map: ", map);
 
-class UserInput extends Component {
-  constructor() {
-    super();
-    this.state = {
-      lat: "",
-      Long: "",
-      radius: "",
-    };
+  function changePage() {
+    console.log("changePage | ", currPage);
+    if (currPage == "Search") {
+      setCurrPage("Slider");
+      console.log("after change: ", currPage);
+      console.log(document.getElementById("geocoder"));
+    } else if (currPage == "Slider") {
+      setCurrPage("Search");
+      console.log("after change:", currPage);
+      console.log(document.getElementById("geocoder"));
+    }
   }
 
-  render() {
+  //Search bar input | for address
+  function SearchInput(props) {
     return (
       <div>
-        <h1 id="Title">Where Do You Want To Go?{this.props.lat_lng}</h1>
-        <div id="geocoder"></div>
+        <h1 id="Title">Where Do You Want To Go?</h1>
+        <div
+          style={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            width: "55%",
+            textAlign: "center",
+          }}
+        >
+          <div id="geocoder"></div>
+        </div>
+
         <Button
           variant="secondary"
           style={{
@@ -46,25 +47,64 @@ class UserInput extends Component {
             backgroundColor: "#1A2637",
             width: "100px",
             padding: "8px",
+            fontfamily: "Roboto Slab",
           }}
+          onClick={changePage}
         >
-          go
+          GO
         </Button>
-        {/* <p
-          style={{
-            marginTop: "10px",
-            fontFamily: "Roboto",
-            fontSize: "1.5rem",
-          }}
-        >
-          What is your radius?
-        </p>
-        <Slider
-          style={{ marginLeft: "auto", marginRight: "auto", width: "50%" }}
-        /> */}
       </div>
     );
   }
+
+  //slider input | for search range
+  function SliderPage(props) {
+    return (
+      <div>
+        <h1 id="Title">What is your radius?</h1>
+        <div
+          style={{
+            marginLeft: "auto",
+            marginRight: "auto",
+            width: "50%",
+            textAlign: "center",
+          }}
+        >
+          <Slider />
+
+          <Button
+            variant="secondary"
+            style={{
+              marginTop: "20px",
+              backgroundColor: "#1A2637",
+              width: "100px",
+              padding: "8px",
+              fontfamily: "Roboto Slab",
+            }}
+            onClick={changePage}
+          >
+            GO
+          </Button>
+        </div>
+      </div>
+    );
+  }
+
+  //controls viewable component | conditional components
+  function InputPage(props) {
+    console.log(currPage);
+    if (currPage == "Search") {
+      console.log("search page");
+      return <SearchInput />;
+    }
+    return <SliderPage />;
+  }
+
+  return (
+    <div>
+      <InputPage />
+    </div>
+  );
 }
 
 export default UserInput;
