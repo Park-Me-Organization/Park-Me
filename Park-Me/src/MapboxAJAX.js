@@ -11,8 +11,10 @@
     
    // getMatch(newCoords, radius, searchtem);
   } */
-
 // Make a Map Matching request
+import "./Mapbox";
+var querydata;
+var coordinates ;
 function getResults(long, lat) {
   // Separate the radiuses with semicolons
   // Create the query
@@ -29,8 +31,34 @@ function getResults(long, lat) {
     url: query,
   }).done(function (data) {
     // Get the data from the response
-    console.log(data);
-    // Code from the next step will go here
+    querydata = (JSON.stringify(data));
+    coordinates = data.features[0].geometry.coordinates;    
+    // Set  markers of locations on the map
+    console.log("The coordinates: " + coordinates)
+    console.log("The data "+ querydata);
+    //addQuery(coordinates)
+
   });
 }
+
+ /* function addQuery(coordinates) {
+
+  map.addLayer({
+      "id": "locations",
+      "type": "symbol",
+      "source": {
+        "type": "geojson",
+        "data": {
+          "type": "Feature",
+          "properties": {},
+          "geometry": coordinates
+        }
+      },
+      "layout": {
+        "icon-image": "parking-15",
+          "icon-allow-overlap": true,
+      },
+    });
+  }; */
 export default getResults;
+export {querydata};
