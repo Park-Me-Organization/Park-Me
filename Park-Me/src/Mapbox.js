@@ -1,5 +1,4 @@
 import React, { Component } from "react";
-import ReactDOM from "react-dom";
 import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "./App.css";
@@ -29,10 +28,6 @@ class Mapbox extends Component {
     parkingdata.features.forEach(function (parking, i) {
       parking.properties.id = i;
     });
-  }
-  setLatLng(lat, lng) {
-    this.state.curLat = lat;
-    this.state.curLng = lng;
   }
 
   componentDidMount() {

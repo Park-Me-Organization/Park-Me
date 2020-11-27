@@ -2,7 +2,6 @@ import React, { useState } from "react";
 // import Slider from "@material-ui/core/Slider";
 import Slider from "./Slider.js";
 import Button from "react-bootstrap/Button";
-import ReactDOM from "react-dom";
 
 function UserInput(props) {
   const [currPage, setCurrPage] = useState(["Search"]);
@@ -13,11 +12,11 @@ function UserInput(props) {
 
   function changePage() {
     console.log("changePage | ", currPage);
-    if (currPage == "Search") {
+    if (currPage === "Search") {
       setCurrPage("Slider");
       console.log("after change: ", currPage);
       console.log(document.getElementById("geocoder"));
-    } else if (currPage == "Slider") {
+    } else if (currPage === "Slider") {
       setCurrPage("Search");
       console.log("after change:", currPage);
       console.log(document.getElementById("geocoder"));
@@ -93,7 +92,7 @@ function UserInput(props) {
   //controls viewable component | conditional components
   function InputPage(props) {
     console.log(currPage);
-    if (currPage == "Search") {
+    if (currPage === "Search") {
       console.log("search page");
       return <SearchInput />;
     }
