@@ -5,12 +5,16 @@ import "./App.css";
 import * as parkingdata from "./parking.geojson";
 import getResults from "./MapboxAJAX";
 import UserInput from "./UserInput";
+import { Link } from 'react-router-dom'
+import Button from "react-bootstrap/Button";
+import ReactDOM from 'react-dom'
+import Btn from "./Btn.js"
+
+
 //import {querydata} from './MapboxAJAX';
 
-var geocoderGlobal = "";
-var mapGlobal = "";
 var coordinates;
-var querydata;
+var $ = require("jquery");
 
 class Mapbox extends Component {
   constructor(props) {
@@ -147,126 +151,57 @@ class Mapbox extends Component {
       map.on("mouseleave", "locations", function () {
         map.getCanvas().style.cursor = "";
       });
-      //      Listen for the `result` event from the Geocoder
-      //  `result` event is triggered when a user makes a selection
-      // Add a marker at the result's coordinates
 
-      /*       geocoder.on('result', function(e) {
-        map.getSource('single-point').setData(e.result.geometry);
-
-      }); */
-      //Geocoder results after user submit search term
-
+      //take location input from geocoder and place markers at the 10 closest
+      // parking lots from entered location
       geocoder.on("result", function (result) {
-        console.log(result.result.geometry.coordinates);
-        var lat = result.result.center[1];
-        var long = result.result.center[0];
-        var main = document.createElement("div");
-        main.className = "marker";
-        new mapboxgl.Marker(main)
-          .setLngLat(result.result.geometry.coordinates)
-          .addTo(map);
-
+        // create div for the marker
         var mainMarker = document.createElement("div");
         mainMarker.className = "Main-Marker";
-
-        console.log("MainMarker created: ", mainMarker);
-
-        // el.addEventListener("click", function () {
-        //   window.alert(marker.properties.message);
-        // });
 
         // add marker to map
         new mapboxgl.Marker(mainMarker)
           .setLngLat(result.result.geometry.coordinates)
           .addTo(map);
 
-        //getResults(long, lat);
-        // Create the query
+        // create the query
         var query =
           "https://api.mapbox.com/geocoding/v5/mapbox.places/parking.json?limit=10&proximity=" +
-          long +
+          result.result.geometry.coordinates[0] +
           "," +
-          lat +
+          result.result.geometry.coordinates[1] +
           "&types=poi&&access_token=pk.eyJ1IjoicmFmYWVsaGR6YSIsImEiOiJja2dzeHJjbnMwZzE3MnJtNWV6cHVsam9sIn0.7oigwdpk6AYK5VqUZq3phg";
-        var $ = require("jquery");
+
         $(".marker").remove();
         $.ajax({
           method: "GET",
           url: query,
         }).done(function (data) {
+          console.log("data: ", data);
           // Get the data from the response
-          querydata = JSON.stringify(data);
           coordinates = data.features[0].geometry.coordinates;
           // Set  markers of locations on the map
           console.log("The coordinates: " + coordinates);
-          console.log("The data " + querydata);
 
           data.features.forEach(function (marker) {
             // create a DOM element for the marker
             var el = document.createElement("div");
             el.className = "marker";
 
-            el.addEventListener("click", function () {
-              <div>words</div>;
-            });
+
+            var address = (marker.properties.address == undefined ? (marker.place_name).substring((marker.place_name).indexOf(",")+1) : marker.properties.address);
+
+            var popup = new mapboxgl.Popup({ offset: 25 }).setHTML("<h1 id=\"popupTitle\">" + (marker.text).toUpperCase() + "</h1>" + "<p id=\"popupDetails\" >" + address + "</p>" +"<p id=\"popupDetails\"> 5 spots remaining </p>" + "<div id=\"aContainer\"><a style=\"background-color: #1A2637;border-color: white;font-family:\"Roboto Slab\";margin-left:10px\" class=\"btn btn-primary\" href=\"/reserve\"> RESERVE </a></div>");
+          
 
             // add marker to map
             new mapboxgl.Marker(el)
               .setLngLat(marker.geometry.coordinates)
+              .setPopup(popup)
               .addTo(map);
           });
-
-          //addQuery(coordinates)
-          map.addSource("single-point", {
-            type: "geojson",
-            data: querydata,
-          });
-          map.getSource("single-point").setData(result.result.geometry);
-          // If a route is already loaded, remove it
-          if (map.getSource("single-point")) {
-            //map.removeLayer('single-point')
-            map.removeSource("single-point");
-          } else {
-            // Add a new layer to the map
-            map.addLayer({
-              id: "locations",
-              type: "symbol",
-
-              source: {
-                type: "geojson",
-                data: querydata /* {
-                "type": "Feature",
-                "properties": {},
-                "geometry": {
-                  "type": "Point",
-                  "coordinates": [coordinates]
-                }
-              } */,
-              },
-              layout: {
-                "icon-image": "parking-15",
-                "icon-allow-overlap": true,
-              },
-            });
-          }
         });
-
-        console.log("_____\nName\n", result.result.place_name);
-        console.log("Lat/Long", lat, ",", long, "\n_____");
       });
-    });
-  }
-  //add markers from JSON file with some parking lot examples
-  addMarkers() {
-    querydata.features.forEach(function (parking, i) {
-      parking.properties.id = i;
-    });
-  }
-
-  newInput(event) {
-    this.setState({
-      input: event.target.value,
     });
   }
 
@@ -275,15 +210,8 @@ class Mapbox extends Component {
       <div className="container-fluid">
         <div className="row">
           <div className="col-lg-4" id="input-side">
-            {/*Sidebar*/}
-            <UserInput
-              didMount={this.componentDidMount}
-              geocoder={geocoderGlobal}
-              map={mapGlobal}
-            />
-            {/* <div id='listings' className='listings'></div> */}
+            <UserInput />
           </div>
-
           <div ref={(el) => (this.mapContainer = el)} className="col-lg-8" />
         </div>
       </div>

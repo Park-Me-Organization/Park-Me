@@ -148,10 +148,8 @@ a:hover {
   background-image: url("./Assets/Map_marker.svg");
   background-size: cover;
   width: 20px;
-  height: 20px;
+  height: 30px;
   display: block;
-  border: none;
-  border-radius: 50%;
   cursor: pointer;
   padding: 0;
 }
@@ -162,8 +160,6 @@ a:hover {
   width: 20px;
   height: 20px;
   display: block;
-  border: none;
-  border-radius: 50%;
   cursor: pointer;
   padding: 0;
 }
@@ -184,6 +180,43 @@ a:hover {
   border-radius: 0;
 } */
 
+
+#popupTitle{
+  font-family: "Roboto Slab";
+  font-Size: 1.4rem;
+  font-weight: bold;
+  color:  #1A2637;
+  padding: 0px 10px;
+  text-align: left;
+}
+
+#popupDetails{
+  font-family: "Roboto Slab";
+  font-Size: 1.0rem;
+  color: black;
+  text-align: left;
+  padding: 0px 10px;
+  margin-bottom: 8px;
+}
+
+#aContainer{
+  padding: 0px 6px;
+}
+
+.btn-primary:active{
+  background-color: #1A2637;
+  border-color:  #1A2637;
+}
+
+.btn-primary:hover{
+  background-color: white;
+  border-color:  #1A2637;
+}
+
+.btn-primary:focus{
+  background-color: white;
+  border-color:  #1A2637;
+}
 .clearfix {
   display: block;
 }
