@@ -3,7 +3,7 @@ import mapboxgl from "mapbox-gl";
 import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "./App.css";
 import * as parkingdata from "./parking.geojson";
-import getResults from './MapboxAJAX';
+import getResults from "./MapboxAJAX";
 import UserInput from "./UserInput";
 //import {querydata} from './MapboxAJAX';
 
@@ -27,14 +27,13 @@ class Mapbox extends Component {
       curLng: 0.0,
     };
   }
-  
-  
-    componentDidMount() {
+
+  componentDidMount() {
     mapboxgl.accessToken =
       "pk.eyJ1IjoibmFkaW1rMSIsImEiOiJja2doaGh5dWowM292MnpudW03MHc2MzdwIn0.TU9JkM8-F3FZ5RKTTO3n9A";
 
     //Mapbox Map View
-      const map = new mapboxgl.Map({
+    const map = new mapboxgl.Map({
       container: this.mapContainer,
       style: "mapbox://styles/nadimk1/ckghhntfd19g51ao0zjbqcu65",
       center: [this.state.lng, this.state.lat],
@@ -93,8 +92,7 @@ class Mapbox extends Component {
     // After the map style has loaded on the page,
     // add a source layer and default styling for a single point
     map.on("load", function () {
-      
-/*       map.addSource("locations", {
+      /*       map.addSource("locations", {
         type: "geojson",
         data: {
           type: "FeatureCollection",
@@ -102,7 +100,7 @@ class Mapbox extends Component {
         },
       }); */
       //add single point mark for geocoder result
-     /*  map.addLayer({
+      /*  map.addLayer({
         id: "point",
         source: "single-point",
         type: "symbol",
@@ -112,78 +110,112 @@ class Mapbox extends Component {
         },
       }); */
 
- //     add parking spots from json file
- 
-    //   map.addLayer({
-    //   id: "parkingpoints",
-    //   type: "symbol",
-    //    /* Add a GeoJSON source containing place coordinates and information. */
-    //    source: "locations",
-    //    layout: {
-    //      "icon-image": "parking-15",
-    //      "icon-allow-overlap": true,
-    //    },
-    //  });
-     map.on("click", "locations", function (e) {
-       var coordinates = e.features[0].geometry.coordinates.slice();
-       var address = e.features[0].properties.address;
-       var place_name = e.features[0].place_name;
-       // Ensure that if the map is zoomed out such that multiple
+      //     add parking spots from json file
+
+      //   map.addLayer({
+      //   id: "parkingpoints",
+      //   type: "symbol",
+      //    /* Add a GeoJSON source containing place coordinates and information. */
+      //    source: "locations",
+      //    layout: {
+      //      "icon-image": "parking-15",
+      //      "icon-allow-overlap": true,
+      //    },
+      //  });
+      map.on("click", "locations", function (e) {
+        var coordinates = e.features[0].geometry.coordinates.slice();
+        var address = e.features[0].properties.address;
+        var place_name = e.features[0].place_name;
+        // Ensure that if the map is zoomed out such that multiple
         //copies of the feature are visible, the popup appears
         //over the copy being pointed to.
-       while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
-         coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
-       }
+        while (Math.abs(e.lngLat.lng - coordinates[0]) > 180) {
+          coordinates[0] += e.lngLat.lng > coordinates[0] ? 360 : -360;
+        }
 
-       new mapboxgl.Popup()
-         .setLngLat(coordinates)
-         .setHTML("<h3>" + place_name + "</h3>" + "<p>" + address + "</p>")
-         .addTo(map);
-     });
-     // Change the cursor to a pointer when the mouse is over the places layer.
-     map.on("mouseenter", "locations", function () {
-       map.getCanvas().style.cursor = "pointer";
-     });
+        new mapboxgl.Popup()
+          .setLngLat(coordinates)
+          .setHTML("<h3>" + place_name + "</h3>" + "<p>" + address + "</p>")
+          .addTo(map);
+      });
+      // Change the cursor to a pointer when the mouse is over the places layer.
+      map.on("mouseenter", "locations", function () {
+        map.getCanvas().style.cursor = "pointer";
+      });
 
-//        Change it back to a pointer when it leaves.
-     map.on("mouseleave", "locations", function () {
-       map.getCanvas().style.cursor = "";
-     });
-//      Listen for the `result` event from the Geocoder
-    //  `result` event is triggered when a user makes a selection
+      //        Change it back to a pointer when it leaves.
+      map.on("mouseleave", "locations", function () {
+        map.getCanvas().style.cursor = "";
+      });
+      //      Listen for the `result` event from the Geocoder
+      //  `result` event is triggered when a user makes a selection
       // Add a marker at the result's coordinates
 
-/*       geocoder.on('result', function(e) {
+      /*       geocoder.on('result', function(e) {
         map.getSource('single-point').setData(e.result.geometry);
 
       }); */
       //Geocoder results after user submit search term
 
       geocoder.on("result", function (result) {
-      
+        console.log(result.result.geometry.coordinates);
         var lat = result.result.center[1];
         var long = result.result.center[0];
+        var main = document.createElement("div");
+        main.className = "marker";
+        new mapboxgl.Marker(main)
+          .setLngLat(result.result.geometry.coordinates)
+          .addTo(map);
+
+        var mainMarker = document.createElement("div");
+        mainMarker.className = "Main-Marker";
+
+        console.log("MainMarker created: ", mainMarker);
+
+        // el.addEventListener("click", function () {
+        //   window.alert(marker.properties.message);
+        // });
+
+        // add marker to map
+        new mapboxgl.Marker(mainMarker)
+          .setLngLat(result.result.geometry.coordinates)
+          .addTo(map);
 
         //getResults(long, lat);
         // Create the query
-          var query =
+        var query =
           "https://api.mapbox.com/geocoding/v5/mapbox.places/parking.json?limit=10&proximity=" +
           long +
           "," +
           lat +
           "&types=poi&&access_token=pk.eyJ1IjoicmFmYWVsaGR6YSIsImEiOiJja2dzeHJjbnMwZzE3MnJtNWV6cHVsam9sIn0.7oigwdpk6AYK5VqUZq3phg";
         var $ = require("jquery");
+        $(".marker").remove();
         $.ajax({
           method: "GET",
           url: query,
         }).done(function (data) {
           // Get the data from the response
-          querydata = (JSON.stringify(data));
-          coordinates = data.features[0].geometry.coordinates;    
+          querydata = JSON.stringify(data);
+          coordinates = data.features[0].geometry.coordinates;
           // Set  markers of locations on the map
-          console.log("The coordinates: " + coordinates)
-          console.log("The data "+ querydata);
-          console.log("QUERY DATA IN MAPBOX:"+querydata);
+          console.log("The coordinates: " + coordinates);
+          console.log("The data " + querydata);
+
+          data.features.forEach(function (marker) {
+            // create a DOM element for the marker
+            var el = document.createElement("div");
+            el.className = "marker";
+
+            el.addEventListener("click", function () {
+              <div>words</div>;
+            });
+
+            // add marker to map
+            new mapboxgl.Marker(el)
+              .setLngLat(marker.geometry.coordinates)
+              .addTo(map);
+          });
 
           //addQuery(coordinates)
           map.addSource("single-point", {
@@ -191,35 +223,34 @@ class Mapbox extends Component {
             data: querydata,
           });
           map.getSource("single-point").setData(result.result.geometry);
-            // If a route is already loaded, remove it
-          if (map.getSource('single-point')) {
+          // If a route is already loaded, remove it
+          if (map.getSource("single-point")) {
             //map.removeLayer('single-point')
-            map.removeSource('single-point')
-          } else { // Add a new layer to the map
-           map.addLayer({
-            "id": "locations",
-            "type": "symbol",
-            
-            "source": {
-              "type": "geojson",
-              "data": querydata /* {
+            map.removeSource("single-point");
+          } else {
+            // Add a new layer to the map
+            map.addLayer({
+              id: "locations",
+              type: "symbol",
+
+              source: {
+                type: "geojson",
+                data: querydata /* {
                 "type": "Feature",
                 "properties": {},
                 "geometry": {
                   "type": "Point",
                   "coordinates": [coordinates]
                 }
-              } */
-            },
-            "layout": {
-              "icon-image": "parking-15",
+              } */,
+              },
+              layout: {
+                "icon-image": "parking-15",
                 "icon-allow-overlap": true,
-            },
-          });
-        } 
+              },
+            });
+          }
         });
-        
-        
 
         console.log("_____\nName\n", result.result.place_name);
         console.log("Lat/Long", lat, ",", long, "\n_____");
@@ -239,7 +270,6 @@ class Mapbox extends Component {
     });
   }
 
-    
   render() {
     return (
       <div className="container-fluid">
@@ -262,4 +292,3 @@ class Mapbox extends Component {
 }
 
 export default Mapbox;
-
