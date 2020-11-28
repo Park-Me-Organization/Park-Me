@@ -14,7 +14,7 @@
 // Make a Map Matching request
 import "./Mapbox";
 var querydata;
-var coordinates ;
+var coordinates;
 function getResults(long, lat) {
   // Create the query
   var query =
@@ -29,8 +29,8 @@ function getResults(long, lat) {
     url: query,
   }).done(function (data) {
     // Get the data from the response
-    querydata = (JSON.stringify(data));
-    coordinates = data.features[0].geometry.coordinates;    
+    querydata = JSON.stringify(data);
+    coordinates = data.features[0].geometry.coordinates;
     // Set  markers of locations on the map
     //console.log("The coordinates: " + coordinates)
     //console.log("The data "+ querydata);
@@ -38,7 +38,7 @@ function getResults(long, lat) {
   });
 }
 
- /* function addQuery(coordinates) {
+/* function addQuery(coordinates) {
 
   map.addLayer({
       "id": "locations",
@@ -58,4 +58,4 @@ function getResults(long, lat) {
     });
   };  */
 export default getResults;
-export {querydata};
+export { querydata };

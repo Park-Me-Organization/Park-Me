@@ -1,88 +1,91 @@
-import React, {Component} from 'react';
-import firebase from './Firebase';
-import {navigate} from '@reach/router'; //move from different pages
-import {Switch,Route, BrowserRouter} from "react-router-dom";
-import './App.css';
-import 'bootstrap/dist/css/bootstrap.css';
-import Navigation from './Navigation';
-import Login from './Login';
-import Mapbox from './Mapbox';
-import Register from './Register'
+import React, { Component } from "react";
+import firebase from "./Firebase";
+import { navigate } from "@reach/router"; //move from different pages
+import { Switch, Route, BrowserRouter } from "react-router-dom";
+import "./App.css";
+import "bootstrap/dist/css/bootstrap.css";
+import Navigation from "./Navigation";
+import Login from "./Login";
+import Mapbox from "./Mapbox";
+import Register from "./Register";
+import Reserve from "./Reserve";
 
 class App extends Component {
-
-  constructor(){
+  constructor() {
     super();
-    this.state = {    //state object
+    this.state = {
+      //state object
       user: null,
       displayName: null,
-      userID: null    
+      userID: null,
     };
   }
 
-
   componentDidMount() {
-    
-     firebase.auth().onAuthStateChanged(FBUser => {
+    firebase.auth().onAuthStateChanged((FBUser) => {
       if (FBUser) {
-        console.log(FBUser)
+        console.log(FBUser);
         this.setState({
           //this statement needs review
-         // user: FBUser,
+          // user: FBUser,
           user: FBUser.displayName,
-          userID: FBUser.uid
+          userID: FBUser.uid,
         });
       }
     });
   }
 
-  registerUser = userName => {
-  firebase.auth().onAuthStateChanged(FBUser => {
-    FBUser.updateProfile({
-      displayName: userName
-    }).then(() => {
-      this.setState({
-        user: FBUser,
-        displayName: FBUser.displayName,
-        userID: FBUser.uid
+  registerUser = (userName) => {
+    firebase.auth().onAuthStateChanged((FBUser) => {
+      FBUser.updateProfile({
+        displayName: userName,
+      }).then(() => {
+        this.setState({
+          user: FBUser,
+          displayName: FBUser.displayName,
+          userID: FBUser.uid,
+        });
+        navigate("/");
       });
-      navigate('/');
     });
-  });
-};
+  };
 
-logOutUser = e => {
-  e.preventDefault();
-  this.setState({
-    displayName: null,
+  logOutUser = (e) => {
+    e.preventDefault();
+    this.setState({
+      displayName: null,
       userID: null,
-      user: null
-  });
-
-  firebase
-    .auth()
-    .signOut().then(() =>{
-      navigate('./');
+      user: null,
     });
-};
 
-  render(){ 
-    
+    firebase
+      .auth()
+      .signOut()
+      .then(() => {
+        navigate("./");
+      });
+  };
+
+  render() {
     return (
-    <div>
-          <BrowserRouter>
+      <div>
+        <BrowserRouter>
           <div>
-         <Navigation user={this.state.user} logOutUser={this.logOutUser}/>
+            <Navigation user={this.state.user} logOutUser={this.logOutUser} />
           </div>
-       <Switch>
-        <Route exact path="/" component={Mapbox}/>
-        <Route path="/login" component={Login} user= {this.state.user}/>
-        <Route path="/register" component={Register} registerUser= {this.registerUser}/> 
-        </Switch>
+          <Switch>
+            <Route exact path="/" component={Mapbox} />
+            <Route path="/login" component={Login} user={this.state.user} />
+            <Route
+              path="/register"
+              component={Register}
+              registerUser={this.registerUser}
+            />
+            <Route path="/reserve" component={Reserve} />
+          </Switch>
         </BrowserRouter>
-    </div>
-
-  );
-}
+      </div>
+    );
+  }
 }
 export default App;
