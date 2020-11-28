@@ -5,10 +5,12 @@ import "./App.css";
 import * as parkingdata from "./parking.geojson";
 import getResults from './MapboxAJAX';
 import UserInput from "./UserInput";
-import {querydata} from './MapboxAJAX';
+//import {querydata} from './MapboxAJAX';
 
 var geocoderGlobal = "";
 var mapGlobal = "";
+var coordinates;
+var querydata;
 
 class Mapbox extends Component {
   constructor(props) {
@@ -26,13 +28,7 @@ class Mapbox extends Component {
     };
   }
   
-  //add markers from JSON file with some parking lot examples
-  addMarkers() {
-    querydata.features.forEach(function (parking, i) {
-      parking.properties.id = i;
-    });
-  }
-
+  
     componentDidMount() {
     mapboxgl.accessToken =
       "pk.eyJ1IjoibmFkaW1rMSIsImEiOiJja2doaGh5dWowM292MnpudW03MHc2MzdwIn0.TU9JkM8-F3FZ5RKTTO3n9A";
@@ -96,21 +92,17 @@ class Mapbox extends Component {
 
     // After the map style has loaded on the page,
     // add a source layer and default styling for a single point
-    console.log("QUERY DATA IN MAPBOX:"+querydata);
     map.on("load", function () {
-      map.addSource("single-point", {
-        type: "geojson",
-        data: querydata,
-      });
-      map.addSource("locations", {
+      
+/*       map.addSource("locations", {
         type: "geojson",
         data: {
           type: "FeatureCollection",
           features: [],
         },
-      });
+      }); */
       //add single point mark for geocoder result
-      map.addLayer({
+     /*  map.addLayer({
         id: "point",
         source: "single-point",
         type: "symbol",
@@ -118,20 +110,20 @@ class Mapbox extends Component {
           "icon-image": "parking-15",
           "icon-allow-overlap": true,
         },
-      });
+      }); */
 
  //     add parking spots from json file
  
-      map.addLayer({
-      id: "parkingpoints",
-      type: "symbol",
-       /* Add a GeoJSON source containing place coordinates and information. */
-       source: "locations",
-       layout: {
-         "icon-image": "parking-15",
-         "icon-allow-overlap": true,
-       },
-     });
+    //   map.addLayer({
+    //   id: "parkingpoints",
+    //   type: "symbol",
+    //    /* Add a GeoJSON source containing place coordinates and information. */
+    //    source: "locations",
+    //    layout: {
+    //      "icon-image": "parking-15",
+    //      "icon-allow-overlap": true,
+    //    },
+    //  });
      map.on("click", "locations", function (e) {
        var coordinates = e.features[0].geometry.coordinates.slice();
        var address = e.features[0].properties.address;
@@ -161,25 +153,86 @@ class Mapbox extends Component {
     //  `result` event is triggered when a user makes a selection
       // Add a marker at the result's coordinates
 
-      geocoder.on('result', function(e) {
+/*       geocoder.on('result', function(e) {
         map.getSource('single-point').setData(e.result.geometry);
 
-      });
-      
-      geocoder.on("result", function (result) {
-        map.getSource("single-point").setData(result.result.geometry);
+      }); */
+      //Geocoder results after user submit search term
 
+      geocoder.on("result", function (result) {
+      
         var lat = result.result.center[1];
         var long = result.result.center[0];
 
-        getResults(long, lat);
+        //getResults(long, lat);
+        // Create the query
+          var query =
+          "https://api.mapbox.com/geocoding/v5/mapbox.places/parking.json?limit=10&proximity=" +
+          long +
+          "," +
+          lat +
+          "&types=poi&&access_token=pk.eyJ1IjoicmFmYWVsaGR6YSIsImEiOiJja2dzeHJjbnMwZzE3MnJtNWV6cHVsam9sIn0.7oigwdpk6AYK5VqUZq3phg";
+        var $ = require("jquery");
+        $.ajax({
+          method: "GET",
+          url: query,
+        }).done(function (data) {
+          // Get the data from the response
+          querydata = (JSON.stringify(data));
+          coordinates = data.features[0].geometry.coordinates;    
+          // Set  markers of locations on the map
+          console.log("The coordinates: " + coordinates)
+          console.log("The data "+ querydata);
+          console.log("QUERY DATA IN MAPBOX:"+querydata);
+
+          //addQuery(coordinates)
+          map.addSource("single-point", {
+            type: "geojson",
+            data: querydata,
+          });
+          map.getSource("single-point").setData(result.result.geometry);
+            // If a route is already loaded, remove it
+          if (map.getSource('single-point')) {
+            //map.removeLayer('single-point')
+            map.removeSource('single-point')
+          } else { // Add a new layer to the map
+           map.addLayer({
+            "id": "locations",
+            "type": "symbol",
+            
+            "source": {
+              "type": "geojson",
+              "data": querydata /* {
+                "type": "Feature",
+                "properties": {},
+                "geometry": {
+                  "type": "Point",
+                  "coordinates": [coordinates]
+                }
+              } */
+            },
+            "layout": {
+              "icon-image": "parking-15",
+                "icon-allow-overlap": true,
+            },
+          });
+        } 
+        });
         
+        
+
         console.log("_____\nName\n", result.result.place_name);
         console.log("Lat/Long", lat, ",", long, "\n_____");
       });
     });
   }
-  
+  //add markers from JSON file with some parking lot examples
+  addMarkers() {
+    querydata.features.forEach(function (parking, i) {
+      parking.properties.id = i;
+    });
+  }
+
   newInput(event) {
     this.setState({
       input: event.target.value,

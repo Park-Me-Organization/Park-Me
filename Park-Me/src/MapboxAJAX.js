@@ -16,9 +16,7 @@ import "./Mapbox";
 var querydata;
 var coordinates ;
 function getResults(long, lat) {
-  // Separate the radiuses with semicolons
   // Create the query
-  //https://api.mapbox.com/geocoding/v5/mapbox.places/parking.json?limit=10&proximity=33.751291&types=poi&access_token=pk.eyJ1IjoicmFmYWVsaGR6YSIsImEiOiJja2dzeHJjbnMwZzE3MnJtNWV6cHVsam9sIn0.7oigwdpk6AYK5VqUZq3phg
   var query =
     "https://api.mapbox.com/geocoding/v5/mapbox.places/parking.json?limit=10&proximity=" +
     long +
@@ -34,10 +32,9 @@ function getResults(long, lat) {
     querydata = (JSON.stringify(data));
     coordinates = data.features[0].geometry.coordinates;    
     // Set  markers of locations on the map
-    console.log("The coordinates: " + coordinates)
-    console.log("The data "+ querydata);
+    //console.log("The coordinates: " + coordinates)
+    //console.log("The data "+ querydata);
     //addQuery(coordinates)
-
   });
 }
 
@@ -59,6 +56,6 @@ function getResults(long, lat) {
           "icon-allow-overlap": true,
       },
     });
-  }; */
+  };  */
 export default getResults;
 export {querydata};
