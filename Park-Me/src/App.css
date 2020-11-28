@@ -144,6 +144,30 @@ a:hover {
   background-color: #f8f8f8;
 }
 
+.Main-Marker {
+  background-image: url("./Assets/Map_marker.svg");
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  display: block;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+}
+
+.marker {
+  background-image: url("./Assets/Parking-Logo.svg");
+  background-size: cover;
+  width: 20px;
+  height: 20px;
+  display: block;
+  border: none;
+  border-radius: 50%;
+  cursor: pointer;
+  padding: 0;
+}
+
 /* ::-webkit-scrollbar {
   width: 3px;
   height: 3px;
