@@ -22,30 +22,7 @@ class UserInput extends Component {
             textAlign: "center",
           }}
         >
-          <div className="input-group mb-3">
-            <input
-              type="text"
-              className="form-control"
-              placeholder="Address"
-              aria-label="Recipient's username"
-              aria-describedby="basic-addon2"
-              value={this.state.Address}
-            />
-            <div className="input-group-append">
-              <Button
-                variant="secondary"
-                style={{
-                  backgroundColor: "#1A2637",
-                  fontfamily: "Roboto Slab",
-                }}
-                onClick={console.log(this.state.Address)}
-              >
-                GO
-              </Button>
-            </div>
-
-            <div id="geocoder"></div>
-          </div>
+          <div id="geocoder"></div>
         </div>
       </div>
     );
