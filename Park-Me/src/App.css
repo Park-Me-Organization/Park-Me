@@ -180,43 +180,28 @@ a:hover {
   border-radius: 0;
 } */
 
-
-#popupTitle{
+#popupTitle {
   font-family: "Roboto Slab";
-  font-Size: 1.4rem;
+  font-size: 1.4rem;
   font-weight: bold;
-  color:  #1A2637;
+  color: #1a2637;
   padding: 0px 10px;
   text-align: left;
 }
 
-#popupDetails{
+#popupDetails {
   font-family: "Roboto Slab";
-  font-Size: 1.0rem;
+  font-size: 1rem;
   color: black;
   text-align: left;
   padding: 0px 10px;
   margin-bottom: 8px;
 }
 
-#aContainer{
+#aContainer {
   padding: 0px 6px;
 }
 
-.btn-primary:active{
-  background-color: #1A2637;
-  border-color:  #1A2637;
-}
-
-.btn-primary:hover{
-  background-color: white;
-  border-color:  #1A2637;
-}
-
-.btn-primary:focus{
-  background-color: white;
-  border-color:  #1A2637;
-}
 .clearfix {
   display: block;
 }

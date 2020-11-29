@@ -5,11 +5,10 @@ import "./App.css";
 import * as parkingdata from "./parking.geojson";
 import getResults from "./MapboxAJAX";
 import UserInput from "./UserInput";
-import { Link } from 'react-router-dom'
+import { Link, Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import ReactDOM from 'react-dom'
-import Btn from "./Btn.js"
-
+import ReactDOM from "react-dom";
+import { render } from "@testing-library/react";
 
 //import {querydata} from './MapboxAJAX';
 
@@ -29,10 +28,16 @@ class Mapbox extends Component {
       currPage: "Search",
       curLat: 0.0,
       curLng: 0.0,
+      toReserve: false,
     };
+    this.handleClick = this.handleClick.bind(this);
+    this.buttonRef = React.createRef();
   }
 
-  componentDidMount() {
+  handleClick() {
+    this.setState({ toReserve: true });
+  }
+  componentDidMount(props) {
     mapboxgl.accessToken =
       "pk.eyJ1IjoibmFkaW1rMSIsImEiOiJja2doaGh5dWowM292MnpudW03MHc2MzdwIn0.TU9JkM8-F3FZ5RKTTO3n9A";
 
@@ -43,9 +48,11 @@ class Mapbox extends Component {
       center: [this.state.lng, this.state.lat],
       zoom: this.state.zoom,
       limit: 10,
+      parkingdata: {},
       bbox: [-84.401037, 33.745468, -84.370436, 33.768017], //min long, min lag, max long, max lat
     });
 
+    const self = this;
     //Geocoder
     const geocoder = new MapboxGeocoder({
       // Initialize the geocoder
@@ -155,6 +162,8 @@ class Mapbox extends Component {
       //take location input from geocoder and place markers at the 10 closest
       // parking lots from entered location
       geocoder.on("result", function (result) {
+        $(".marker").remove();
+        $(".Main-Marker").remove();
         // create div for the marker
         var mainMarker = document.createElement("div");
         mainMarker.className = "Main-Marker";
@@ -172,7 +181,6 @@ class Mapbox extends Component {
           result.result.geometry.coordinates[1] +
           "&types=poi&&access_token=pk.eyJ1IjoicmFmYWVsaGR6YSIsImEiOiJja2dzeHJjbnMwZzE3MnJtNWV6cHVsam9sIn0.7oigwdpk6AYK5VqUZq3phg";
 
-        $(".marker").remove();
         $.ajax({
           method: "GET",
           url: query,
@@ -183,22 +191,66 @@ class Mapbox extends Component {
           // Set  markers of locations on the map
           console.log("The coordinates: " + coordinates);
 
-          data.features.forEach(function (marker) {
+          data.features.forEach(function (marker, props) {
             // create a DOM element for the marker
             var el = document.createElement("div");
             el.className = "marker";
 
+            var address =
+              marker.properties.address == undefined
+                ? marker.place_name.substring(
+                    marker.place_name.indexOf(",") + 1
+                  )
+                : marker.properties.address;
 
-            var address = (marker.properties.address == undefined ? (marker.place_name).substring((marker.place_name).indexOf(",")+1) : marker.properties.address);
+            var directBtn = document.createElement("div");
 
-            var popup = new mapboxgl.Popup({ offset: 25 }).setHTML("<h1 id=\"popupTitle\">" + (marker.text).toUpperCase() + "</h1>" + "<p id=\"popupDetails\" >" + address + "</p>" +"<p id=\"popupDetails\"> 5 spots remaining </p>" + "<div id=\"aContainer\"><a style=\"background-color: #1A2637;border-color: white;font-family:\"Roboto Slab\";margin-left:10px\" class=\"btn btn-primary\" href=\"/reserve\"> RESERVE </a></div>");
-          
+            // reactDom.render(<Redirect to={{
+            //   pathname: "/reserve",
+            //   state: {name: marker.text.toUpperCase(), parkingAddress: address, spots: "5" }
+            // }},directBtn );
+
+            var pData = {
+              name: marker.text.toUpperCase(),
+              address: address,
+            };
+
+            var description = `<h1>Hello World!</h1> 
+            <button className="btn" ref=${self.buttonRef.current}>todo</button>`;
+            var popupInfo =
+              '<h1 id="popupTitle">' +
+              marker.text.toUpperCase() +
+              "</h1>" +
+              '<p id="popupDetails" >' +
+              address +
+              "</p>" +
+              '<p id="popupDetails"> 5 spots remaining </p>' +
+              '<div id="aContainer"><a style="background-color: #1A2637;border-color: white;font-family:"Roboto Slab";" class="btn btn-primary" href="/reserve"> RESERVE </a></div>';
+            // var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(description);
+            var popup = new mapboxgl.Popup()
+              .setLngLat([-96, 37.8])
+              .setHTML(
+                `<h1 id="popupTitle"> ${marker.text.toUpperCase()} </h1><p id="popupDetails" >${address}</p><div id="aContainer">
+    <button style="background-color: #1A2637;font-family:"Roboto Slab";border-color: white;;" Name="btn" class="btn btn-primary" ref=${
+      self.buttonRef.current
+    }>RESERVE</button></div>`
+              )
+              .addTo(map);
+            const btn = document.getElementsByName("btn")[0];
+            btn.addEventListener("click", self.handleClick);
 
             // add marker to map
             new mapboxgl.Marker(el)
               .setLngLat(marker.geometry.coordinates)
               .setPopup(popup)
-              .addTo(map);
+              .addTo(map)
+              .getElement()
+              .addEventListener("click", () => {
+                self.setState({
+                  parkingData: pData,
+                });
+                console.log(self.state.parkingData);
+              });
           });
         });
       });
@@ -206,6 +258,16 @@ class Mapbox extends Component {
   }
 
   render() {
+    if (this.state.toReserve === true) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/reserve",
+            state: { parkingData: this.state.parkingData },
+          }}
+        />
+      );
+    }
     return (
       <div className="container-fluid">
         <div className="row">

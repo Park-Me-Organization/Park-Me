@@ -1,7 +1,7 @@
 import React, { Component } from "react";
 import firebase from "./Firebase";
 import { navigate } from "@reach/router"; //move from different pages
-import { Switch, Route, BrowserRouter } from "react-router-dom";
+import { Switch, Route, BrowserRouter, Redirect } from "react-router-dom";
 import "./App.css";
 import "bootstrap/dist/css/bootstrap.css";
 import Navigation from "./Navigation";
@@ -9,6 +9,10 @@ import Login from "./Login";
 import Mapbox from "./Mapbox";
 import Register from "./Register";
 import Reserve from "./Reserve";
+import VehicleDetails from "./VehicleDetails";
+import TransactionHandle from "./TransactionHandle.js";
+import Receipt from "./Receipt.js";
+import Confirmation from "./Confirmation.js";
 
 class App extends Component {
   constructor() {
@@ -81,7 +85,20 @@ class App extends Component {
               component={Register}
               registerUser={this.registerUser}
             />
-            <Route path="/reserve" component={Reserve} />
+            <Route path="/reserve" render={(props) => <Reserve {...props} />} />
+            <Route
+              path="/vehicleDetails"
+              render={(props) => <VehicleDetails {...props} />}
+            />
+            <Route
+              path="/confirmation"
+              render={(props) => <Confirmation {...props} />}
+            />
+            <Route
+              path="/transactionHandle"
+              render={(props) => <TransactionHandle {...props} />}
+            />
+            <Route path="/receipt" render={(props) => <Receipt {...props} />} />
           </Switch>
         </BrowserRouter>
       </div>
@@ -89,3 +106,5 @@ class App extends Component {
   }
 }
 export default App;
+
+//render={(props) => <Reserve parkingLot={name: "", location: "",}/>} component={Reserve}

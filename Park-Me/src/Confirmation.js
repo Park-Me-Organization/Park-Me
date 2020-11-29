@@ -3,10 +3,9 @@ import FormError from "./FormError";
 import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
-class Reserve extends Component {
+class Confirmation extends Component {
   constructor(props) {
     super(props);
-    console.log("here");
     this.state = {
       user: "",
       lname: "",
@@ -15,7 +14,7 @@ class Reserve extends Component {
       license: "",
       state: "",
       finalRegistrationInfo: {},
-      toVehicleDetails: false,
+      toTransactionHandle: false,
       errorMessage: null,
     };
 
@@ -42,21 +41,21 @@ class Reserve extends Component {
       state: this.state.state,
       parkingData: this.props.location.state.parkingData,
     };
-    console.log("registrationInfo: ", registrationInfo);
     this.setState({
       toVehicleDetails: true,
       finalRegistrationInfo: registrationInfo,
     });
+    console.log(registrationInfo);
     e.preventDefault();
   }
 
   render() {
-    if (this.state.toVehicleDetails === true) {
+    if (this.state.toTransactionHandle === true) {
       return (
         <Redirect
           to={{
-            pathname: "/vehicleDetails",
-            state: this.state.finalRegistrationInfo,
+            pathname: "/TransactionHandle",
+            state: this.state,
           }}
         />
       );
@@ -69,6 +68,10 @@ class Reserve extends Component {
       >
         <div className="container" style={{ padding: "0px" }}>
           <div className="row">
+            {console.log(
+              "finalRegistrationInfo: ",
+              this.props.location.state.finalRegistrationInfo
+            )}
             <div
               className="card bg-light"
               style={{
@@ -199,4 +202,6 @@ class Reserve extends Component {
   }
 }
 
-export default Reserve;
+export default Confirmation;
+
+// this.props.location.state.property

@@ -3,10 +3,9 @@ import FormError from "./FormError";
 import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
-class Reserve extends Component {
+class VehicleDetails extends Component {
   constructor(props) {
     super(props);
-    console.log("here");
     this.state = {
       user: "",
       lname: "",
@@ -14,13 +13,23 @@ class Reserve extends Component {
       phonenumber: "",
       license: "",
       state: "",
+      make: "",
+      model: "",
+      year: "",
+      color: "",
       finalRegistrationInfo: {},
-      toVehicleDetails: false,
+      toConfirmation: false,
       errorMessage: null,
     };
-
+    const year = new Date().getFullYear();
+    this.years = Array.from(new Array(20), (val, index) => index + year);
+    this.handleSelect = this.handleSelect.bind(this);
     this.handleChange = this.handleChange.bind(this); //constructor <-handle change
     this.handleSubmit = this.handleSubmit.bind(this);
+  }
+
+  handleSelect(e) {
+    e.target.name = e.target.value;
   }
 
   handleChange(e) {
@@ -30,6 +39,7 @@ class Reserve extends Component {
     const itemValue = e.target.value;
 
     this.setState({ [itemName]: itemValue });
+    console.log("name: ", itemName, "value: ", itemValue);
   }
 
   handleSubmit(e) {
@@ -41,22 +51,25 @@ class Reserve extends Component {
       license: this.state.license,
       state: this.state.state,
       parkingData: this.props.location.state.parkingData,
+      vehicleMake: this.state.make,
+      vehicleModel: this.state.model,
+      vehicleYear: this.state.year,
+      vehicleColor: this.state.color,
     };
-    console.log("registrationInfo: ", registrationInfo);
     this.setState({
-      toVehicleDetails: true,
+      toTransactionHandle: true,
       finalRegistrationInfo: registrationInfo,
     });
     e.preventDefault();
   }
 
   render() {
-    if (this.state.toVehicleDetails === true) {
+    if (this.state.toConfirmation === true) {
       return (
         <Redirect
           to={{
-            pathname: "/vehicleDetails",
-            state: this.state.finalRegistrationInfo,
+            pathname: "/confirmation",
+            state: this.state,
           }}
         />
       );
@@ -79,7 +92,7 @@ class Reserve extends Component {
             >
               <div className="card-body">
                 <h3 className="font-weight-light mb-3">
-                  Let's get some details
+                  Tell us about that ride
                 </h3>
                 <div className="form-row">
                   {this.state.errorMessage !== null ? (
@@ -92,16 +105,17 @@ class Reserve extends Component {
                     >
                       Name
                     </label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      id="user"
-                      placeholder="First Name"
-                      name="user"
-                      required
-                      value={this.state.user}
+                    <select
+                      className="custom-select my-1 mr-sm-2"
+                      id="inlineFormCustomSelectPref"
+                      value={this.state.make}
                       onChange={this.handleChange}
-                    />
+                    >
+                      <option defaultValue="choose">Choose...</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
                   </section>
                   <section className="col-sm-6 form-group">
                     <label
@@ -114,10 +128,53 @@ class Reserve extends Component {
                       className="form-control"
                       type="text"
                       id="lname"
-                      placeholder="Last Name"
-                      name="lname"
+                      placeholder="Model"
+                      name="model"
                       required
-                      value={this.state.lname}
+                      value={this.state.model}
+                      onChange={this.handleChange}
+                    />
+                  </section>
+                </div>
+
+                <div className="form-row">
+                  {this.state.errorMessage !== null ? (
+                    <FormError theMessage={this.state.errorMessage} />
+                  ) : null}
+                  <section className="col-sm-6 form-group">
+                    <label
+                      className="form-control-label sr-only"
+                      htmlFor="year"
+                    >
+                      Name
+                    </label>
+                    <select
+                      className="custom-select my-1 mr-sm-2"
+                      id="inlineFormCustomSelectPref"
+                      value={this.state.year}
+                      onChange={this.handleChange}
+                    >
+                      <option defaultValue="choose">Choose...</option>
+                      <option value="1">One</option>
+                      <option value="2">Two</option>
+                      <option value="3">Three</option>
+                    </select>
+                  </section>
+                  <section className="col-sm-6 form-group">
+                    <label
+                      className="form-control-label sr-only"
+                      htmlFor="lname"
+                    >
+                      Last Name
+                    </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      id="lname"
+                      placeholder="Model"
+                      name="model"
+                      required
+                      value={this.state.model}
                       onChange={this.handleChange}
                     />
                   </section>
@@ -199,4 +256,6 @@ class Reserve extends Component {
   }
 }
 
-export default Reserve;
+export default VehicleDetails;
+
+// this.props.location.state.property
