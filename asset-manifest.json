@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/Park-Me/static/css/main.d191d5bf.chunk.css",
-    "main.js": "/Park-Me/static/js/main.368b57ac.chunk.js",
-    "main.js.map": "/Park-Me/static/js/main.368b57ac.chunk.js.map",
-    "runtime-main.js": "/Park-Me/static/js/runtime-main.8f0e8948.js",
-    "runtime-main.js.map": "/Park-Me/static/js/runtime-main.8f0e8948.js.map",
-    "static/css/2.8aa5a7f8.chunk.css": "/Park-Me/static/css/2.8aa5a7f8.chunk.css",
-    "static/js/2.a9b92bfb.chunk.js": "/Park-Me/static/js/2.a9b92bfb.chunk.js",
-    "static/js/2.a9b92bfb.chunk.js.map": "/Park-Me/static/js/2.a9b92bfb.chunk.js.map",
-    "index.html": "/Park-Me/index.html",
-    "precache-manifest.ee2f4602c57452a3d41e1c6617ed0641.js": "/Park-Me/precache-manifest.ee2f4602c57452a3d41e1c6617ed0641.js",
-    "service-worker.js": "/Park-Me/service-worker.js",
-    "static/css/2.8aa5a7f8.chunk.css.map": "/Park-Me/static/css/2.8aa5a7f8.chunk.css.map",
-    "static/css/main.d191d5bf.chunk.css.map": "/Park-Me/static/css/main.d191d5bf.chunk.css.map",
-    "static/js/2.a9b92bfb.chunk.js.LICENSE.txt": "/Park-Me/static/js/2.a9b92bfb.chunk.js.LICENSE.txt",
-    "static/media/App.css": "/Park-Me/static/media/Map_marker.749bf3c6.svg",
-    "static/media/Parking-Logo.svg": "/Park-Me/static/media/Parking-Logo.5a95957d.svg",
-    "static/media/parking.geojson": "/Park-Me/static/media/parking.4aadf9fe.geojson"
+    "main.css": "/static/css/main.30673e87.chunk.css",
+    "main.js": "/static/js/main.a9757e83.chunk.js",
+    "main.js.map": "/static/js/main.a9757e83.chunk.js.map",
+    "runtime-main.js": "/static/js/runtime-main.32caf428.js",
+    "runtime-main.js.map": "/static/js/runtime-main.32caf428.js.map",
+    "static/css/2.8aa5a7f8.chunk.css": "/static/css/2.8aa5a7f8.chunk.css",
+    "static/js/2.e6ebb5c3.chunk.js": "/static/js/2.e6ebb5c3.chunk.js",
+    "static/js/2.e6ebb5c3.chunk.js.map": "/static/js/2.e6ebb5c3.chunk.js.map",
+    "index.html": "/index.html",
+    "precache-manifest.363b6a4b41d78694a314c670d354c690.js": "/precache-manifest.363b6a4b41d78694a314c670d354c690.js",
+    "service-worker.js": "/service-worker.js",
+    "static/css/2.8aa5a7f8.chunk.css.map": "/static/css/2.8aa5a7f8.chunk.css.map",
+    "static/css/main.30673e87.chunk.css.map": "/static/css/main.30673e87.chunk.css.map",
+    "static/js/2.e6ebb5c3.chunk.js.LICENSE.txt": "/static/js/2.e6ebb5c3.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/static/media/Map_marker.749bf3c6.svg",
+    "static/media/Parking-Logo.svg": "/static/media/Parking-Logo.5a95957d.svg",
+    "static/media/parking.geojson": "/static/media/parking.4aadf9fe.geojson"
   },
   "entrypoints": [
-    "static/js/runtime-main.8f0e8948.js",
+    "static/js/runtime-main.32caf428.js",
     "static/css/2.8aa5a7f8.chunk.css",
-    "static/js/2.a9b92bfb.chunk.js",
-    "static/css/main.d191d5bf.chunk.css",
-    "static/js/main.368b57ac.chunk.js"
+    "static/js/2.e6ebb5c3.chunk.js",
+    "static/css/main.30673e87.chunk.css",
+    "static/js/main.a9757e83.chunk.js"
   ]
 }
