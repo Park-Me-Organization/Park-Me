@@ -4,8 +4,12 @@ import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { getMatches, isValid } from "driver-license-validator";
 
-var validation = function(inputString, regex) {
+var validation = function(inputString, regex, me) {
   var alpha = true;
+  if (regex == "license") {
+    console.log("inside license: ", inputString);
+    return isValid(inputString);
+  }
   for (var i = 0; i < inputString.length; i++) {
     if (!regex.test(inputString.charAt(i))) {
       return false;
@@ -47,23 +51,28 @@ class Reserve extends Component {
     const itemName = e.target.name;
     const itemValue = e.target.value;
 
-    this.setState({ [itemName]: itemValue }, () => {
-      if (validation(this.state.user, /^[a-zA-Z -]*$/i) == false) {
-        this.setState({
-          errorMessage:
-            'Incorrect format for First Name. Only Letters, spaces " ", and hyphens "-" are accepted.'
-        });
-      } else if (validation(this.state.lname, /^[a-zA-Z -]*$/i) == false) {
-        this.setState({
-          errorMessage:
-            'Incorrect format for Last Name. Only Letters, spaces " ", and hyphens "-" are accepted.'
-        });
-      } else {
-        this.setState({
-          errorMessage: null
-        });
-      }
-    });
+    this.setState({ [itemName]: itemValue });
+    var me = this;
+    if (validation(this.state.user, /^[a-zA-Z -]*$/i) == false) {
+      this.setState({
+        errorMessage:
+          'Incorrect format for First Name. Only Letters, spaces " ", and hyphens "-" are accepted.'
+      });
+    } else if (validation(this.state.lname, /^[a-zA-Z -]*$/i) == false) {
+      this.setState({
+        errorMessage:
+          'Incorrect format for Last Name. Only Letters, spaces " ", and hyphens "-" are accepted.'
+      });
+    } else if (validation(this.state.license, "license", me) == false) {
+      this.setState({
+        errorMessage:
+          'Incorrect format for License. Only Letters, spaces " ", and hyphens "-" are accepted.'
+      });
+    } else {
+      this.setState({
+        errorMessage: null
+      });
+    }
   }
 
   handleSubmit(e) {
@@ -203,7 +212,7 @@ class Reserve extends Component {
                   <section className="col-sm-6 form-group">
                     <select
                       name="state"
-                      className="custom-select my-1 mr-sm-2"
+                      className="custom-select mr-sm-2"
                       value={this.state.state}
                       onChange={this.handleSelect}
                     >
