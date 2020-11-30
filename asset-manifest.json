@@ -1,0 +1,28 @@
+{
+  "files": {
+    "main.css": "/Park-Me-Organization/Park-Me.git/static/css/main.bdd32387.chunk.css",
+    "main.js": "/Park-Me-Organization/Park-Me.git/static/js/main.54d0fde0.chunk.js",
+    "main.js.map": "/Park-Me-Organization/Park-Me.git/static/js/main.54d0fde0.chunk.js.map",
+    "runtime-main.js": "/Park-Me-Organization/Park-Me.git/static/js/runtime-main.2f3e456c.js",
+    "runtime-main.js.map": "/Park-Me-Organization/Park-Me.git/static/js/runtime-main.2f3e456c.js.map",
+    "static/css/2.8aa5a7f8.chunk.css": "/Park-Me-Organization/Park-Me.git/static/css/2.8aa5a7f8.chunk.css",
+    "static/js/2.570d1ee3.chunk.js": "/Park-Me-Organization/Park-Me.git/static/js/2.570d1ee3.chunk.js",
+    "static/js/2.570d1ee3.chunk.js.map": "/Park-Me-Organization/Park-Me.git/static/js/2.570d1ee3.chunk.js.map",
+    "index.html": "/Park-Me-Organization/Park-Me.git/index.html",
+    "precache-manifest.18f25f37d5d7977741e789d108439797.js": "/Park-Me-Organization/Park-Me.git/precache-manifest.18f25f37d5d7977741e789d108439797.js",
+    "service-worker.js": "/Park-Me-Organization/Park-Me.git/service-worker.js",
+    "static/css/2.8aa5a7f8.chunk.css.map": "/Park-Me-Organization/Park-Me.git/static/css/2.8aa5a7f8.chunk.css.map",
+    "static/css/main.bdd32387.chunk.css.map": "/Park-Me-Organization/Park-Me.git/static/css/main.bdd32387.chunk.css.map",
+    "static/js/2.570d1ee3.chunk.js.LICENSE.txt": "/Park-Me-Organization/Park-Me.git/static/js/2.570d1ee3.chunk.js.LICENSE.txt",
+    "static/media/App.css": "/Park-Me-Organization/Park-Me.git/static/media/Map_marker.749bf3c6.svg",
+    "static/media/Parking-Logo.svg": "/Park-Me-Organization/Park-Me.git/static/media/Parking-Logo.5a95957d.svg",
+    "static/media/parking.geojson": "/Park-Me-Organization/Park-Me.git/static/media/parking.4aadf9fe.geojson"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.2f3e456c.js",
+    "static/css/2.8aa5a7f8.chunk.css",
+    "static/js/2.570d1ee3.chunk.js",
+    "static/css/main.bdd32387.chunk.css",
+    "static/js/main.54d0fde0.chunk.js"
+  ]
+}
