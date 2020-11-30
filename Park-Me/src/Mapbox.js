@@ -28,7 +28,7 @@ class Mapbox extends Component {
       currPage: "Search",
       curLat: 0.0,
       curLng: 0.0,
-      toReserve: false,
+      toReserve: false
     };
     this.handleClick = this.handleClick.bind(this);
     this.buttonRef = React.createRef();
@@ -49,7 +49,7 @@ class Mapbox extends Component {
       zoom: this.state.zoom,
       limit: 10,
       parkingdata: {},
-      bbox: [-84.401037, 33.745468, -84.370436, 33.768017], //min long, min lag, max long, max lat
+      bbox: [-84.401037, 33.745468, -84.370436, 33.768017] //min long, min lag, max long, max lat
     });
 
     const self = this;
@@ -63,7 +63,7 @@ class Mapbox extends Component {
       limit: 10, //limits the search suggestion results
       types: "poi",
       //render geocoder for suggested list of items with logo,text and address
-      render: function (item) {
+      render: function(item) {
         var maki = item.properties.maki || "marker";
         {
           return (
@@ -76,7 +76,7 @@ class Mapbox extends Component {
             "</span></div>"
           );
         }
-      },
+      }
     });
 
     // Add the geocoder to the map
@@ -92,17 +92,17 @@ class Mapbox extends Component {
     map.addControl(
       new mapboxgl.GeolocateControl({
         positionOptions: {
-          enableHighAccuracy: true,
+          enableHighAccuracy: true
         },
         trackUserLocation: true,
         showUserLocation: true,
-        showAccuracyCircle: true,
+        showAccuracyCircle: true
       })
     );
 
     // After the map style has loaded on the page,
     // add a source layer and default styling for a single point
-    map.on("load", function () {
+    map.on("load", function() {
       /*       map.addSource("locations", {
         type: "geojson",
         data: {
@@ -133,7 +133,7 @@ class Mapbox extends Component {
       //      "icon-allow-overlap": true,
       //    },
       //  });
-      map.on("click", "locations", function (e) {
+      map.on("click", "locations", function(e) {
         var coordinates = e.features[0].geometry.coordinates.slice();
         var address = e.features[0].properties.address;
         var place_name = e.features[0].place_name;
@@ -150,18 +150,18 @@ class Mapbox extends Component {
           .addTo(map);
       });
       // Change the cursor to a pointer when the mouse is over the places layer.
-      map.on("mouseenter", "locations", function () {
+      map.on("mouseenter", "locations", function() {
         map.getCanvas().style.cursor = "pointer";
       });
 
       //        Change it back to a pointer when it leaves.
-      map.on("mouseleave", "locations", function () {
+      map.on("mouseleave", "locations", function() {
         map.getCanvas().style.cursor = "";
       });
 
       //take location input from geocoder and place markers at the 10 closest
       // parking lots from entered location
-      geocoder.on("result", function (result) {
+      geocoder.on("result", function(result) {
         $(".marker").remove();
         $(".Main-Marker").remove();
         // create div for the marker
@@ -183,15 +183,15 @@ class Mapbox extends Component {
 
         $.ajax({
           method: "GET",
-          url: query,
-        }).done(function (data) {
+          url: query
+        }).done(function(data) {
           console.log("data: ", data);
           // Get the data from the response
           coordinates = data.features[0].geometry.coordinates;
           // Set  markers of locations on the map
           console.log("The coordinates: " + coordinates);
 
-          data.features.forEach(function (marker, props) {
+          data.features.forEach(function(marker, props) {
             // create a DOM element for the marker
             var el = document.createElement("div");
             el.className = "marker";
@@ -212,7 +212,7 @@ class Mapbox extends Component {
 
             var pData = {
               name: marker.text.toUpperCase(),
-              address: address,
+              address: address
             };
 
             var description = `<h1>Hello World!</h1> 
@@ -247,9 +247,8 @@ class Mapbox extends Component {
               .getElement()
               .addEventListener("click", () => {
                 self.setState({
-                  parkingData: pData,
+                  parkingData: pData
                 });
-                console.log(self.state.parkingData);
               });
           });
         });
@@ -263,7 +262,7 @@ class Mapbox extends Component {
         <Redirect
           to={{
             pathname: "/reserve",
-            state: { parkingData: this.state.parkingData },
+            state: { parkingData: this.state.parkingData }
           }}
         />
       );
@@ -274,7 +273,7 @@ class Mapbox extends Component {
           <div className="col-lg-4" id="input-side">
             <UserInput />
           </div>
-          <div ref={(el) => (this.mapContainer = el)} className="col-lg-8" />
+          <div ref={el => (this.mapContainer = el)} className="col-lg-8" />
         </div>
       </div>
     );

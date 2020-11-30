@@ -1,46 +1,46 @@
 {
-    "uuid": "8800b4b4-4ea6-11ea-91fd-302303742060",
-    "spaces": [
+  "uuid": "8800b4b4-4ea6-11ea-91fd-302303742060",
+  "spaces": [
     {
-    "location": {
-    "lat": 31.755325,
-    "lon": -106.487996
-    },
-    "is_active": true
+      "location": {
+        "lat": 31.755325,
+        "lon": -106.487996
+      },
+      "is_active": true
     }
-    ],
-    "streets": [
+  ],
+  "streets": [
     {
-    "state": "Parking Allowed",
-    "vector": [
+      "state": "Parking Allowed",
+      "vector": [
+        {
+          "location": {
+            "lat": 31.755325,
+            "lon": -106.487996
+          }
+        }
+      ],
+      "occupancy": 81
+    }
+  ],
+  "polygons": [
     {
-    "location": {
-    "lat": 31.755325,
-    "lon": -106.487996
+      "map": [
+        {
+          "location": {
+            "lat": 31.755325,
+            "lon": -106.487996
+          }
+        }
+      ],
+      "occupancy": 81
     }
-    }
-    ],
-    "occupancy": 81
-    }
-    ],
-    "polygons": [
+  ],
+  "zones": [
     {
-    "map": [
-    {
-    "location": {
-    "lat": 31.755325,
-    "lon": -106.487996
+      "internal_zone_code": "1234-5678",
+      "occupancy": 81
     }
-    }
-    ],
-    "occupancy": 81
-    }
-    ],
-    "zones": [
-    {
-    "internal_zone_code": "1234-5678",
-    "occupancy": 81
-    }
-    ],
-    "error": "AV-1001"
-    }
+  ],
+  "error": "AV-1001"
+}

@@ -1,12 +1,13 @@
 import React, { Component, useState } from "react";
 import Slider from "./Slider.js";
 import Button from "react-bootstrap/Button";
+import { flexbox } from "@material-ui/system";
 
 class UserInput extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      address: "",
+      address: ""
     };
   }
 
@@ -19,10 +20,12 @@ class UserInput extends Component {
             marginLeft: "auto",
             marginRight: "auto",
             width: "55%",
-            textAlign: "center",
+            textAlign: "center"
           }}
         >
-          <div id="geocoder"></div>
+          <div style={{ display: "flex", justifyContent: "center" }}>
+            <div id="geocoder"></div>
+          </div>
         </div>
       </div>
     );

@@ -2,6 +2,15 @@ import React, { Component } from "react";
 import FormError from "./FormError";
 import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import carMake from "./Data/CarMake.json";
+import carModels from "./Data/CarModels.json";
+
+console.log("make: ", carMake);
+console.log("models: ", carModels);
+
+const years = Array.from(new Array(80), (val, index) =>
+  (2020 - index).toString()
+);
 
 class VehicleDetails extends Component {
   constructor(props) {
@@ -19,17 +28,18 @@ class VehicleDetails extends Component {
       color: "",
       finalRegistrationInfo: {},
       toConfirmation: false,
-      errorMessage: null,
+      errorMessage: null
     };
-    const year = new Date().getFullYear();
-    this.years = Array.from(new Array(20), (val, index) => index + year);
+
     this.handleSelect = this.handleSelect.bind(this);
     this.handleChange = this.handleChange.bind(this); //constructor <-handle change
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
   handleSelect(e) {
-    e.target.name = e.target.value;
+    this.setState({
+      make: e.target.value
+    });
   }
 
   handleChange(e) {
@@ -39,7 +49,6 @@ class VehicleDetails extends Component {
     const itemValue = e.target.value;
 
     this.setState({ [itemName]: itemValue });
-    console.log("name: ", itemName, "value: ", itemValue);
   }
 
   handleSubmit(e) {
@@ -54,11 +63,12 @@ class VehicleDetails extends Component {
       vehicleMake: this.state.make,
       vehicleModel: this.state.model,
       vehicleYear: this.state.year,
-      vehicleColor: this.state.color,
+      vehicleColor: this.state.color
     };
+    console.log("registrationInfo: ", registrationInfo);
     this.setState({
-      toTransactionHandle: true,
-      finalRegistrationInfo: registrationInfo,
+      toConfirmation: true,
+      finalRegistrationInfo: registrationInfo
     });
     e.preventDefault();
   }
@@ -69,7 +79,7 @@ class VehicleDetails extends Component {
         <Redirect
           to={{
             pathname: "/confirmation",
-            state: this.state,
+            state: this.state.finalRegistrationInfo
           }}
         />
       );
@@ -87,7 +97,7 @@ class VehicleDetails extends Component {
               style={{
                 marginLeft: "auto",
                 marginRight: "auto",
-                width: "650px",
+                width: "650px"
               }}
             >
               <div className="card-body">
@@ -99,101 +109,56 @@ class VehicleDetails extends Component {
                     <FormError theMessage={this.state.errorMessage} />
                   ) : null}
                   <section className="col-sm-6 form-group">
-                    <label
-                      className="form-control-label sr-only"
-                      htmlFor="user"
-                    >
-                      Name
-                    </label>
                     <select
+                      name="state"
                       className="custom-select my-1 mr-sm-2"
-                      id="inlineFormCustomSelectPref"
                       value={this.state.make}
-                      onChange={this.handleChange}
+                      onChange={this.handleSelect}
                     >
-                      <option defaultValue="choose">Choose...</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      {carMake.map(car => (
+                        <option value={car}>{car}</option>
+                      ))}
                     </select>
                   </section>
                   <section className="col-sm-6 form-group">
-                    <label
-                      className="form-control-label sr-only"
-                      htmlFor="lname"
+                    <select
+                      name="state"
+                      className="custom-select my-1 mr-sm-2"
+                      value={this.state.year}
+                      onChange={this.handleSelect}
                     >
-                      Last Name
-                    </label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      id="lname"
-                      placeholder="Model"
-                      name="model"
-                      required
-                      value={this.state.model}
-                      onChange={this.handleChange}
-                    />
+                      {years.map(year => (
+                        <option value={year}>{year}</option>
+                      ))}
+                    </select>
                   </section>
                 </div>
 
                 <div className="form-row">
-                  {this.state.errorMessage !== null ? (
-                    <FormError theMessage={this.state.errorMessage} />
-                  ) : null}
                   <section className="col-sm-6 form-group">
-                    <label
-                      className="form-control-label sr-only"
-                      htmlFor="year"
-                    >
-                      Name
-                    </label>
                     <select
+                      name="state"
                       className="custom-select my-1 mr-sm-2"
-                      id="inlineFormCustomSelectPref"
-                      value={this.state.year}
-                      onChange={this.handleChange}
+                      value={this.state.make}
+                      onChange={this.handleSelect}
                     >
-                      <option defaultValue="choose">Choose...</option>
-                      <option value="1">One</option>
-                      <option value="2">Two</option>
-                      <option value="3">Three</option>
+                      {}
                     </select>
                   </section>
                   <section className="col-sm-6 form-group">
-                    <label
-                      className="form-control-label sr-only"
-                      htmlFor="lname"
+                    <select
+                      name="state"
+                      className="custom-select my-1 mr-sm-2"
+                      value={this.state.year}
+                      onChange={this.handleSelect}
                     >
-                      Last Name
-                    </label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      id="lname"
-                      placeholder="Model"
-                      name="model"
-                      required
-                      value={this.state.model}
-                      onChange={this.handleChange}
-                    />
+                      {years.map(year => (
+                        <option value={year}>{year}</option>
+                      ))}
+                    </select>
                   </section>
                 </div>
-                <section className="form-group">
-                  <label className="form-control-label sr-only" htmlFor="email">
-                    Email
-                  </label>
-                  <input
-                    className="form-control"
-                    type="email"
-                    id="email"
-                    placeholder="Email Address"
-                    required
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                  />
-                </section>
+
                 <section className="form-group">
                   <label
                     className="form-control-label sr-only"
@@ -205,7 +170,7 @@ class VehicleDetails extends Component {
                     className="form-control"
                     type="tel"
                     id="phonenumber"
-                    placeholder="123-456-7890"
+                    placeholder="phone number"
                     required
                     name="phonenumber"
                     value={this.state.phonenumber}
@@ -224,15 +189,64 @@ class VehicleDetails extends Component {
                     />
                   </section>
                   <section className="col-sm-6 form-group">
-                    <input
-                      className="form-control"
-                      type="text"
-                      required
+                    <select
                       name="state"
-                      placeholder="License State"
+                      className="custom-select my-1 mr-sm-2"
                       value={this.state.state}
-                      onChange={this.handleChange}
-                    />
+                      onChange={this.handleSelect}
+                    >
+                      <option value="AL">Alabama</option>
+                      <option value="AK">Alaska</option>
+                      <option value="AZ">Arizona</option>
+                      <option value="AR">Arkansas</option>
+                      <option value="CA">California</option>
+                      <option value="CO">Colorado</option>
+                      <option value="CT">Connecticut</option>
+                      <option value="DE">Delaware</option>
+                      <option value="DC">District of Columbia</option>
+                      <option value="FL">Florida</option>
+                      <option value="GA">Georgia</option>
+                      <option value="HI">Hawaii</option>
+                      <option value="ID">Idaho</option>
+                      <option value="IL">Illinois</option>
+                      <option value="IN">Indiana</option>
+                      <option value="IA">Iowa</option>
+                      <option value="KS">Kansas</option>
+                      <option value="KY">Kentucky</option>
+                      <option value="LA">Louisiana</option>
+                      <option value="ME">Maine</option>
+                      <option value="MD">Maryland</option>
+                      <option value="MA">Massachusetts</option>
+                      <option value="MI">Michigan</option>
+                      <option value="MN">Minnesota</option>
+                      <option value="MS">Mississippi</option>
+                      <option value="MO">Missouri</option>
+                      <option value="MT">Montana</option>
+                      <option value="NE">Nebraska</option>
+                      <option value="NV">Nevada</option>
+                      <option value="NH">New Hampshire</option>
+                      <option value="NJ">New Jersey</option>
+                      <option value="NM">New Mexico</option>
+                      <option value="NY">New York</option>
+                      <option value="NC">North Carolina</option>
+                      <option value="ND">North Dakota</option>
+                      <option value="OH">Ohio</option>
+                      <option value="OK">Oklahoma</option>
+                      <option value="OR">Oregon</option>
+                      <option value="PA">Pennsylvania</option>
+                      <option value="RI">Rhode Island</option>
+                      <option value="SC">South Carolina</option>
+                      <option value="SD">South Dakota</option>
+                      <option value="TN">Tennessee</option>
+                      <option value="TX">Texas</option>
+                      <option value="UT">Utah</option>
+                      <option value="VT">Vermont</option>
+                      <option value="VA">Virginia</option>
+                      <option value="WA">Washington</option>
+                      <option value="WV">West Virginia</option>
+                      <option value="WI">Wisconsin</option>
+                      <option value="WY">Wyoming</option>
+                    </select>
                   </section>
                 </div>
                 <div className="form-group text-right mb-0">
@@ -240,7 +254,7 @@ class VehicleDetails extends Component {
                     style={{
                       backgroundColor: "#1A2637",
                       borderColor: "white",
-                      fontFamily: "Roboto Slab",
+                      fontFamily: "Roboto Slab"
                     }}
                     type="submit"
                   >
