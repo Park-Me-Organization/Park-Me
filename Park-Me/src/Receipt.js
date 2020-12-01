@@ -19,6 +19,7 @@ class Receipt extends Component {
       errorMessage: null,
       qrcode: 'default'
     };
+    console.log(this.props.location.state)
 
     this.handleChange = this.handleChange.bind(this); //constructor <-handle change
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -141,46 +142,46 @@ class Receipt extends Component {
             <h3><u>Vehicle</u></h3>
           <p>
             Make:{" "}
-            {this.props.location.state.make}
+            {this.props.location.state.vehicleMake}
           </p>
           <p>
             model:{" "}
-            {(this.props.location.state.model)}
+            {(this.props.location.state.vehicleModel)}
           </p>
           <p>
             year:{" "}
-            {(this.props.location.state.year)}
+            {(this.props.location.state.vehicleYear)}
           </p>
           <p>
             Color:{" "}
-            {(this.props.location.state.color)}
+            {(this.props.location.state.vehicleColor)}
           </p>
           <p>
             License Plate:{" "}
-            {(this.props.location.state.plate)}
+            {(this.props.location.state.vehiclePlate)}
           </p>
           </div>
           <div style={{textAlign: "left", float: "left", marginLeft: "40px", marginRight: "auto", width: "30%"}}>
             <h3><u>Reservation</u></h3>
           <p>
             Name:{" "}
-            {this.props.location.state.parkingData.name}
+            {this.props.location.state.finalRegistrationInfo.parkingData.lotName}
           </p>
           <p>
             Hours:{" "}
-            {(this.props.location.state.parkingData.hours.open + ":00 to " + this.props.location.state.parkingData.hours.close)}
+            {(this.props.location.state.finalRegistrationInfo.parkingData.hours.open + ":00 to " + this.props.location.state.finalRegistrationInfo.parkingData.hours.close)}
           </p>
           <p>
             Address:{" "}
-            {(this.props.location.state.parkingData.address)}
+            {(this.props.location.state.finalRegistrationInfo.parkingData.address)}
           </p>
           <p>
             Price:{" "}
-            {(this.props.location.state.parkingData.price)}
+            {(this.props.location.state.finalRegistrationInfo.parkingData.price)}
           </p>
           <p>
             Reservation:{" "}
-            {(this.props.location.state.parkingData.startReservation+ " to " + this.props.location.state.parkingData.endReservation)}
+            {(this.props.location.state.finalRegistrationInfo.parkingData.startReservation+ " to " + this.props.location.state.finalRegistrationInfo.parkingData.endReservation)}
           </p>
           </div>
           </div>

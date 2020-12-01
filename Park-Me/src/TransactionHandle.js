@@ -40,9 +40,14 @@ class TransactionHandle extends Component {
       license: this.state.license,
       state: this.state.state,
       parkingData: this.props.location.state.parkingData,
+      vehicleMake: this.props.location.state.vehicleMake,
+      vehicleModel: this.props.location.state.vehicleModel,
+      vehicleYear: this.props.location.state.vehicleYear,
+      vehicleColor: this.props.location.state.vehicleColor,
+      vehiclePlate: this.props.location.state.vehiclePlate
     };
     this.setState({
-      toVehicleDetails: true,
+      toReceipt: true,
       finalRegistrationInfo: registrationInfo,
     });
     console.log(registrationInfo);
@@ -131,12 +136,12 @@ class TransactionHandle extends Component {
                   </label>
                   <input
                     className="form-control"
-                    type="email"
+                    type="text"
                     id="email"
-                    placeholder="Email Address"
+                    placeholder="Credit Card Number"
                     required
-                    name="email"
-                    value={this.state.email}
+                    name="number"
+                    value={this.state.number}
                     onChange={this.handleChange}
                   />
                 </section>
@@ -190,7 +195,7 @@ class TransactionHandle extends Component {
                     }}
                     type="submit"
                   >
-                    Register
+                    Confirm
                   </Button>
                 </div>
               </div>
