@@ -137,23 +137,23 @@ class Confirmation extends Component {
             <h3><u>Vehicle</u></h3>
           <p>
             Make:{" "}
-            {this.props.location.state.make}
+            {this.props.location.state.vehicleMake}
           </p>
           <p>
             model:{" "}
-            {(this.props.location.state.model)}
+            {(this.props.location.state.VehicleModel)}
           </p>
           <p>
             year:{" "}
-            {(this.props.location.state.year)}
+            {(this.props.location.state.vehicleYear)}
           </p>
           <p>
             Color:{" "}
-            {(this.props.location.state.color)}
+            {(this.props.location.state.vehicleColor)}
           </p>
           <p>
             License Plate:{" "}
-            {(this.props.location.state.plate)}
+            {(this.props.location.state.vehiclePlate)}
           </p>
           </div>
           <div style={{textAlign: "left", float: "left", marginLeft: "40px", marginRight: "auto", width: "30%"}}>
@@ -163,8 +163,9 @@ class Confirmation extends Component {
             {this.props.location.state.parkingData.name}
           </p>
           <p>
+            {console.log(this.props.location.state.parkingData.hours)}
             Hours:{" "}
-            {(this.props.location.state.parkingData.hours.open + ":00 to " + this.props.location.state.parkingData.hours.close)}
+            {(this.props.location.state.parkingData.hours.opening + ":00 to " + this.props.location.state.parkingData.hours.closing + ":00")}
           </p>
           <p>
             Address:{" "}
