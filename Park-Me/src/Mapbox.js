@@ -146,7 +146,7 @@ class Mapbox extends Component {
 
         new mapboxgl.Popup()
           .setLngLat(coordinates)
-          .setHTML("<h3>" + place_name + "</h3>" + "<p>" + address + "</p>")
+          .setHTML("<h3>" + place_name + "</h3>" + "<p>" + address + "</p><br><p>Price: $" + this.state.pData.price + "/hr</p>")
           .addTo(map);
       });
       // Change the cursor to a pointer when the mouse is over the places layer.
@@ -216,8 +216,9 @@ class Mapbox extends Component {
                 open: 6,
                 close: 20
               },
-              price: 5,
-              address: address
+              price: Math.floor((Math.random() * 11)+3),
+              address: address,
+              availablespots:  Math.floor((Math.random() * 16)) 
             };
 
             var description = `<h1>Hello World!</h1> 
@@ -229,14 +230,16 @@ class Mapbox extends Component {
               '<p id="popupDetails" >' +
               address +
               "</p>" +
-              '<p id="popupDetails"> 5 spots remaining </p>' +
+              '<p id="popupDetails">Price: $' + pData.price + '</p>' +
               '<div id="aContainer"><a style="background-color: #1A2637;border-color: white;font-family:"Roboto Slab";" class="btn btn-primary" href="/reserve"> RESERVE </a></div>';
             // var popup = new mapboxgl.Popup({ offset: 25 }).setHTML(description);
             var popup = new mapboxgl.Popup()
               .setLngLat([-96, 37.8])
               .setHTML(
                 `<h1 id="popupTitle"> ${marker.text.toUpperCase()} </h1><p id="popupDetails" >${address}</p><div id="aContainer">
-    <button style="background-color: #1A2637;font-family:"Roboto Slab";border-color: white;" Name="btn" class="btn btn-primary" ref=${
+                <p id="popupDetails">Available Spots: ${pData.availablespots}</p>
+                <p id="popupDetails">Price: $${pData.price}/hr </p>
+                <button style="background-color: #1A2637;font-family:"Roboto Slab";border-color: white;" Name="btn" class="btn btn-primary" ref=${
       self.buttonRef.current
     }>RESERVE</button></div>`
               )

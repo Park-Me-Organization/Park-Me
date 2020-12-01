@@ -1,8 +1,8 @@
 import React, {Component} from 'react';
 import firebase from './Firebase';
 import FormError from './FormError';
-import {navigate} from '@reach/router';
 import './App.css';
+import { Redirect } from "react-router-dom";
 
 class Login extends Component {
 
@@ -30,7 +30,12 @@ class Login extends Component {
         email: this.state.email,
         password : this.state.password
         }
-
+        
+        this.setState({
+          toHomePage: true,
+//          user: registrationInfo.user,
+        });
+        
         e.preventDefault();
         //push an authentication event into the fireabse database
 
@@ -54,7 +59,16 @@ class Login extends Component {
 
 
     render(){
-      
+      if (this.state.toHomePage === true) {
+        return (
+          <Redirect
+            to={{
+              pathname: "/",
+              state: this.state.user,
+            }}
+          />
+        );
+      }       
         return(
           <form className="main-form" style={{marginTop: "2%"}} onSubmit={this.handleSubmit}>
             <div className="container" style={{padding: "0px"}} >

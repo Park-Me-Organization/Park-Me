@@ -71,21 +71,7 @@ class Register extends Component {
             }
         });
     }
-            ///   
-            /* this.setState({
-                user: registrationInfo.user,
-              });
-            console.log("registrationInfo.user: ", registrationInfo.user);
-        })
-        .catch(error =>{
-            if (error.message !== null){
-                this.setState({errorMessage: error.message});
-            } else{
-                this.setState({errorMessage: null});
-            }
-        }); */
             
-    
     render(){ 
         if (this.state.toHomePage === true) {
             return (
