@@ -14,17 +14,23 @@ class Receipt extends Component {
       phonenumber: "",
       license: "",
       state: "",
-      finalRegistrationInfo: {},
-      toReceipt: false,
+      finalRegistrationInfo: this.props.location.state.finalRegistrationInfo,
+      toHome: false,
       errorMessage: null,
       qrcode: 'default'
     };
+    console.log(this.props.location.state.finalRegistrationInfo)
+
     console.log(this.props.location.state)
 
+    this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this); //constructor <-handle change
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  handleClick(e){
+    this.setState({toHome: true})
+  }
   handleChange(e) {
     //Collects the value for each item name
 
@@ -54,19 +60,18 @@ class Receipt extends Component {
   }
   
   render(qrcode) {
-    if (this.state.toReceipt === true) {
+    if (this.state.toHome === true) {
       return (
         <Redirect
           to={{
-            pathname: "/receipt",
-            state: this.state,
+            pathname: "/Park-Me"
           }}
         />
       );
     }
     function generateQRCode(qrcode) {
       var qrtext = qrcode;
-      console.log("qrcode:"+qrtext);
+      console.log("qrcode:", qrtext);
       var qr = new QRious({
         element: document.getElementById('qr-code'),
         size: 200,
@@ -107,7 +112,7 @@ class Receipt extends Component {
           }}
         >
           <h1 style={{ fontFamily: "Roboto Slab" }}>
-            Please Confirm Your Information
+            Thank You for Your Reservation!
           </h1>
           <canvas id="qr-code"></canvas>
 
@@ -117,48 +122,48 @@ class Receipt extends Component {
             <h3><u>About You</u></h3>
           <p>
             Name:{" "}
-            {(this.props.location.state.user).toUpperCase() +
+            {(this.props.location.state.finalRegistrationInfo.user).toUpperCase() +
               " " +
-              (this.props.location.state.lname).toUpperCase()}
+              (this.props.location.state.finalRegistrationInfo.lname).toUpperCase()}
           </p>
           <p>
             Email:{" "}
-            {(this.props.location.state.email)}
+            {(this.props.location.state.finalRegistrationInfo.email)}
           </p>
           <p>
             Phone Number:{" "}
-            {(this.props.location.state.phonenumber)}
+            {(this.props.location.state.finalRegistrationInfo.phonenumber)}
           </p>
           <p>
             License Number:{" "}
-            {(this.props.location.state.license)}
+            {(this.props.location.state.finalRegistrationInfo.license)}
           </p>
           <p>
             State:{" "}
-            {(this.props.location.state.state)}
+            {(this.props.location.state.finalRegistrationInfo.state)}
           </p>
           </div>
           <div style={{textAlign: "left", float: "left", marginLeft: "20px"}}>
             <h3><u>Vehicle</u></h3>
           <p>
             Make:{" "}
-            {this.props.location.state.vehicleMake}
+            {this.props.location.state.finalRegistrationInfo.vehicleMake}
           </p>
           <p>
             model:{" "}
-            {(this.props.location.state.vehicleModel)}
+            {(this.props.location.state.finalRegistrationInfo.vehicleModel)}
           </p>
           <p>
             year:{" "}
-            {(this.props.location.state.vehicleYear)}
+            {(this.props.location.state.finalRegistrationInfo.vehicleYear)}
           </p>
           <p>
             Color:{" "}
-            {(this.props.location.state.vehicleColor)}
+            {(this.props.location.state.finalRegistrationInfo.vehicleColor)}
           </p>
           <p>
             License Plate:{" "}
-            {(this.props.location.state.vehiclePlate)}
+            {(this.props.location.state.finalRegistrationInfo.vehiclePlate)}
           </p>
           </div>
           <div style={{textAlign: "left", float: "left", marginLeft: "40px", marginRight: "auto", width: "30%"}}>
@@ -169,7 +174,7 @@ class Receipt extends Component {
           </p>
           <p>
             Hours:{" "}
-            {(this.props.location.state.finalRegistrationInfo.parkingData.hours.open + ":00 to " + this.props.location.state.finalRegistrationInfo.parkingData.hours.close)}
+            {(this.props.location.state.finalRegistrationInfo.parkingData.hours.opening + ":00 am to " + (this.props.location.state.finalRegistrationInfo.parkingData.hours.closing -12) + ":00 pm")}
           </p>
           <p>
             Address:{" "}
@@ -177,7 +182,7 @@ class Receipt extends Component {
           </p>
           <p>
             Price:{" "}
-            {(this.props.location.state.finalRegistrationInfo.parkingData.price)}
+            {("$" + this.props.location.state.finalRegistrationInfo.parkingData.price + "/hr")}
           </p>
           <p>
             Reservation:{" "}
@@ -187,8 +192,7 @@ class Receipt extends Component {
           </div>
         </div>
         <div style={{marginLeft: "auto", marginRight: "auto"}}>
-        <Button className="btn btn-primary" name="fix" onClick={this.handleClick}>Need to Fix</Button>&nbsp;&nbsp;&nbsp;
-        <Button className="btn btn-primary" name="confirm" onClick={this.handleClick}>Confirm</Button>
+        <Button className="btn btn-primary" name="confirm" onClick={this.handleClick}>Back Home</Button>
         </div>
         
       </div>

@@ -15,10 +15,11 @@ class Confirmation extends Component {
       license: this.props.location.state.license,
       state: this.props.location.state.state,
       parkingData: this.props.location.state.parkingData,
-      vehicleMake: this.props.location.state.make,
-      vehicleModel: this.props.location.state.model,
-      vehicleYear: this.props.location.state.year,
-      vehicleColor: this.props.location.state.color,
+      vehicleMake: this.props.location.state.vehicleMake,
+      vehicleModel: this.props.location.state.vehicleModel,
+      vehicleYear: this.props.location.state.vehicleYear,
+      vehicleColor: this.props.location.state.vehicleColor,
+      vehiclePlate: this.props.location.state.vehiclePlate,
       vehiclePlate: this.props.location.state.plate, toTransactionHandle: false, toReservationDetails: false,
     };
     this.handleClick = this.handleClick.bind(this);
@@ -44,19 +45,25 @@ class Confirmation extends Component {
 
   handleSubmit(e) {
     var registrationInfo = {
-      user: this.state.user,
-      lname: this.state.lname,
-      email: this.state.email,
-      phonenumber: this.state.phonenumber,
-      license: this.state.license,
-      state: this.state.state,
-      parkingData: this.props.location.state.parkingData
+      user: this.props.location.state.user,
+      lname: this.props.location.state.lname,
+      email: this.props.location.state.email,
+      phonenumber: this.props.location.state.phonenumber,
+      license: this.props.location.state.license,
+      state: this.props.location.state.state,
+      parkingData: this.props.location.state.parkingData,
+      parkingData: this.props.location.state.parkingData,
+      vehicleMake: this.props.location.state.vehicleMake,
+      vehicleModel: this.props.location.state.vehicleModel,
+      vehicleYear: this.props.location.state.vehicleYear,
+      vehicleColor: this.props.location.state.vehicleColor,
+      vehiclePlate: this.props.location.state.vehiclePlate
     };
     this.setState({
       toVehicleDetails: true,
       finalRegistrationInfo: registrationInfo
     });
-    console.log(registrationInfo);
+    console.log("finalRegistrationInfo: ", this.state.finalRegistrationInfo);
     e.preventDefault();
   }
 
@@ -160,7 +167,7 @@ class Confirmation extends Component {
             <h3><u>Reservation</u></h3>
           <p>
             Name:{" "}
-            {this.props.location.state.parkingData.name}
+            {this.props.location.state.parkingData.lotName}
           </p>
           <p>
             {console.log(this.props.location.state.parkingData.hours)}

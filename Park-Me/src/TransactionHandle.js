@@ -13,7 +13,7 @@ class TransactionHandle extends Component {
       phonenumber: "",
       license: "",
       state: "",
-      finalRegistrationInfo: {},
+      finalRegistrationInfo: this.props.location.state.finalRegistrationInfo,
       toReceipt: false,
       errorMessage: null,
     };
@@ -33,12 +33,12 @@ class TransactionHandle extends Component {
 
   handleSubmit(e) {
     var registrationInfo = {
-      user: this.state.user,
-      lname: this.state.lname,
-      email: this.state.email,
-      phonenumber: this.state.phonenumber,
-      license: this.state.license,
-      state: this.state.state,
+      user: this.props.location.state.user,
+      lname: this.props.location.state.lname,
+      email: this.props.location.state.email,
+      phonenumber: this.props.location.state.phonenumber,
+      license: this.props.location.state.license,
+      state: this.props.location.state.state,
       parkingData: this.props.location.state.parkingData,
       vehicleMake: this.props.location.state.vehicleMake,
       vehicleModel: this.props.location.state.vehicleModel,
@@ -50,7 +50,7 @@ class TransactionHandle extends Component {
       toReceipt: true,
       finalRegistrationInfo: registrationInfo,
     });
-    console.log(registrationInfo);
+    console.log("finalRegistrationInfo: ", this.state.finalRegistrationInfo)
     e.preventDefault();
   }
 
@@ -75,7 +75,7 @@ class TransactionHandle extends Component {
           <div className="row">
             {console.log(
               "finalRegistrationInfo: ",
-              this.props.location.state.finalRegistrationInfo
+              this.props.location.state
             )}
             <div
               className="card bg-light"
@@ -145,32 +145,14 @@ class TransactionHandle extends Component {
                     onChange={this.handleChange}
                   />
                 </section>
-                <section className="form-group">
-                  <label
-                    className="form-control-label sr-only"
-                    htmlFor="phonenumber"
-                  >
-                    PhoneNumber
-                  </label>
-                  <input
-                    className="form-control"
-                    type="tel"
-                    id="phonenumber"
-                    placeholder="123-456-7890"
-                    required
-                    name="phonenumber"
-                    value={this.state.phonenumber}
-                    onChange={this.handleChange}
-                  />
-                </section>
                 <div className="form-row">
                   <section className="col-sm-6 form-group">
                     <input
                       className="form-control"
                       type="text"
-                      name="license"
-                      placeholder="License Number"
-                      value={this.state.license}
+                      name="sCode"
+                      placeholder="Security Code"
+                      value={this.state.sCode}
                       onChange={this.handleChange}
                     />
                   </section>
@@ -179,9 +161,9 @@ class TransactionHandle extends Component {
                       className="form-control"
                       type="text"
                       required
-                      name="state"
-                      placeholder="License State"
-                      value={this.state.state}
+                      name="zipcode"
+                      placeholder="Zipcode"
+                      value={this.state.zipcode}
                       onChange={this.handleChange}
                     />
                   </section>
