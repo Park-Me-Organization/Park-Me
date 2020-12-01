@@ -6,22 +6,33 @@ import Button from "react-bootstrap/Button";
 class Confirmation extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props.location.state.parkingData)
     this.state = {
-      user: "",
-      lname: "",
-      email: "",
-      phonenumber: "",
-      license: "",
-      state: "",
-      finalRegistrationInfo: {},
-      toTransactionHandle: false,
-      errorMessage: null,
+      user: this.props.location.state.user,
+      lname: this.props.location.state.lname,
+      email: this.props.location.state.email,
+      phonenumber: this.props.location.state.phonenumber,
+      license: this.props.location.state.license,
+      state: this.props.location.state.state,
+      parkingData: this.props.location.state.parkingData,
+      vehicleMake: this.props.location.state.make,
+      vehicleModel: this.props.location.state.model,
+      vehicleYear: this.props.location.state.year,
+      vehicleColor: this.props.location.state.color,
+      vehiclePlate: this.props.location.state.plate, toTransactionHandle: false, toReservationDetails: false,
     };
-
-    this.handleChange = this.handleChange.bind(this); //constructor <-handle change
-    this.handleSubmit = this.handleSubmit.bind(this);
+    this.handleClick = this.handleClick.bind(this);
   }
 
+  handleClick(e){
+    var itemName = e.target.name;
+
+    if(itemName == "fix"){
+      this.setState({toReservationDetails: true})
+    }else{
+      this.setState({toTransactionHandle: true})
+    }
+  }
   handleChange(e) {
     //Collects the value for each item name
 
@@ -39,11 +50,11 @@ class Confirmation extends Component {
       phonenumber: this.state.phonenumber,
       license: this.state.license,
       state: this.state.state,
-      parkingData: this.props.location.state.parkingData,
+      parkingData: this.props.location.state.parkingData
     };
     this.setState({
       toVehicleDetails: true,
-      finalRegistrationInfo: registrationInfo,
+      finalRegistrationInfo: registrationInfo
     });
     console.log(registrationInfo);
     e.preventDefault();
@@ -55,149 +66,127 @@ class Confirmation extends Component {
         <Redirect
           to={{
             pathname: "/TransactionHandle",
-            state: this.state,
+            state: this.state
           }}
         />
       );
-    }
+    }else if(this.state.toReservationDetails === true) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/reservationdetails",
+            state: this.state
+          }}
+        />
+      );
+        }
     return (
-      <form
-        className="main-form"
-        style={{ marginTop: "2%" }}
-        onSubmit={this.handleSubmit}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#1A2637",
+          maxWidth: "fit-content",
+          margin: "10px auto",
+          padding: "20px",
+          borderRadius: "10px"
+        }}
       >
-        <div className="container" style={{ padding: "0px" }}>
-          <div className="row">
-            {console.log(
-              "finalRegistrationInfo: ",
-              this.props.location.state.finalRegistrationInfo
-            )}
-            <div
-              className="card bg-light"
-              style={{
-                marginLeft: "auto",
-                marginRight: "auto",
-                width: "650px",
-              }}
-            >
-              <div className="card-body">
-                <h3 className="font-weight-light mb-3">
-                  Let's get some details
-                </h3>
-                <div className="form-row">
-                  {this.state.errorMessage !== null ? (
-                    <FormError theMessage={this.state.errorMessage} />
-                  ) : null}
-                  <section className="col-sm-6 form-group">
-                    <label
-                      className="form-control-label sr-only"
-                      htmlFor="user"
-                    >
-                      Name
-                    </label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      id="user"
-                      placeholder="First Name"
-                      name="user"
-                      required
-                      value={this.state.user}
-                      onChange={this.handleChange}
-                    />
-                  </section>
-                  <section className="col-sm-6 form-group">
-                    <label
-                      className="form-control-label sr-only"
-                      htmlFor="lname"
-                    >
-                      Last Name
-                    </label>
-                    <input
-                      className="form-control"
-                      type="text"
-                      id="lname"
-                      placeholder="Last Name"
-                      name="lname"
-                      required
-                      value={this.state.lname}
-                      onChange={this.handleChange}
-                    />
-                  </section>
-                </div>
-                <section className="form-group">
-                  <label className="form-control-label sr-only" htmlFor="email">
-                    Email
-                  </label>
-                  <input
-                    className="form-control"
-                    type="email"
-                    id="email"
-                    placeholder="Email Address"
-                    required
-                    name="email"
-                    value={this.state.email}
-                    onChange={this.handleChange}
-                  />
-                </section>
-                <section className="form-group">
-                  <label
-                    className="form-control-label sr-only"
-                    htmlFor="phonenumber"
-                  >
-                    PhoneNumber
-                  </label>
-                  <input
-                    className="form-control"
-                    type="tel"
-                    id="phonenumber"
-                    placeholder="123-456-7890"
-                    required
-                    name="phonenumber"
-                    value={this.state.phonenumber}
-                    onChange={this.handleChange}
-                  />
-                </section>
-                <div className="form-row">
-                  <section className="col-sm-6 form-group">
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="license"
-                      placeholder="License Number"
-                      value={this.state.license}
-                      onChange={this.handleChange}
-                    />
-                  </section>
-                  <section className="col-sm-6 form-group">
-                    <input
-                      className="form-control"
-                      type="text"
-                      required
-                      name="state"
-                      placeholder="License State"
-                      value={this.state.state}
-                      onChange={this.handleChange}
-                    />
-                  </section>
-                </div>
-                <div className="form-group text-right mb-0">
-                  <Button
-                    style={{
-                      backgroundColor: "#1A2637",
-                      borderColor: "white",
-                      fontFamily: "Roboto Slab",
-                    }}
-                    type="submit"
-                  >
-                    Register
-                  </Button>
-                </div>
-              </div>
-            </div>
+        <div
+          style={{
+            fontFamily: "Roboto Slab",
+            color: "white",
+            fontSize: "1.2rem",
+            margin: "20px 0",
+            textAlign: "center"
+          }}
+        >
+          <h1 style={{ fontFamily: "Roboto Slab" }}>
+            Please Confirm Your Information
+          </h1>
+          <hr style={{backgroundColor: "white"}}/>
+          <div style={{paddingLeft: "auto", paddingLeft: "10%"}}>
+          <div style={{textAlign: "left", float: "left"}}>
+            <h3><u>About You</u></h3>
+          <p>
+            Name:{" "}
+            {(this.props.location.state.user).toUpperCase() +
+              " " +
+              (this.props.location.state.lname).toUpperCase()}
+          </p>
+          <p>
+            Email:{" "}
+            {(this.props.location.state.email)}
+          </p>
+          <p>
+            Phone Number:{" "}
+            {(this.props.location.state.phonenumber)}
+          </p>
+          <p>
+            License Number:{" "}
+            {(this.props.location.state.license)}
+          </p>
+          <p>
+            State:{" "}
+            {(this.props.location.state.state)}
+          </p>
+          </div>
+          <div style={{textAlign: "left", float: "left", marginLeft: "20px"}}>
+            <h3><u>Vehicle</u></h3>
+          <p>
+            Make:{" "}
+            {this.props.location.state.make}
+          </p>
+          <p>
+            model:{" "}
+            {(this.props.location.state.model)}
+          </p>
+          <p>
+            year:{" "}
+            {(this.props.location.state.year)}
+          </p>
+          <p>
+            Color:{" "}
+            {(this.props.location.state.color)}
+          </p>
+          <p>
+            License Plate:{" "}
+            {(this.props.location.state.plate)}
+          </p>
+          </div>
+          <div style={{textAlign: "left", float: "left", marginLeft: "40px", marginRight: "auto", width: "30%"}}>
+            <h3><u>Reservation</u></h3>
+          <p>
+            Name:{" "}
+            {this.props.location.state.parkingData.name}
+          </p>
+          <p>
+            Hours:{" "}
+            {(this.props.location.state.parkingData.hours.open + ":00 to " + this.props.location.state.parkingData.hours.close)}
+          </p>
+          <p>
+            Address:{" "}
+            {(this.props.location.state.parkingData.address)}
+          </p>
+          <p>
+            Price:{" "}
+            {(this.props.location.state.parkingData.price)}
+          </p>
+          <p>
+            Reservation:{" "}
+            {(this.props.location.state.parkingData.startReservation+ " to " + this.props.location.state.parkingData.endReservation)}
+          </p>
+          </div>
           </div>
         </div>
-      </form>
+        <div style={{marginLeft: "auto", marginRight: "auto"}}>
+        <Button className="btn btn-primary" name="fix" onClick={this.handleClick}>Need to Fix</Button>&nbsp;&nbsp;&nbsp;
+        <Button className="btn btn-primary" name="confirm" onClick={this.handleClick}>Confirm</Button>
+        </div>
+        
+      </div>
     );
   }
 }

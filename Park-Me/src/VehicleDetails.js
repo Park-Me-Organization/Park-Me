@@ -15,17 +15,19 @@ const years = Array.from(new Array(80), (val, index) =>
 class VehicleDetails extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props.location.state);
     this.state = {
-      user: "",
-      lname: "",
-      email: "",
-      phonenumber: "",
-      license: "",
-      state: "",
+      user: this.props.location.state.user,
+      lname: this.props.location.state.lname,
+      email: this.props.location.state.email,
+      phonenumber: this.props.location.state.phonenumber,
+      license: this.props.location.state.license,
+      state: this.props.location.state.state,
       make: "",
       model: "",
       year: "",
       color: "",
+      plate: "",
       finalRegistrationInfo: {},
       toConfirmation: false,
       errorMessage: null
@@ -63,7 +65,8 @@ class VehicleDetails extends Component {
       vehicleMake: this.state.make,
       vehicleModel: this.state.model,
       vehicleYear: this.state.year,
-      vehicleColor: this.state.color
+      vehicleColor: this.state.color,
+      vehiclePlate: this.state.plate
     };
     console.log("registrationInfo: ", registrationInfo);
     this.setState({
@@ -138,24 +141,45 @@ class VehicleDetails extends Component {
                   <section className="col-sm-6 form-group">
                     <select
                       name="state"
-                      className="custom-select my-1 mr-sm-2"
-                      value={this.state.make}
-                      onChange={this.handleSelect}
-                    >
-                      {}
-                    </select>
-                  </section>
-                  <section className="col-sm-6 form-group">
-                    <select
-                      name="state"
-                      className="custom-select my-1 mr-sm-2"
+                      className="custom-select mr-sm-2"
                       value={this.state.year}
                       onChange={this.handleSelect}
                     >
-                      {years.map(year => (
+                      {console.log(this.state.make)}
+                      {this.state.make != null
+                        ? carModels.forEach(make => {
+                            if (this.state.make === make["brand"]) {
+                              make["models"].map(model => (
+                                <option value={model}>{model}</option>
+                              ));
+                            }
+                          })
+                        : this.setState({
+                            error: "please select a make first"
+                          })}
+                      {/* {years.map(year => (
                         <option value={year}>{year}</option>
-                      ))}
+                      ))} */}
                     </select>
+                  </section>
+
+                  <section className="form-group col-sm-6">
+                    <label
+                      className="form-control-label sr-only"
+                      htmlFor="phonenumber"
+                    >
+                      color
+                    </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      id="phonenumber"
+                      placeholder="Color"
+                      required
+                      name="color"
+                      value={this.state.color}
+                      onChange={this.handleChange}
+                    />
                   </section>
                 </div>
 
@@ -168,87 +192,16 @@ class VehicleDetails extends Component {
                   </label>
                   <input
                     className="form-control"
-                    type="tel"
-                    id="phonenumber"
-                    placeholder="phone number"
+                    type="text"
+                    id="LicensePlateNumber"
+                    placeholder="License Plate Number"
                     required
-                    name="phonenumber"
-                    value={this.state.phonenumber}
+                    name="plate"
+                    value={this.state.plate}
                     onChange={this.handleChange}
                   />
                 </section>
-                <div className="form-row">
-                  <section className="col-sm-6 form-group">
-                    <input
-                      className="form-control"
-                      type="text"
-                      name="license"
-                      placeholder="License Number"
-                      value={this.state.license}
-                      onChange={this.handleChange}
-                    />
-                  </section>
-                  <section className="col-sm-6 form-group">
-                    <select
-                      name="state"
-                      className="custom-select my-1 mr-sm-2"
-                      value={this.state.state}
-                      onChange={this.handleSelect}
-                    >
-                      <option value="AL">Alabama</option>
-                      <option value="AK">Alaska</option>
-                      <option value="AZ">Arizona</option>
-                      <option value="AR">Arkansas</option>
-                      <option value="CA">California</option>
-                      <option value="CO">Colorado</option>
-                      <option value="CT">Connecticut</option>
-                      <option value="DE">Delaware</option>
-                      <option value="DC">District of Columbia</option>
-                      <option value="FL">Florida</option>
-                      <option value="GA">Georgia</option>
-                      <option value="HI">Hawaii</option>
-                      <option value="ID">Idaho</option>
-                      <option value="IL">Illinois</option>
-                      <option value="IN">Indiana</option>
-                      <option value="IA">Iowa</option>
-                      <option value="KS">Kansas</option>
-                      <option value="KY">Kentucky</option>
-                      <option value="LA">Louisiana</option>
-                      <option value="ME">Maine</option>
-                      <option value="MD">Maryland</option>
-                      <option value="MA">Massachusetts</option>
-                      <option value="MI">Michigan</option>
-                      <option value="MN">Minnesota</option>
-                      <option value="MS">Mississippi</option>
-                      <option value="MO">Missouri</option>
-                      <option value="MT">Montana</option>
-                      <option value="NE">Nebraska</option>
-                      <option value="NV">Nevada</option>
-                      <option value="NH">New Hampshire</option>
-                      <option value="NJ">New Jersey</option>
-                      <option value="NM">New Mexico</option>
-                      <option value="NY">New York</option>
-                      <option value="NC">North Carolina</option>
-                      <option value="ND">North Dakota</option>
-                      <option value="OH">Ohio</option>
-                      <option value="OK">Oklahoma</option>
-                      <option value="OR">Oregon</option>
-                      <option value="PA">Pennsylvania</option>
-                      <option value="RI">Rhode Island</option>
-                      <option value="SC">South Carolina</option>
-                      <option value="SD">South Dakota</option>
-                      <option value="TN">Tennessee</option>
-                      <option value="TX">Texas</option>
-                      <option value="UT">Utah</option>
-                      <option value="VT">Vermont</option>
-                      <option value="VA">Virginia</option>
-                      <option value="WA">Washington</option>
-                      <option value="WV">West Virginia</option>
-                      <option value="WI">Wisconsin</option>
-                      <option value="WY">Wyoming</option>
-                    </select>
-                  </section>
-                </div>
+
                 <div className="form-group text-right mb-0">
                   <Button
                     style={{

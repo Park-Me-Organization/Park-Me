@@ -57,11 +57,20 @@ class ReservationDetails extends React.Component {
     this.setState({
       toUserInfo: true,
       finalRegistrationInfo: {
-        name: this.props.location.state.parkingData.name,
+        parkingData:{
+          lotName: this.props.location.state.parkingData.name,
         hours: this.props.location.state.parkingData.hours,
         address: this.props.location.state.parkingData.address,
-        startReservation: this.state.selectedInterval[0],
-        endReservation: this.state.selectedInterval[1]
+        startReservation: format(
+          this.state.selectedInterval[0],
+          " MMM dd, hh:mm a"
+        ),
+        endReservation: format(
+          this.state.selectedInterval[1],
+          " MMM dd, hh:mm a"
+        ), price: this.props.location.state.parkingData.price
+        }
+        
       }
     });
   }

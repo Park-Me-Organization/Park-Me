@@ -216,6 +216,7 @@ class Mapbox extends Component {
                 open: 6,
                 close: 20
               },
+              price: 5,
               address: address
             };
 

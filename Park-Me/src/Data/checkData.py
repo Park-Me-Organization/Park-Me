@@ -6,9 +6,10 @@ with open('/Users/Nadimkabir/Documents/Park-Me/Park-Me/Park-Me/src/Data/CarModel
 with open('/Users/Nadimkabir/Documents/Park-Me/Park-Me/Park-Me/src/Data/CarMake.json') as f:
  make = json.load(f)
 
-for m in model:
- print(m[brand], "\n")
+#for i in range(len(model)):
+# print(model[i], "\n\n\n\n\n")
 
+print(model[0]['models'])
 #print("\nmake: ", make, "\n\n")
 #print("\nmodel: ", model, "\n\n")
 

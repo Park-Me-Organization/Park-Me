@@ -6,7 +6,8 @@ import { getMatches, isValid } from "driver-license-validator";
 
 var validation = function(inputString, regex, me) {
   var alpha = true;
-  if (regex == "license") {
+  console.log("regex: ", regex);
+  if (regex === "license") {
     console.log("inside license: ", inputString);
     return isValid(inputString);
   }
@@ -52,17 +53,29 @@ class UserInfo extends Component {
 
     this.setState({ [itemName]: itemValue });
     var me = this;
-    if (validation(this.state.user, /^[a-zA-Z -]*$/i) == false) {
+    if (
+      validation(this.state.user, /^[a-zA-Z -]*$/i) == false &&
+      itemName == "user"
+    ) {
+      console.log("first | ", itemName);
       this.setState({
         errorMessage:
           'Incorrect format for First Name. Only Letters, spaces " ", and hyphens "-" are accepted.'
       });
-    } else if (validation(this.state.lname, /^[a-zA-Z -]*$/i) == false) {
+    } else if (
+      validation(this.state.lname, /^[a-zA-Z -]*$/i) == false &&
+      itemName == "lname"
+    ) {
+      console.log("second | ", itemName);
       this.setState({
         errorMessage:
           'Incorrect format for Last Name. Only Letters, spaces " ", and hyphens "-" are accepted.'
       });
-    } else if (validation(this.state.license, "license", me) == false) {
+    } else if (
+      validation(this.state.license, "license", me) == false &&
+      itemName == "license"
+    ) {
+      console.log("third | ", itemName);
       this.setState({
         errorMessage:
           'Incorrect format for License. Only Letters, spaces " ", and hyphens "-" are accepted.'
