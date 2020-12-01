@@ -20,7 +20,7 @@ class App extends Component {
     this.state = {
       //state object
       user: null,
-      displayName: null,
+     // displayName: null,
       userID: null,
     };
   }
@@ -28,10 +28,9 @@ class App extends Component {
   componentDidMount() {
     firebase.auth().onAuthStateChanged((FBUser) => {
       if (FBUser) {
-        console.log(FBUser);
+        console.log("Firebase User"+ FBUser.displayName);
+        console.log("Firebase User"+ this.state.user);
         this.setState({
-          //this statement needs review
-          // user: FBUser,
           user: FBUser.displayName,
           userID: FBUser.uid,
         });
@@ -45,8 +44,8 @@ class App extends Component {
         displayName: userName,
       }).then(() => {
         this.setState({
-          user: FBUser,
-          displayName: FBUser.displayName,
+          user: FBUser.displayName,
+        //  displayName: FBUser.displayName,
           userID: FBUser.uid,
         });
         navigate("/");
@@ -78,12 +77,12 @@ class App extends Component {
             <Navigation user={this.state.user} logOutUser={this.logOutUser} />
           </div>
           <Switch>
-            <Route exact path="/" component={Mapbox} />
+            <Route exact path="/" component={Mapbox} render={(props) => <Reserve {...props} />} />
             <Route path="/login" component={Login} user={this.state.user} />
             <Route
               path="/register"
               component={Register}
-              registerUser={this.registerUser}
+              registerUser={this.state.user}
             />
             <Route path="/reserve" render={(props) => <Reserve {...props} />} />
             <Route
