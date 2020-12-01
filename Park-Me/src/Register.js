@@ -1,9 +1,10 @@
 import React, {Component} from 'react';
 import FormError from './FormError';
 import firebase from './Firebase'
+import { Redirect } from "react-router-dom";
+
 
 class Register extends Component {
-
     constructor(props) {
         super(props);
         this.state = {
@@ -44,6 +45,11 @@ class Register extends Component {
         phonenumber : this.state.phonenumber,
         passOne : this.state.passOne
         }
+        console.log("registrationInfo: ", registrationInfo);
+        this.setState({
+            toHomePage: true,
+            user: registrationInfo.user,
+          });
         e.preventDefault();
         
         //push an authentication event into the fireabse database        
@@ -53,20 +59,44 @@ class Register extends Component {
             registrationInfo.email,
             registrationInfo.passOne
         )
-        .then(()=> {
-            this.props.registerUser(registrationInfo.user);
+        .then(function() {
+            if (firebase.auth().currentUser != null) {
+                firebase.auth().currentUser.updateProfile({
+                    displayName: registrationInfo.user
+                }).then(function() { 
+                    console.log("Updated");
+                }, function (error){
+                    console.log("Error happened");
+                });
+            }
+        });
+    }
+            ///   
+            /* this.setState({
+                user: registrationInfo.user,
+              });
+            console.log("registrationInfo.user: ", registrationInfo.user);
         })
         .catch(error =>{
             if (error.message !== null){
                 this.setState({errorMessage: error.message});
             } else{
-                
                 this.setState({errorMessage: null});
             }
-        });
-    }
+        }); */
+            
     
-    render(){        
+    render(){ 
+        if (this.state.toHomePage === true) {
+            return (
+              <Redirect
+                to={{
+                  pathname: "/",
+                  state: this.state.user,
+                }}
+              />
+            );
+          }       
         return (
             <form className="main-form" style={{marginTop: "2%"}} onSubmit={this.handleSubmit}>
                 <div className="container" style={{padding: "0px"}}>

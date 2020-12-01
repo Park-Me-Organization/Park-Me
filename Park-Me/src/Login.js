@@ -41,7 +41,6 @@ class Login extends Component {
             registrationInfo.password
         )
         .then(()=>{
-            navigate('/');
         })
         .catch(error =>{
             if (error.message !== null){
@@ -55,6 +54,7 @@ class Login extends Component {
 
 
     render(){
+      
         return(
           <form className="main-form" style={{marginTop: "2%"}} onSubmit={this.handleSubmit}>
             <div className="container" style={{padding: "0px"}} >
