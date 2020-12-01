@@ -213,14 +213,13 @@ class Mapbox extends Component {
             var pData = {
               name: marker.text.toUpperCase(),
               hours: {
-                open: 6,
-                close: 20
+                opening: Math.floor((Math.random() * 3)+7),
+                closing: Math.floor((Math.random() * 5)+5)
               },
               price: Math.floor((Math.random() * 11)+3),
               address: address,
               availablespots:  Math.floor((Math.random() * 16)),
-              opening: Math.floor((Math.random() * 3)+7), //7 TO 10 AM
-              closing: Math.floor((Math.random() * 5)+5)  //5 TO 10 PM
+    
             };
 
             var description = `<h1>Hello World!</h1> 
@@ -238,10 +237,10 @@ class Mapbox extends Component {
             var popup = new mapboxgl.Popup()
               .setLngLat([-96, 37.8])
               .setHTML(
-                `<h1 id="popupTitle"> ${marker.text.toUpperCase()} </h1><p id="popupDetails" >${address}</p><div id="aContainer">
-                <p id="popupDetails">Available Spots: ${pData.availablespots}</p>
+                `<h1 id="popupTitle"> ${marker.text.toUpperCase()} </h1><p id="popupDetails" >${address}</p><p id="popupDetails">Available Spots: ${pData.availablespots}</p>
                 <p id="popupDetails">Price: $${pData.price}/hr </p>
-                <p id="popupDetails">Hours: ${pData.opening}AM-${pData.closing}PM</p>
+                <p id="popupDetails">Hours: ${pData.hours.opening}AM-${pData.hours.closing}PM</p><div id="aContainer">
+                
 
                 <button style="background-color: #1A2637;font-family:"Roboto Slab";border-color: white;" Name="btn" class="btn btn-primary" ref=${
       self.buttonRef.current
@@ -259,8 +258,15 @@ class Mapbox extends Component {
               .getElement()
               .addEventListener("click", () => {
                 self.setState({
-                  pData: pData
-                });
+                  pData: {name: pData.name,
+                    hours: {
+                      opening: pData.hours.opening,
+                      closing: pData.hours.closing +12,
+                    },
+                    price: pData.price,
+                    address: pData.address,
+                    availablespots:  pData.availablespots,
+                }});
               });
           });
         });
@@ -271,12 +277,14 @@ class Mapbox extends Component {
   render() {
     if (this.state.toReservationDetails === true) {
       return (
+        <div>{console.log("pData: ", this.state.pData)}
         <Redirect
-          to={{
-            pathname: "/reservationdetails",
-            state: { parkingData: this.state.pData }
-          }}
-        />
+        to={{
+          pathname: "/reservationdetails",
+          state: { parkingData: this.state.pData }
+        }}
+      /></div>
+        
       );
     }
     return (

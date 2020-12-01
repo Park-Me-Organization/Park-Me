@@ -15,25 +15,25 @@ const timelineInterval = [
 class ReservationDetails extends React.Component {
   constructor(props) {
     super(props);
-    console.log(this.props.location.state);
+    console.log(this.props.location.state.parkingData);
     this.state = {
       error: false,
       disabledIntervals: [
         {
           start: getTodayAtSpecificHour(0),
           end: getTodayAtSpecificHour(
-            this.props.location.state.parkingData.hours.open
+            this.props.location.state.parkingData.hours.opening
           )
         },
         {
           start: getTodayAtSpecificHour(
-            this.props.location.state.parkingData.hours.open
+            this.props.location.state.parkingData.hours.opening
           ),
           end: getTodayAtSpecificHour(now.getHours())
         },
         {
           start: getTodayAtSpecificHour(
-            this.props.location.state.parkingData.hours.close
+            this.props.location.state.parkingData.hours.closing
           ),
           end: getTodayAtSpecificHour(24)
         }
