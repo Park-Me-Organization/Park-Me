@@ -23,7 +23,6 @@ var validation = function(inputString, regex, me) {
 class UserInfo extends Component {
   constructor(props) {
     super(props);
-    console.log("here");
     this.state = {
       user: "",
       lname: "",

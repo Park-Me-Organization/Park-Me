@@ -2,6 +2,7 @@ import { set } from "date-fns";
 import React from "react";
 import { format } from "date-fns";
 import TimeRange from "react-timeline-range-slider";
+import { Redirect } from "react-router-dom";
 
 const now = new Date();
 const getTodayAtSpecificHour = (hour = 9) =>
@@ -37,15 +38,45 @@ class ReservationDetails extends React.Component {
           end: getTodayAtSpecificHour(24)
         }
       ],
-      selectedInterval: [getTodayAtSpecificHour(), getTodayAtSpecificHour(15)]
+      selectedInterval: [getTodayAtSpecificHour(), getTodayAtSpecificHour(15)],
+      toUserInfo: false,
+      finalRegistrationInfo: {
+        name: this.props.location.state.parkingData.name,
+        hours: this.props.location.state.parkingData.hours,
+        address: this.props.location.state.parkingData.address
+      }
     };
+    this.handleClick = this.handleClick.bind(this);
   }
 
   errorHandler = ({ error }) => this.setState({ error });
   onChangeCallback = selectedInterval =>
     this.setState({ selectedInterval }, () => {});
 
+  handleClick(e) {
+    this.setState({
+      toUserInfo: true,
+      finalRegistrationInfo: {
+        name: this.props.location.state.parkingData.name,
+        hours: this.props.location.state.parkingData.hours,
+        address: this.props.location.state.parkingData.address,
+        startReservation: this.state.selectedInterval[0],
+        endReservation: this.state.selectedInterval[1]
+      }
+    });
+  }
+
   render() {
+    if (this.state.toUserInfo === true) {
+      return (
+        <Redirect
+          to={{
+            pathname: "/userinfo",
+            state: this.state.finalRegistrationInfo
+          }}
+        />
+      );
+    }
     return (
       <div
         style={{
@@ -92,6 +123,7 @@ class ReservationDetails extends React.Component {
             marginTop: "40px",
             width: "300px"
           }}
+          onClick={this.handleClick}
         >
           Submit
         </button>
