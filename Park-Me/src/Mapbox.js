@@ -28,14 +28,14 @@ class Mapbox extends Component {
       currPage: "Search",
       curLat: 0.0,
       curLng: 0.0,
-      toReserve: false
+      toReservationDetails: false
     };
     this.handleClick = this.handleClick.bind(this);
     this.buttonRef = React.createRef();
   }
 
   handleClick() {
-    this.setState({ toReserve: true });
+    this.setState({ toReservationDetails: true });
   }
   componentDidMount(props) {
     mapboxgl.accessToken =
@@ -212,6 +212,10 @@ class Mapbox extends Component {
 
             var pData = {
               name: marker.text.toUpperCase(),
+              hours: {
+                open: 6,
+                close: 20
+              },
               address: address
             };
 
@@ -231,7 +235,7 @@ class Mapbox extends Component {
               .setLngLat([-96, 37.8])
               .setHTML(
                 `<h1 id="popupTitle"> ${marker.text.toUpperCase()} </h1><p id="popupDetails" >${address}</p><div id="aContainer">
-    <button style="background-color: #1A2637;font-family:"Roboto Slab";border-color: white;;" Name="btn" class="btn btn-primary" ref=${
+    <button style="background-color: #1A2637;font-family:"Roboto Slab";border-color: white;" Name="btn" class="btn btn-primary" ref=${
       self.buttonRef.current
     }>RESERVE</button></div>`
               )
@@ -247,7 +251,7 @@ class Mapbox extends Component {
               .getElement()
               .addEventListener("click", () => {
                 self.setState({
-                  parkingData: pData
+                  pData: pData
                 });
               });
           });
@@ -257,12 +261,12 @@ class Mapbox extends Component {
   }
 
   render() {
-    if (this.state.toReserve === true) {
+    if (this.state.toReservationDetails === true) {
       return (
         <Redirect
           to={{
-            pathname: "/reserve",
-            state: { parkingData: this.state.parkingData }
+            pathname: "/reservationdetails",
+            state: { parkingData: this.state.pData }
           }}
         />
       );

@@ -5,8 +5,8 @@ import Button from "react-bootstrap/Button";
 import carMake from "./Data/CarMake.json";
 import carModels from "./Data/CarModels.json";
 
-console.log("make: ", carMake);
-console.log("models: ", carModels);
+// console.log("make: ", carMake);
+// console.log("models: ", carModels);
 
 const years = Array.from(new Array(80), (val, index) =>
   (2020 - index).toString()

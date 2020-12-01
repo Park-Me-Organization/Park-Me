@@ -28,6 +28,7 @@
     "react-map-gl": "^5.2.9",
     "react-router-dom": "^5.2.0",
     "react-scripts": "3.4.3",
+    "react-timeline-range-slider": "^1.1.2",
     "request": "^2.88.2",
     "search-google-place": "^1.1.0"
   },

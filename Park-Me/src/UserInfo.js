@@ -20,7 +20,7 @@ var validation = function(inputString, regex, me) {
   return alpha;
 };
 
-class Reserve extends Component {
+class UserInfo extends Component {
   constructor(props) {
     super(props);
     console.log("here");
@@ -291,6 +291,6 @@ class Reserve extends Component {
   }
 }
 
-export default Reserve;
+export default UserInfo;
 
 //first&last name: /^[a-zA-Z -]*$/i

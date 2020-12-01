@@ -8,11 +8,12 @@ import Navigation from "./Navigation";
 import Login from "./Login";
 import Mapbox from "./Mapbox";
 import Register from "./Register";
-import Reserve from "./Reserve";
+import UserInfo from "./UserInfo";
 import VehicleDetails from "./VehicleDetails";
 import TransactionHandle from "./TransactionHandle.js";
 import Receipt from "./Receipt.js";
 import Confirmation from "./Confirmation.js";
+import ReservationDetails from "./ReservationDetails.js";
 
 class App extends Component {
   constructor() {
@@ -21,45 +22,45 @@ class App extends Component {
       //state object
       user: null,
       displayName: null,
-      userID: null,
+      userID: null
     };
   }
 
   componentDidMount() {
-    firebase.auth().onAuthStateChanged((FBUser) => {
+    firebase.auth().onAuthStateChanged(FBUser => {
       if (FBUser) {
         console.log(FBUser);
         this.setState({
           //this statement needs review
           // user: FBUser,
           user: FBUser.displayName,
-          userID: FBUser.uid,
+          userID: FBUser.uid
         });
       }
     });
   }
 
-  registerUser = (userName) => {
-    firebase.auth().onAuthStateChanged((FBUser) => {
+  registerUser = userName => {
+    firebase.auth().onAuthStateChanged(FBUser => {
       FBUser.updateProfile({
-        displayName: userName,
+        displayName: userName
       }).then(() => {
         this.setState({
           user: FBUser,
           displayName: FBUser.displayName,
-          userID: FBUser.uid,
+          userID: FBUser.uid
         });
         navigate("/");
       });
     });
   };
 
-  logOutUser = (e) => {
+  logOutUser = e => {
     e.preventDefault();
     this.setState({
       displayName: null,
       userID: null,
-      user: null,
+      user: null
     });
 
     firebase
@@ -78,27 +79,31 @@ class App extends Component {
             <Navigation user={this.state.user} logOutUser={this.logOutUser} />
           </div>
           <Switch>
-            <Route exact path="/" component={Mapbox} />
+            <Route exact path="/Park-Me" component={Mapbox} />
             <Route path="/login" component={Login} user={this.state.user} />
             <Route
               path="/register"
               component={Register}
               registerUser={this.registerUser}
             />
-            <Route path="/reserve" render={(props) => <Reserve {...props} />} />
+            <Route
+              path="/reservationdetails"
+              render={props => <ReservationDetails {...props} />}
+            />
+            <Route path="/userinfo" render={props => <UserInfo {...props} />} />
             <Route
               path="/vehicleDetails"
-              render={(props) => <VehicleDetails {...props} />}
+              render={props => <VehicleDetails {...props} />}
             />
             <Route
               path="/confirmation"
-              render={(props) => <Confirmation {...props} />}
+              render={props => <Confirmation {...props} />}
             />
             <Route
               path="/transactionHandle"
-              render={(props) => <TransactionHandle {...props} />}
+              render={props => <TransactionHandle {...props} />}
             />
-            <Route path="/receipt" render={(props) => <Receipt {...props} />} />
+            <Route path="/receipt" render={props => <Receipt {...props} />} />
           </Switch>
         </BrowserRouter>
       </div>

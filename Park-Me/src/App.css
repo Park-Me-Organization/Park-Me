@@ -214,3 +214,8 @@ a:hover {
   clear: both;
   visibility: hidden;
 }
+
+.react_time_range__tick_label {
+  font-family: "Roboto Slab";
+  color: black;
+}
