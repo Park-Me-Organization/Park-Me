@@ -77,7 +77,7 @@ class Register extends Component {
             return (
               <Redirect
                 to={{
-                  pathname: "/",
+                  pathname: "/Park-Me",
                   state: this.state.user,
                 }}
               />

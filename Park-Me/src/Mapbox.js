@@ -218,7 +218,9 @@ class Mapbox extends Component {
               },
               price: Math.floor((Math.random() * 11)+3),
               address: address,
-              availablespots:  Math.floor((Math.random() * 16)) 
+              availablespots:  Math.floor((Math.random() * 16)),
+              opening: Math.floor((Math.random() * 3)+7), //7 TO 10 AM
+              closing: Math.floor((Math.random() * 5)+5)  //5 TO 10 PM
             };
 
             var description = `<h1>Hello World!</h1> 
@@ -239,6 +241,8 @@ class Mapbox extends Component {
                 `<h1 id="popupTitle"> ${marker.text.toUpperCase()} </h1><p id="popupDetails" >${address}</p><div id="aContainer">
                 <p id="popupDetails">Available Spots: ${pData.availablespots}</p>
                 <p id="popupDetails">Price: $${pData.price}/hr </p>
+                <p id="popupDetails">Hours: ${pData.opening}AM-${pData.closing}PM</p>
+
                 <button style="background-color: #1A2637;font-family:"Roboto Slab";border-color: white;" Name="btn" class="btn btn-primary" ref=${
       self.buttonRef.current
     }>RESERVE</button></div>`
