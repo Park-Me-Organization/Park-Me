@@ -3,8 +3,18 @@ import FormError from './FormError';
 import firebase from './Firebase'
 import { Redirect } from "react-router-dom";
 
+var database = firebase.database();
+var ref = database.ref('users');
+var data = {
+    DB_user: "",
+    DB_lname: "",
+    DB_email: "",
+    DB_phonenumber: "",
+    DB_userID: ""
+}
 
 class Register extends Component {
+    
     constructor(props) {
         super(props);
         this.state = {
@@ -14,7 +24,9 @@ class Register extends Component {
             phonenumber:'',
             passOne: '',
             passTwo: '',
-            errorMessage: null
+            userid: '',
+            errorMessage: null,
+           
             };
             
         this.handleChange = this.handleChange.bind(this); //constructor <-handle change
@@ -45,7 +57,13 @@ class Register extends Component {
         phonenumber : this.state.phonenumber,
         passOne : this.state.passOne
         }
-        console.log("registrationInfo: ", registrationInfo);
+        
+        data.DB_user = this.state.user;
+        data.DB_lname = this.state.lname;
+        data.DB_email = this.state.email;
+        data.DB_phonenumber = this.state.phonenumber;
+        
+        
         this.setState({
             toHomePage: true,
             user: registrationInfo.user,
@@ -64,9 +82,17 @@ class Register extends Component {
                 firebase.auth().currentUser.updateProfile({
                     displayName: registrationInfo.user
                 }).then(function() { 
-                    console.log("Updated");
+                    firebase.auth().onAuthStateChanged(profile => {
+                        var userid = String(profile.uid)
+                        console.log("  Provider-specific UID: " + userid);
+                        this.setState({userid: userid});
+                        data.DB_userID = this.state.userid; 
+                    });
+                    
+                    console.log(data);
+                    ref.push(data)
                 }, function (error){
-                    console.log("Error happened");
+                    console.log("Error happened" + error);
                 });
             }
         });
@@ -74,11 +100,11 @@ class Register extends Component {
             
     render(){ 
         if (this.state.toHomePage === true) {
+            
             return (
               <Redirect
                 to={{
-                  pathname: "/Park-Me",
-                  state: this.state.user,
+                  pathname: "/Park-Me"                  
                 }}
               />
             );

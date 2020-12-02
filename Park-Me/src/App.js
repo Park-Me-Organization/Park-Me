@@ -14,45 +14,48 @@ import TransactionHandle from "./TransactionHandle.js";
 import Receipt from "./Receipt.js";
 import Confirmation from "./Confirmation.js";
 import ReservationDetails from "./ReservationDetails.js";
+import Account from "./Account";
+
+/*  var database = firebase.database();
+var ref = database.ref('users');
+var data = {
+    DB_user: "",
+    DB_userID: "",
+    
+} */
 
 class App extends Component {
-  constructor() {
-    super();
+  constructor(props) {
+    super(props);
     this.state = {
-      //state object
       user: null,
-      // displayName: null,
-      userID: null
+      displayName: null,
+      userID: null,
+      lname:'',
+      email: '',
+      phonenumber:'',
     };
   }
 
   componentDidMount() {
     firebase.auth().onAuthStateChanged(FBUser => {
       if (FBUser) {
-        console.log("Firebase User" + FBUser.displayName);
-        console.log("Firebase User" + this.state.user);
         this.setState({
+          //HERE IS WHERE THE FIREBASE USER SET 
           user: FBUser.displayName,
           userID: FBUser.uid
+          
         });
+        
+        //Data insertion into DB
+        // data.DB_user = this.state.user;
+        //data.DB_userID = this.state.userID;
+        //ref.push(data)
       }
     });
   }
 
-  registerUser = userName => {
-    firebase.auth().onAuthStateChanged(FBUser => {
-      FBUser.updateProfile({
-        displayName: userName
-      }).then(() => {
-        this.setState({
-          user: FBUser.displayName,
-          //  displayName: FBUser.displayName,
-          userID: FBUser.uid
-        });
-        navigate("/");
-      });
-    });
-  };
+  
 
   logOutUser = e => {
     e.preventDefault();
@@ -108,6 +111,11 @@ class App extends Component {
               render={props => <TransactionHandle {...props} />}
             />
             <Route path="/receipt" render={props => <Receipt {...props} />} />
+            <Route 
+            path="/account" 
+            component={Account}
+            render= {props => <Account {...props} />}/>
+
           </Switch>
         </BrowserRouter>
       </div>
