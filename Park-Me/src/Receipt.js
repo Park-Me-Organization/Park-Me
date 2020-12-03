@@ -193,13 +193,18 @@ class Receipt extends Component {
             {(this.props.location.state.finalRegistrationInfo.parkingData.address)}
           </p>
           <p>
-            Price:{" "}
-            {("$" + this.props.location.state.finalRegistrationInfo.parkingData.price )}
-          </p>
-          <p>
             Reservation:{" "}
             {(this.props.location.state.finalRegistrationInfo.parkingData.startReservation+ " to " + this.props.location.state.finalRegistrationInfo.parkingData.endReservation)}
           </p>
+          <p>
+            Price:{" "}
+            {("$" + this.props.location.state.finalRegistrationInfo.parkingData.price + "/hr" )}
+          </p>
+          <p>
+            Total:{" "}
+            {("$" + this.props.location.state.finalRegistrationInfo.parkingData.total )}
+          </p>
+          
           </div>
           </div>
         </div>
