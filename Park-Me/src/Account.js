@@ -15,24 +15,35 @@ class Account extends Component {
     };
   }
     componentDidMount() {
-    firebase.auth().onAuthStateChanged(user => {
-      if (user) {
+    firebase.auth().onAuthStateChanged(FBUser => {
+      if (FBUser) {
         this.setState({
-        user: user.displayName,
-        email: user.email,
-        phonenumber: user.DB_phonenumber
-        })
-        console.log(this.state.user)
-        console.log(this.state.email)
+        user: FBUser.displayName,
+        email: FBUser.email,
+        phonenumber: FBUser.DB_phonenumber
 
+        })
+        console.log(this.state.FBUser)
+        console.log(this.state.email)
+        console.log(FBUser.uid)
+
+        const userreference = firebase.database().ref().child("users");
+        userreference.on('value', (snapshot) =>{
+        console.log(snapshot.val());
+      })
       }
+      
+     
+      
+      
+
     });
   }
   
   render() {
     
     return (
-      <div class="center">
+      <div className="center">
         <h3>My account</h3>
           <div>
             <p>
