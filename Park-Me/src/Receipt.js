@@ -3,6 +3,7 @@ import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import QRious from 'qrious';
 import { set } from "date-fns";
+import nodemailer from 'nodemailer';
 
 var qrcode;
 console.log("qrcode before function" + qrcode);
@@ -19,12 +20,10 @@ class Receipt extends Component {
       finalRegistrationInfo: this.props.location.state.finalRegistrationInfo,
       toHome: false,
       errorMessage: null,
-      qrcode:"",
     };
     console.log(this.props.location.state.finalRegistrationInfo)
 
     console.log(this.props.location.state)
-
     this.handleClick = this.handleClick.bind(this);
     this.handleChange = this.handleChange.bind(this); //constructor <-handle change
     this.handleSubmit = this.handleSubmit.bind(this);
@@ -54,10 +53,9 @@ class Receipt extends Component {
         size: 200,
         value: qrcode
     });
-    this.qrcode = qrcode;
+   
+    console.log("qrcode state:", qrcode);
 
-    console.log("qrcode state:", this.qrcode);
-  
   }
   handleClick(e){
     this.setState({toHome: true})
@@ -127,7 +125,7 @@ class Receipt extends Component {
           <h1 style={{ fontFamily: "Roboto Slab" }}>
             Thank You for Your Reservation!
           </h1>
-        <p>Your confirmation number is: <b id="confirmation"> {this.qrcode}</b></p>
+        <p>Your confirmation number is: <b id="confirmation"> {this.state.qrcode} </b></p>
           <canvas id="qr-code"></canvas>
 
           <hr style={{backgroundColor: "white"}}/>

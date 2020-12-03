@@ -15,6 +15,7 @@ import Receipt from "./Receipt.js";
 import Confirmation from "./Confirmation.js";
 import ReservationDetails from "./ReservationDetails.js";
 import Account from "./Account";
+import Email from "./Email";
 
 /*  var database = firebase.database();
 var ref = database.ref('users');
@@ -127,6 +128,10 @@ class App extends Component {
             component={Account}
             render= {props => <Account {...props} />}/>
 
+            <Route 
+            path="/Email" 
+            component={Email}
+            render= {props => <Account {...props} />}/>
           </Switch>
         </BrowserRouter>
       </div>
