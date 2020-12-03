@@ -1,11 +1,11 @@
 import React, { Component } from "react";
-import FormError from "./FormError";
 import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import QRious from 'qrious';
+import { set } from "date-fns";
 
-var qrcode="";
-
+var qrcode;
+console.log("qrcode before function" + qrcode);
 class Receipt extends Component {
   constructor(props) {
     super(props);
@@ -19,7 +19,7 @@ class Receipt extends Component {
       finalRegistrationInfo: this.props.location.state.finalRegistrationInfo,
       toHome: false,
       errorMessage: null,
-      qrcode: ''
+      qrcode:"",
     };
     console.log(this.props.location.state.finalRegistrationInfo)
 
@@ -30,6 +30,35 @@ class Receipt extends Component {
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  componentDidMount(){
+      var result = '';
+      var length = 5;
+      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+      }
+      qrcode = result;
+  
+      console.log("qrcode in function:", qrcode);
+      var qrcode;
+      var qr = new QRious({
+        element: document.getElementById('qr-code'),
+        foreground: 'black',
+          size: 200,
+         // value:qrcode
+      });
+      
+      qr.set({
+        foreground: 'black',
+        size: 200,
+        value: qrcode
+    });
+    this.qrcode = qrcode;
+
+    console.log("qrcode state:", this.qrcode);
+  
+  }
   handleClick(e){
     this.setState({toHome: true})
   }
@@ -57,11 +86,10 @@ class Receipt extends Component {
       toVehicleDetails: true,
       finalRegistrationInfo: registrationInfo,
     });
-    console.log(registrationInfo);
     e.preventDefault();
   }
-  
-  render(qrcode) {
+
+  render() {
     if (this.state.toHome === true) {
       return (
         <Redirect
@@ -71,37 +99,9 @@ class Receipt extends Component {
         />
       );
     }
-    function generateQRCode() {
-      var result = '';
-      var length = 5;
-      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
-      var charactersLength = characters.length;
-      for ( var i = 0; i < length; i++ ) {
-          result += characters.charAt(Math.floor(Math.random() * charactersLength));
-
-      qrcode = result;
-
-      console.log("qrcode:", qrcode);
-      var qr = new QRious({
-        element: document.getElementById('qr-code'),
-        size: 200,
-        value: 'https://studytonight.com'
-    });
-  
-      qr.set({
-          foreground: 'black',
-          size: 200,
-          value: qrcode
-      });
-  }
-}
-
-generateQRCode();
 
     return (
       <div>
-        
-    
     <div
         style={{
           display: "flex",
@@ -127,7 +127,7 @@ generateQRCode();
           <h1 style={{ fontFamily: "Roboto Slab" }}>
             Thank You for Your Reservation!
           </h1>
-          <p>Your confirmation number is: {qrcode}</p>
+        <p>Your confirmation number is: <b id="confirmation"> {this.qrcode}</b></p>
           <canvas id="qr-code"></canvas>
 
           <hr style={{backgroundColor: "white"}}/>
