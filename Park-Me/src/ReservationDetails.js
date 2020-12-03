@@ -1,4 +1,4 @@
-import { set } from "date-fns";
+import { set, differenceInMinutes } from "date-fns";
 import React from "react";
 import { format } from "date-fns";
 import TimeRange from "react-timeline-range-slider";
@@ -54,6 +54,7 @@ class ReservationDetails extends React.Component {
     this.setState({ selectedInterval }, () => {});
 
   handleClick(e) {
+    console.log(differenceInMinutes(this.state.selectedInterval[0], this.state.selectedInterval[1])/60.0)
     this.setState({
       toUserInfo: true,
       finalRegistrationInfo: {
@@ -68,7 +69,7 @@ class ReservationDetails extends React.Component {
         endReservation: format(
           this.state.selectedInterval[1],
           " MMM dd, hh:mm a"
-        ), price: this.props.location.state.parkingData.price
+        ), price: (this.props.location.state.parkingData.price * (differenceInMinutes(this.state.selectedInterval[0], this.state.selectedInterval[1])/60.0))*-1
         }
         
       }

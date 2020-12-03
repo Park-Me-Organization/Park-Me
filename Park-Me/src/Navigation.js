@@ -3,6 +3,9 @@ import React, { Component } from "react";
 import Logo from "./Assets/Parking-Logo.svg";
 import { NavLink } from "react-router-dom";
 
+function capitalize(string){
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
 class Navigation extends Component {
   render() {
     const { user, logOutUser } = this.props;
@@ -29,7 +32,7 @@ class Navigation extends Component {
             <div className="navbar-nav ml-auto">
               <NavLink className="nav-item nav-link" to="/account">
                 {" "}
-                {this.props.user}
+                {this.props.user != null ? capitalize(this.props.user) : console.log("no user")}
               </NavLink>
 
               {user == null && (

@@ -17,6 +17,7 @@ class Receipt extends Component {
       phonenumber: "",
       license: "",
       state: "",
+      qrcode: "",
       finalRegistrationInfo: this.props.location.state.finalRegistrationInfo,
       toHome: false,
       errorMessage: null,
@@ -37,10 +38,9 @@ class Receipt extends Component {
       for ( var i = 0; i < length; i++ ) {
           result += characters.charAt(Math.floor(Math.random() * charactersLength));
       }
-      qrcode = result;
+      this.setState({qrcode: result})
   
-      console.log("qrcode in function:", qrcode);
-      var qrcode;
+      console.log("qrcode in function:", this.state.qrcode);
       var qr = new QRious({
         element: document.getElementById('qr-code'),
         foreground: 'black',
@@ -194,7 +194,7 @@ class Receipt extends Component {
           </p>
           <p>
             Price:{" "}
-            {("$" + this.props.location.state.finalRegistrationInfo.parkingData.price + "/hr")}
+            {("$" + this.props.location.state.finalRegistrationInfo.parkingData.price )}
           </p>
           <p>
             Reservation:{" "}

@@ -148,7 +148,7 @@ class Confirmation extends Component {
           </p>
           <p>
             model:{" "}
-            {(this.props.location.state.VehicleModel)}
+            {(this.props.location.state.vehicleModel)}
           </p>
           <p>
             year:{" "}
@@ -180,7 +180,7 @@ class Confirmation extends Component {
           </p>
           <p>
             Price:{" "}
-            {(this.props.location.state.parkingData.price)}
+            {("$" + this.props.location.state.parkingData.price)}
           </p>
           <p>
             Reservation:{" "}

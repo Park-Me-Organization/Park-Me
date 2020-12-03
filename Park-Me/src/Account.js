@@ -16,6 +16,7 @@ class Account extends Component {
   }
     componentDidMount() {
     firebase.auth().onAuthStateChanged(user => {
+    
       if (user) {
         this.setState({
         user: user.displayName,

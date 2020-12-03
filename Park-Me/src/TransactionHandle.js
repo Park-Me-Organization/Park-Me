@@ -2,6 +2,7 @@ import React, { Component } from "react";
 import FormError from "./FormError";
 import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
+import emailjs from 'emailjs-com';
 
 class TransactionHandle extends Component {
   constructor(props) {
@@ -31,6 +32,9 @@ class TransactionHandle extends Component {
     this.setState({ [itemName]: itemValue });
   }
 
+  sendEmail(e) {
+   
+  }
   handleSubmit(e) {
     var registrationInfo = {
       user: this.props.location.state.user,
@@ -51,7 +55,17 @@ class TransactionHandle extends Component {
       finalRegistrationInfo: registrationInfo,
     });
     console.log("finalRegistrationInfo: ", this.state.finalRegistrationInfo)
+      
     e.preventDefault();
+    
+
+      
+    emailjs.sendForm('gmail', 'template_9e9kmv4', String(this.props.location.state.email), 'user_takFl3TCtn7fzwHUaO7aj')
+    .then((result) => {
+      console.log(result.text);
+  }, (error) => {
+      console.log(error.text);
+  });
   }
 
   render() {
