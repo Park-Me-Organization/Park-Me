@@ -179,13 +179,18 @@ class Confirmation extends Component {
             {(this.props.location.state.parkingData.address)}
           </p>
           <p>
-            Price:{" "}
-            {("$" + this.props.location.state.parkingData.price)}
-          </p>
-          <p>
             Reservation:{" "}
             {(this.props.location.state.parkingData.startReservation+ " to " + this.props.location.state.parkingData.endReservation)}
           </p>
+          <p>
+            Price:{" "}
+            {("$" + this.props.location.state.parkingData.price + "/hr")}
+          </p>
+          <p>
+            Total:{" "}
+            {("$" + this.props.location.state.parkingData.total + "/hr")}
+          </p>
+          
           </div>
           </div>
         </div>

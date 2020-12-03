@@ -69,7 +69,8 @@ class ReservationDetails extends React.Component {
         endReservation: format(
           this.state.selectedInterval[1],
           " MMM dd, hh:mm a"
-        ), price: (this.props.location.state.parkingData.price * (differenceInMinutes(this.state.selectedInterval[0], this.state.selectedInterval[1])/60.0))*-1
+        ), price: this.props.location.state.parkingData.price,
+        total: (this.props.location.state.parkingData.price * (differenceInMinutes(this.state.selectedInterval[0], this.state.selectedInterval[1])/60.0))*-1
         }
         
       }
