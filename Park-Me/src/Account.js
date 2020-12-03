@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import firebase from "./Firebase";
-
+import "./App.css";
 class Account extends Component {
   constructor(props) {
     super(props);
@@ -32,18 +32,17 @@ class Account extends Component {
   render() {
     
     return (
-      <div>
+      <div class="center">
         <h3>My account</h3>
           <div>
             <p>
             Username: {this.state.user}
             </p>
             <p>Email: {this.state.email}</p>
-            <p>Phone: {this.state.phonenumber}</p>
 
           </div>
           <div>
-            My reservations
+            <h3>My reservations</h3>
           </div>
       </div>
     );
