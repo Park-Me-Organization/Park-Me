@@ -60,12 +60,12 @@ class TransactionHandle extends Component {
     
 
       
-    emailjs.sendForm('gmail', 'template_9e9kmv4', String(this.props.location.state.email), '')
+ /*    emailjs.sendForm('gmail', 'template_9e9kmv4', String(this.props.location.state.email), '')
     .then((result) => {
       console.log(result.text);
   }, (error) => {
       console.log(error.text);
-  });
+  }); */
   }
 
   render() {
