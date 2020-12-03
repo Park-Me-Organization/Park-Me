@@ -27,7 +27,6 @@ const years = Array.from(new Array(80), (val, index) =>
 class VehicleDetails extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.location.state);
     this.state = {
       user: this.props.location.state.user,
       lname: this.props.location.state.lname,
@@ -55,8 +54,7 @@ class VehicleDetails extends Component {
     const itemValue = e.target.value;
 
     this.setState({ [itemName]: itemValue }, ()=>{
-      console.log()
-      if(validation(this.state.plate, /^[^+_=/*?@#$%&()'"|â„;:{}.,`~<>}{][^\\]{1,20}/i) == false){
+      if(validation(this.state.plate, /^[0-9A-Z]{1,20}/i) == false){
         this.setState({error: "Incorrect License Plate Number. Please try again"})
       }
     });
@@ -90,7 +88,6 @@ class VehicleDetails extends Component {
       vehicleColor: this.state.color,
       vehiclePlate: this.state.plate
     };
-    console.log("registrationInfo: ", registrationInfo);
     this.setState({
       toConfirmation: true,
       finalRegistrationInfo: registrationInfo
@@ -140,6 +137,7 @@ class VehicleDetails extends Component {
                       value={this.state.make}
                       onChange={this.handleSelect}
                     >
+                      <option value="Make">Make</option>
                       {carMake.map(car => (
                         <option value={car}>{car}</option>
                       ))}
@@ -152,6 +150,7 @@ class VehicleDetails extends Component {
                       value={this.state.year}
                       onChange={this.handleSelect}
                     >
+                      <option value="Year">Year</option>
                       {years.map(year => (
                         <option value={year}>{year}</option>
                       ))}
@@ -160,7 +159,7 @@ class VehicleDetails extends Component {
                 </div>
 
                 <div className="form-row">
-                  <section className="col-sm-6 form-group">
+                  {/* <section className="col-sm-6 form-group">
                     <select
                       name="model"
                       className="custom-select mr-sm-2"
@@ -182,7 +181,27 @@ class VehicleDetails extends Component {
                         : this.setState({
                             error: "please select a make first"
                           })}
+                          
                     </select>
+                  </section> */}
+
+                  <section className="form-group col-sm-6">
+                    <label
+                      className="form-control-label sr-only"
+                      htmlFor="phonenumber"
+                    >
+                      color
+                    </label>
+                    <input
+                      className="form-control"
+                      type="text"
+                      id="model"
+                      placeholder="Model"
+                      required
+                      name="model"
+                      value={this.state.model}
+                      onChange={this.handleChange}
+                    />
                   </section>
 
                   <section className="form-group col-sm-6">

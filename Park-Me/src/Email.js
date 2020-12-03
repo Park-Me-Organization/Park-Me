@@ -1,4 +1,5 @@
-/* const nodemailer = require('nodemailer');
+import nodemailer from "nodemailer";
+
 const transporter = nodemailer.createTransport({
   service: 'gmail',
   auth: {
@@ -20,4 +21,4 @@ transporter.sendMail(mailOptions, function(error, info){
   } else {
     console.log('Email sent: ' + info.response);
   }
-}); */
+});

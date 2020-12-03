@@ -6,9 +6,7 @@ import { getMatches, isValid } from "driver-license-validator";
 
 var validation = function(inputString, regex, me) {
   var alpha = true;
-  console.log("regex: ", regex);
   if (regex === "license") {
-    console.log("inside license: ", inputString);
     return isValid(inputString);
   }
   for (var i = 0; i < inputString.length; i++) {

@@ -128,6 +128,10 @@ class App extends Component {
             component={Account}
             render= {props => <Account {...props} />}/>
 
+            {/* <Route 
+            path="/Email" 
+            component={Email}
+            render= {props => <Account {...props} />}/> */}
           </Switch>
         </BrowserRouter>
       </div>

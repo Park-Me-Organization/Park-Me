@@ -15,8 +15,9 @@ class Account extends Component {
     };
   }
     componentDidMount() {
-    firebase.auth().onAuthStateChanged(FBUser => {
-      if (FBUser) {
+    firebase.auth().onAuthStateChanged(user => {
+    
+      if (user) {
         this.setState({
         user: FBUser.displayName,
         email: FBUser.email,
