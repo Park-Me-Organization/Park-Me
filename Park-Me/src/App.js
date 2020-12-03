@@ -118,7 +118,7 @@ class App extends Component {
               render={props => <Confirmation {...props} />}
             />
             <Route
-              path="/transactionHandle"
+              path="/TransactionHandle"
               render={props => <TransactionHandle {...props} />}
             />
             <Route path="/receipt" render={props => <Receipt {...props} />} />

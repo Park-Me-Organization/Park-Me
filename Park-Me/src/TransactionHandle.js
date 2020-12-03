@@ -87,7 +87,7 @@ class TransactionHandle extends Component {
             >
               <div className="card-body">
                 <h3 className="font-weight-light mb-3">
-                  Let's get some details
+                 Payment Details
                 </h3>
                 <div className="form-row">
                   {this.state.errorMessage !== null ? (

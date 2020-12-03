@@ -4,6 +4,8 @@ import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import QRious from 'qrious';
 
+var qrcode="";
+
 class Receipt extends Component {
   constructor(props) {
     super(props);
@@ -17,7 +19,7 @@ class Receipt extends Component {
       finalRegistrationInfo: this.props.location.state.finalRegistrationInfo,
       toHome: false,
       errorMessage: null,
-      qrcode: 'default'
+      qrcode: ''
     };
     console.log(this.props.location.state.finalRegistrationInfo)
 
@@ -69,9 +71,17 @@ class Receipt extends Component {
         />
       );
     }
-    function generateQRCode(qrcode) {
-      var qrtext = qrcode;
-      console.log("qrcode:", qrtext);
+    function generateQRCode() {
+      var result = '';
+      var length = 5;
+      var characters = 'ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789';
+      var charactersLength = characters.length;
+      for ( var i = 0; i < length; i++ ) {
+          result += characters.charAt(Math.floor(Math.random() * charactersLength));
+
+      qrcode = result;
+
+      console.log("qrcode:", qrcode);
       var qr = new QRious({
         element: document.getElementById('qr-code'),
         size: 200,
@@ -81,10 +91,13 @@ class Receipt extends Component {
       qr.set({
           foreground: 'black',
           size: 200,
-          value: qrtext
+          value: qrcode
       });
   }
-    generateQRCode(qrcode);
+}
+
+generateQRCode();
+
     return (
       <div>
         
@@ -114,6 +127,7 @@ class Receipt extends Component {
           <h1 style={{ fontFamily: "Roboto Slab" }}>
             Thank You for Your Reservation!
           </h1>
+          <p>Your confirmation number is: {qrcode}</p>
           <canvas id="qr-code"></canvas>
 
           <hr style={{backgroundColor: "white"}}/>

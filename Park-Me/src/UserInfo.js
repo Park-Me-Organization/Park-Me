@@ -203,7 +203,7 @@ class UserInfo extends Component {
                     className="form-control"
                     type="tel"
                     id="phonenumber"
-                    placeholder="phone number"
+                    placeholder="Phone Number"
                     required
                     name="phonenumber"
                     value={this.state.phonenumber}
