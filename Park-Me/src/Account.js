@@ -36,9 +36,9 @@ class Account extends Component {
         <h3>My account</h3>
           <div>
             <p>
-            Username: {this.state.user}
+            <strong>Username: </strong>{this.state.user}
             </p>
-            <p>Email: {this.state.email}</p>
+            <p><strong>Email: </strong> {this.state.email}</p>
 
           </div>
           <div>
