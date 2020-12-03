@@ -44,7 +44,6 @@ class App extends Component {
           //HERE IS WHERE THE FIREBASE USER SET 
           user: FBUser.displayName,
           userID: FBUser.uid
-          
         });
         
         //Data insertion into DB
@@ -54,8 +53,20 @@ class App extends Component {
       }
     });
   }
-
-  
+  registerUser = userName => {
+    firebase.auth().onAuthStateChanged(FBUser => {
+      FBUser.updateProfile({
+        displayName: userName
+      }).then(() => {
+        this.setState({
+          user: FBUser.displayName,
+          displayName: FBUser.displayName,
+          userID: FBUser.uid
+        });
+        navigate("/");
+      });
+    });
+  };
 
   logOutUser = e => {
     e.preventDefault();

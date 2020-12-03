@@ -24,7 +24,6 @@ class Register extends Component {
             phonenumber:'',
             passOne: '',
             passTwo: '',
-            userid: '',
             errorMessage: null,
            
             };
@@ -63,7 +62,8 @@ class Register extends Component {
         data.DB_email = this.state.email;
         data.DB_phonenumber = this.state.phonenumber;
         
-        
+        console.log("registrationInfo: ", registrationInfo);
+
         this.setState({
             toHomePage: true,
             user: registrationInfo.user,
@@ -85,12 +85,9 @@ class Register extends Component {
                     firebase.auth().onAuthStateChanged(profile => {
                         var userid = String(profile.uid)
                         console.log("  Provider-specific UID: " + userid);
-                        this.setState({userid: userid});
-                        data.DB_userID = this.state.userid; 
+                        data.DB_userID = userid; 
+                        ref.push(data)
                     });
-                    
-                    console.log(data);
-                    ref.push(data)
                 }, function (error){
                     console.log("Error happened" + error);
                 });
@@ -104,7 +101,8 @@ class Register extends Component {
             return (
               <Redirect
                 to={{
-                  pathname: "/Park-Me"                  
+                  pathname: "/Park-Me",    
+                  state: this.state.user,
                 }}
               />
             );
