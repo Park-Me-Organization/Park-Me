@@ -10,4 +10,5 @@ https://github.com/Park-Me-Organization/Park-Me
 7.	It should auto open a tab in your browser that points to http://localhost:3000/ (if not, manually visit that address). 
 
 To view the web version of the application, please click on the link below: 
+
 https://park-me-organization.github.io/Park-Me
