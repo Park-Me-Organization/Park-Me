@@ -1,0 +1,6 @@
+1.) if user attempts to register with an already used email address, it will not let them, but there is no alert for that. 
+2.) if the user selects the current location, then enters an new address in the search bar, and then selects away from the map, 
+    the application will still present the results of the current location search
+3.) When a user registers for an account, after they are redirected to the homepage, they will have to refresh the page to be able 
+    to see their user name on the top right
+4.) Some form entrys do not have working validations associated with them
