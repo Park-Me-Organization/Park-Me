@@ -5,6 +5,18 @@ import { Redirect } from "react-router-dom";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
+var validation = function(inputString, regex) {
+  var alpha = true;
+
+  for (var i = 0; i < inputString.length; i++) {
+    if (!regex.test(inputString.charAt(i))) {
+      return false;
+    } else {
+      continue;
+    }
+  }
+  return alpha;
+};
 var database = firebase.database();
 var ref = database.ref("users");
 var data = {
@@ -41,6 +53,23 @@ class Register extends Component {
     this.setState({ [itemName]: itemValue }, () => {
       if (this.state.passOne !== this.state.passTwo) {
         this.setState({ errorMessage: "Passwords do not match" });
+      }
+      if (
+        validation(itemValue, /^[a-zA-Z -]*$/i) == false &&
+        itemName == "user"
+      ) {
+        this.setState({
+          errorMessage:
+            'Incorrect format for First Name. Only Letters, spaces " ", and hyphens "-" are accepted.'
+        });
+      } else if (
+        validation(itemValue, /^[a-zA-Z -]*$/i) == false &&
+        itemName == "lname"
+      ) {
+        this.setState({
+          errorMessage:
+            'Incorrect format for Last Name. Only Letters, spaces " ", and hyphens "-" are accepted.'
+        });
       } else {
         this.setState({ errorMessage: null });
       }
