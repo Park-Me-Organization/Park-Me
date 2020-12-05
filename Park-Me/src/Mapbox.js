@@ -119,7 +119,7 @@ class Mapbox extends Component {
             },
             price: Math.floor(Math.random() * 11 + 3),
             address: address,
-            availablespots: Math.floor(Math.random() * 16)
+            availablespots: Math.floor(Math.random() * 16) + 1
           };
 
           var popup = new mapboxgl.Popup()
