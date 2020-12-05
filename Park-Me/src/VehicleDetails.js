@@ -54,14 +54,7 @@ class VehicleDetails extends Component {
     const itemName = e.target.name;
     const itemValue = e.target.value;
 
-    this.setState({ [itemName]: itemValue }, () => {
-      // regex = new RegExp(/^[0-9]\{5\}$/);
-      // if (validation(itemValue, regex) == false && itemName == "plate") {
-      //   this.setState({
-      //     errorMessage: "Incorrect format for License Plate. Please Try again."
-      //   });
-      // }
-    });
+    this.setState({ [itemName]: itemValue });
   }
 
   handleSubmit(e) {

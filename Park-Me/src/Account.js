@@ -21,8 +21,6 @@ class Account extends Component {
           email: user.email,
           phonenumber: user.DB_phonenumber
         });
-        console.log(this.state.user);
-        console.log(this.state.email);
       }
     });
   }

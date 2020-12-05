@@ -1,10 +1,9 @@
 import React, { Component } from "react";
-import FormError from "./FormError";
 import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
-function capitalize(string){
-  return string.charAt(0).toUpperCase() + string.slice(1)
+function capitalize(string) {
+  return string.charAt(0).toUpperCase() + string.slice(1);
 }
 
 class Confirmation extends Component {
@@ -90,14 +89,26 @@ class Confirmation extends Component {
               </h3>
               <p>
                 Name:{" "}
-                {capitalize(this.props.location.state.finalRegistrationInfo.user) +
+                {capitalize(
+                  this.props.location.state.finalRegistrationInfo.user
+                ) +
                   " " +
-                 capitalize(this.props.location.state.finalRegistrationInfo.lname)}
+                  capitalize(
+                    this.props.location.state.finalRegistrationInfo.lname
+                  )}
               </p>
               <p>Email: {this.state.finalRegistrationInfo.email}</p>
-              <p>Phone Number: {this.props.location.state.finalRegistrationInfo.phonenumber}</p>
-              <p>License Number: {this.props.location.state.finalRegistrationInfo.license}</p>
-              <p>State: {this.props.location.state.finalRegistrationInfo.state}</p>
+              <p>
+                Phone Number:{" "}
+                {this.props.location.state.finalRegistrationInfo.phonenumber}
+              </p>
+              <p>
+                License Number:{" "}
+                {this.props.location.state.finalRegistrationInfo.license}
+              </p>
+              <p>
+                State: {this.props.location.state.finalRegistrationInfo.state}
+              </p>
             </div>
             <div
               style={{ textAlign: "left", float: "left", marginLeft: "20px" }}
@@ -105,11 +116,26 @@ class Confirmation extends Component {
               <h3>
                 <u>Vehicle</u>
               </h3>
-              <p>Make: {this.props.location.state.finalRegistrationInfo.vehicleMake}</p>
-              <p>model: {this.props.location.state.finalRegistrationInfo.vehicleModel}</p>
-              <p>year: {this.props.location.state.finalRegistrationInfo.vehicleYear}</p>
-              <p>Color: {this.props.location.state.finalRegistrationInfo.vehicleColor}</p>
-              <p>License Plate: {this.props.location.state.finalRegistrationInfo.vehiclePlate}</p>
+              <p>
+                Make:{" "}
+                {this.props.location.state.finalRegistrationInfo.vehicleMake}
+              </p>
+              <p>
+                model:{" "}
+                {this.props.location.state.finalRegistrationInfo.vehicleModel}
+              </p>
+              <p>
+                year:{" "}
+                {this.props.location.state.finalRegistrationInfo.vehicleYear}
+              </p>
+              <p>
+                Color:{" "}
+                {this.props.location.state.finalRegistrationInfo.vehicleColor}
+              </p>
+              <p>
+                License Plate:{" "}
+                {this.props.location.state.finalRegistrationInfo.vehiclePlate}
+              </p>
             </div>
             <div
               style={{
@@ -123,29 +149,55 @@ class Confirmation extends Component {
               <h3>
                 <u>Reservation</u>
               </h3>
-              <p>Name: {this.props.location.state.finalRegistrationInfo.parkingData.parkingData.lotName}</p>
               <p>
-                {console.log(this.props.location.state.finalRegistrationInfo.parkingData.parkingData.hours)}
+                Name:{" "}
+                {
+                  this.props.location.state.finalRegistrationInfo.parkingData
+                    .parkingData.lotName
+                }
+              </p>
+              <p>
+                {console.log(
+                  this.props.location.state.finalRegistrationInfo.parkingData
+                    .parkingData.hours
+                )}
                 Hours:{" "}
-                {this.props.location.state.finalRegistrationInfo.parkingData.parkingData.hours.opening +
+                {this.props.location.state.finalRegistrationInfo.parkingData
+                  .parkingData.hours.opening +
                   ":00 am to " +
-                  (this.props.location.state.finalRegistrationInfo.parkingData.parkingData.hours.closing - 12) +
+                  (this.props.location.state.finalRegistrationInfo.parkingData
+                    .parkingData.hours.closing -
+                    12) +
                   ":00 pm"}
               </p>
-              <p>Address: {this.props.location.state.finalRegistrationInfo.parkingData.parkingData.address}</p>
+              <p>
+                Address:{" "}
+                {
+                  this.props.location.state.finalRegistrationInfo.parkingData
+                    .parkingData.address
+                }
+              </p>
               <p>
                 Reservation:{" "}
-                {this.props.location.state.finalRegistrationInfo.parkingData.parkingData.startReservation +
+                {this.props.location.state.finalRegistrationInfo.parkingData
+                  .parkingData.startReservation +
                   " to " +
-                  this.props.location.state.finalRegistrationInfo.parkingData.parkingData.endReservation}
+                  this.props.location.state.finalRegistrationInfo.parkingData
+                    .parkingData.endReservation}
               </p>
               <p>
                 Price:{" "}
-                {"$" + this.props.location.state.finalRegistrationInfo.parkingData.parkingData.price + "/hr"}
+                {"$" +
+                  this.props.location.state.finalRegistrationInfo.parkingData
+                    .parkingData.price +
+                  "/hr"}
               </p>
               <p>
                 Total:{" "}
-                {"$" + this.props.location.state.finalRegistrationInfo.parkingData.parkingData.total + "/hr"}
+                {"$" +
+                  this.props.location.state.finalRegistrationInfo.parkingData
+                    .parkingData.total +
+                  "/hr"}
               </p>
             </div>
           </div>

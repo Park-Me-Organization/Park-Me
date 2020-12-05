@@ -6,7 +6,6 @@ import Button from "react-bootstrap/Button";
 class TransactionHandle extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.location.state.finalRegistrationInfo);
     this.state = {
       user: "",
       lname: "",

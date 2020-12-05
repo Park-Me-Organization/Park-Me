@@ -15,15 +15,6 @@ import Receipt from "./Receipt.js";
 import Confirmation from "./Confirmation.js";
 import ReservationDetails from "./ReservationDetails.js";
 import Account from "./Account";
-import Email from "./Email";
-
-/*  var database = firebase.database();
-var ref = database.ref('users');
-var data = {
-    DB_user: "",
-    DB_userID: "",
-    
-} */
 
 class App extends Component {
   constructor(props) {
@@ -42,15 +33,9 @@ class App extends Component {
     firebase.auth().onAuthStateChanged(FBUser => {
       if (FBUser) {
         this.setState({
-          //HERE IS WHERE THE FIREBASE USER SET
           user: FBUser.displayName,
           userID: FBUser.uid
         });
-
-        //Data insertion into DB
-        // data.DB_user = this.state.user;
-        //data.DB_userID = this.state.userID;
-        //ref.push(data)
       }
     });
   }

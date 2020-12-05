@@ -2,11 +2,8 @@ import React, { Component } from "react";
 import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import QRious from "qrious";
-import { set } from "date-fns";
-import nodemailer from "nodemailer";
 
 var qrcode;
-console.log("qrcode before function" + qrcode);
 class Receipt extends Component {
   constructor(props) {
     super(props);
@@ -34,7 +31,6 @@ class Receipt extends Component {
       element: document.getElementById("qr-code"),
       foreground: "black",
       size: 200
-      // value:qrcode
     });
 
     qr.set({

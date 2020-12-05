@@ -4,9 +4,9 @@ import MapboxGeocoder from "@mapbox/mapbox-gl-geocoder";
 import "./App.css";
 import UserInput from "./UserInput";
 import { Redirect } from "react-router-dom";
+var $ = require("jquery");
 
 var query;
-var $ = require("jquery");
 
 class Mapbox extends Component {
   constructor(props) {

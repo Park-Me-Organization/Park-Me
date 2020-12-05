@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import FormError from "./FormError";
 import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import { getMatches, isValid } from "driver-license-validator";
+import { isValid } from "driver-license-validator";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
