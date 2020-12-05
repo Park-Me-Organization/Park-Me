@@ -3,26 +3,18 @@ import FormError from "./FormError";
 import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 
+function capitalize(string){
+  return string.charAt(0).toUpperCase() + string.slice(1)
+}
+
 class Confirmation extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.location.state.parkingData);
+    console.log(this.props.location.state.finalRegistrationInfo);
     this.state = {
-      user: this.props.location.state.user,
-      lname: this.props.location.state.lname,
-      email: this.props.location.state.email,
-      phonenumber: this.props.location.state.phonenumber,
-      license: this.props.location.state.license,
-      state: this.props.location.state.state,
-      parkingData: this.props.location.state.parkingData,
-      vehicleMake: this.props.location.state.vehicleMake,
-      vehicleModel: this.props.location.state.vehicleModel,
-      vehicleYear: this.props.location.state.vehicleYear,
-      vehicleColor: this.props.location.state.vehicleColor,
-      vehiclePlate: this.props.location.state.vehiclePlate,
-      vehiclePlate: this.props.location.state.plate,
       toTransactionHandle: false,
-      toReservationDetails: false
+      toReservationDetails: false,
+      finalRegistrationInfo: this.props.location.state.finalRegistrationInfo
     };
     this.handleClick = this.handleClick.bind(this);
   }
@@ -45,37 +37,13 @@ class Confirmation extends Component {
     this.setState({ [itemName]: itemValue });
   }
 
-  handleSubmit(e) {
-    var registrationInfo = {
-      user: this.props.location.state.user,
-      lname: this.props.location.state.lname,
-      email: this.props.location.state.email,
-      phonenumber: this.props.location.state.phonenumber,
-      license: this.props.location.state.license,
-      state: this.props.location.state.state,
-      parkingData: this.props.location.state.parkingData,
-      parkingData: this.props.location.state.parkingData,
-      vehicleMake: this.props.location.state.vehicleMake,
-      vehicleModel: this.props.location.state.vehicleModel,
-      vehicleYear: this.props.location.state.vehicleYear,
-      vehicleColor: this.props.location.state.vehicleColor,
-      vehiclePlate: this.props.location.state.vehiclePlate
-    };
-    this.setState({
-      toVehicleDetails: true,
-      finalRegistrationInfo: registrationInfo
-    });
-    console.log("finalRegistrationInfo: ", this.state.finalRegistrationInfo);
-    e.preventDefault();
-  }
-
   render() {
     if (this.state.toTransactionHandle === true) {
       return (
         <Redirect
           to={{
             pathname: "/TransactionHandle",
-            state: this.state
+            state: { finalRegistrationInfo: this.state.finalRegistrationInfo }
           }}
         />
       );
@@ -83,8 +51,7 @@ class Confirmation extends Component {
       return (
         <Redirect
           to={{
-            pathname: "/reservationdetails",
-            state: this.state
+            pathname: "/reservationdetails"
           }}
         />
       );
@@ -123,14 +90,14 @@ class Confirmation extends Component {
               </h3>
               <p>
                 Name:{" "}
-                {this.props.location.state.user.toUpperCase() +
+                {capitalize(this.props.location.state.finalRegistrationInfo.user) +
                   " " +
-                  this.props.location.state.lname.toUpperCase()}
+                 capitalize(this.props.location.state.finalRegistrationInfo.lname)}
               </p>
-              <p>Email: {this.props.location.state.email}</p>
-              <p>Phone Number: {this.props.location.state.phonenumber}</p>
-              <p>License Number: {this.props.location.state.license}</p>
-              <p>State: {this.props.location.state.state}</p>
+              <p>Email: {this.state.finalRegistrationInfo.email}</p>
+              <p>Phone Number: {this.props.location.state.finalRegistrationInfo.phonenumber}</p>
+              <p>License Number: {this.props.location.state.finalRegistrationInfo.license}</p>
+              <p>State: {this.props.location.state.finalRegistrationInfo.state}</p>
             </div>
             <div
               style={{ textAlign: "left", float: "left", marginLeft: "20px" }}
@@ -138,11 +105,11 @@ class Confirmation extends Component {
               <h3>
                 <u>Vehicle</u>
               </h3>
-              <p>Make: {this.props.location.state.vehicleMake}</p>
-              <p>model: {this.props.location.state.vehicleModel}</p>
-              <p>year: {this.props.location.state.vehicleYear}</p>
-              <p>Color: {this.props.location.state.vehicleColor}</p>
-              <p>License Plate: {this.props.location.state.vehiclePlate}</p>
+              <p>Make: {this.props.location.state.finalRegistrationInfo.vehicleMake}</p>
+              <p>model: {this.props.location.state.finalRegistrationInfo.vehicleModel}</p>
+              <p>year: {this.props.location.state.finalRegistrationInfo.vehicleYear}</p>
+              <p>Color: {this.props.location.state.finalRegistrationInfo.vehicleColor}</p>
+              <p>License Plate: {this.props.location.state.finalRegistrationInfo.vehiclePlate}</p>
             </div>
             <div
               style={{
@@ -156,29 +123,29 @@ class Confirmation extends Component {
               <h3>
                 <u>Reservation</u>
               </h3>
-              <p>Name: {this.props.location.state.parkingData.lotName}</p>
+              <p>Name: {this.props.location.state.finalRegistrationInfo.parkingData.parkingData.lotName}</p>
               <p>
-                {console.log(this.props.location.state.parkingData.hours)}
+                {console.log(this.props.location.state.finalRegistrationInfo.parkingData.parkingData.hours)}
                 Hours:{" "}
-                {this.props.location.state.parkingData.hours.opening +
-                  ":00 to " +
-                  this.props.location.state.parkingData.hours.closing +
-                  ":00"}
+                {this.props.location.state.finalRegistrationInfo.parkingData.parkingData.hours.opening +
+                  ":00 am to " +
+                  (this.props.location.state.finalRegistrationInfo.parkingData.parkingData.hours.closing - 12) +
+                  ":00 pm"}
               </p>
-              <p>Address: {this.props.location.state.parkingData.address}</p>
+              <p>Address: {this.props.location.state.finalRegistrationInfo.parkingData.parkingData.address}</p>
               <p>
                 Reservation:{" "}
-                {this.props.location.state.parkingData.startReservation +
+                {this.props.location.state.finalRegistrationInfo.parkingData.parkingData.startReservation +
                   " to " +
-                  this.props.location.state.parkingData.endReservation}
+                  this.props.location.state.finalRegistrationInfo.parkingData.parkingData.endReservation}
               </p>
               <p>
                 Price:{" "}
-                {"$" + this.props.location.state.parkingData.price + "/hr"}
+                {"$" + this.props.location.state.finalRegistrationInfo.parkingData.parkingData.price + "/hr"}
               </p>
               <p>
                 Total:{" "}
-                {"$" + this.props.location.state.parkingData.total + "/hr"}
+                {"$" + this.props.location.state.finalRegistrationInfo.parkingData.parkingData.total + "/hr"}
               </p>
             </div>
           </div>

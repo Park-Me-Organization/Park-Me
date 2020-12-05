@@ -3,11 +3,8 @@ import FormError from "./FormError";
 import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import carMake from "./Data/CarMake.json";
-import carModels from "./Data/CarModels.json";
 
-// console.log("make: ", carMake);
-// console.log("models: ", carModels);
-
+var regex = "";
 var validation = function(inputString, regex) {
   var alpha = true;
   for (var i = 0; i < inputString.length; i++) {
@@ -27,19 +24,14 @@ const years = Array.from(new Array(80), (val, index) =>
 class VehicleDetails extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props.location.state.finalRegistrationInfo);
     this.state = {
-      user: this.props.location.state.user,
-      lname: this.props.location.state.lname,
-      email: this.props.location.state.email,
-      phonenumber: this.props.location.state.phonenumber,
-      license: this.props.location.state.license,
-      state: this.props.location.state.state,
       make: "",
       model: "",
       year: "",
       color: "",
       plate: "",
-      finalRegistrationInfo: {},
+      finalRegistrationInfo: this.props.location.state.finalRegistrationInfo,
       toConfirmation: false,
       errorMessage: null
     };
@@ -53,13 +45,7 @@ class VehicleDetails extends Component {
     const itemName = e.target.name;
     const itemValue = e.target.value;
 
-    this.setState({ [itemName]: itemValue }, () => {
-      if (validation(itemValue, /^[0-9A-Z]\{5,7\}/i) == false) {
-        this.setState({
-          error: "Incorrect License Plate Number. Please try again"
-        });
-      }
-    });
+    this.setState({ [itemName]: itemValue });
   }
 
   handleChange(e) {
@@ -68,18 +54,25 @@ class VehicleDetails extends Component {
     const itemName = e.target.name;
     const itemValue = e.target.value;
 
-    this.setState({ [itemName]: itemValue });
+    this.setState({ [itemName]: itemValue }, () => {
+      // regex = new RegExp(/^[0-9]\{5\}$/);
+      // if (validation(itemValue, regex) == false && itemName == "plate") {
+      //   this.setState({
+      //     errorMessage: "Incorrect format for License Plate. Please Try again."
+      //   });
+      // }
+    });
   }
 
   handleSubmit(e) {
     var registrationInfo = {
-      user: this.props.location.state.user,
-      lname: this.props.location.state.lname,
-      email: this.props.location.state.email,
-      phonenumber: this.props.location.state.phonenumber,
-      license: this.props.location.state.license,
-      state: this.props.location.state.state,
-      parkingData: this.props.location.state.parkingData,
+      user: this.props.location.state.finalRegistrationInfo.user,
+      lname: this.props.location.state.finalRegistrationInfo.lname,
+      email: this.props.location.state.finalRegistrationInfo.email,
+      phonenumber: this.props.location.state.finalRegistrationInfo.phonenumber,
+      license: this.props.location.state.finalRegistrationInfo.license,
+      state: this.props.location.state.finalRegistrationInfo.state,
+      parkingData: this.props.location.state.finalRegistrationInfo.parkingData,
       vehicleMake: this.state.make,
       vehicleModel: this.state.model,
       vehicleYear: this.state.year,
@@ -99,7 +92,7 @@ class VehicleDetails extends Component {
         <Redirect
           to={{
             pathname: "/confirmation",
-            state: this.state.finalRegistrationInfo
+            state: { finalRegistrationInfo: this.state.finalRegistrationInfo }
           }}
         />
       );

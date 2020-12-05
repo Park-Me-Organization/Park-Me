@@ -6,6 +6,7 @@ import { NavLink } from "react-router-dom";
 function capitalize(string){
   return string.charAt(0).toUpperCase() + string.slice(1)
 }
+
 class Navigation extends Component {
   render() {
     const { user, logOutUser } = this.props;

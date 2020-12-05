@@ -2,70 +2,40 @@ import React, { Component } from "react";
 import FormError from "./FormError";
 import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
-import emailjs from 'emailjs-com';
 
 class TransactionHandle extends Component {
   constructor(props) {
     super(props);
+    console.log(this.props.location.state.finalRegistrationInfo);
     this.state = {
       user: "",
       lname: "",
-      email: "",
-      phonenumber: "",
-      license: "",
-      state: "",
+      number: "",
+      zipcode: "",
+      sCode: "",
       finalRegistrationInfo: this.props.location.state.finalRegistrationInfo,
       toReceipt: false,
-      errorMessage: null,
+      errorMessage: null
     };
 
     this.handleChange = this.handleChange.bind(this); //constructor <-handle change
     this.handleSubmit = this.handleSubmit.bind(this);
   }
 
+  // handle value changes for the input
   handleChange(e) {
-    //Collects the value for each item name
-
     const itemName = e.target.name;
     const itemValue = e.target.value;
 
     this.setState({ [itemName]: itemValue });
   }
 
-  sendEmail(e) {
-   
-  }
   handleSubmit(e) {
-    var registrationInfo = {
-      user: this.props.location.state.user,
-      lname: this.props.location.state.lname,
-      email: this.props.location.state.email,
-      phonenumber: this.props.location.state.phonenumber,
-      license: this.props.location.state.license,
-      state: this.props.location.state.state,
-      parkingData: this.props.location.state.parkingData,
-      vehicleMake: this.props.location.state.vehicleMake,
-      vehicleModel: this.props.location.state.vehicleModel,
-      vehicleYear: this.props.location.state.vehicleYear,
-      vehicleColor: this.props.location.state.vehicleColor,
-      vehiclePlate: this.props.location.state.vehiclePlate
-    };
     this.setState({
-      toReceipt: true,
-      finalRegistrationInfo: registrationInfo,
+      toReceipt: true
     });
-    console.log("finalRegistrationInfo: ", this.state.finalRegistrationInfo)
-      
-    e.preventDefault();
-    
 
-      
- /*    emailjs.sendForm('gmail', 'template_9e9kmv4', String(this.props.location.state.email), '')
-    .then((result) => {
-      console.log(result.text);
-  }, (error) => {
-      console.log(error.text);
-  }); */
+    e.preventDefault();
   }
 
   render() {
@@ -74,7 +44,7 @@ class TransactionHandle extends Component {
         <Redirect
           to={{
             pathname: "/receipt",
-            state: this.state,
+            state: { finalRegistrationInfo: this.state.finalRegistrationInfo }
           }}
         />
       );
@@ -87,22 +57,16 @@ class TransactionHandle extends Component {
       >
         <div className="container" style={{ padding: "0px" }}>
           <div className="row">
-            {console.log(
-              "finalRegistrationInfo: ",
-              this.props.location.state
-            )}
             <div
               className="card bg-light"
               style={{
                 marginLeft: "auto",
                 marginRight: "auto",
-                width: "650px",
+                width: "650px"
               }}
             >
               <div className="card-body">
-                <h3 className="font-weight-light mb-3">
-                 Payment Details
-                </h3>
+                <h3 className="font-weight-light mb-3">Payment Details</h3>
                 <div className="form-row">
                   {this.state.errorMessage !== null ? (
                     <FormError theMessage={this.state.errorMessage} />
@@ -187,7 +151,7 @@ class TransactionHandle extends Component {
                     style={{
                       backgroundColor: "#1A2637",
                       borderColor: "white",
-                      fontFamily: "Roboto Slab",
+                      fontFamily: "Roboto Slab"
                     }}
                     type="submit"
                   >

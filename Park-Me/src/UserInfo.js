@@ -90,7 +90,7 @@ class UserInfo extends Component {
       phonenumber: this.state.phonenumber,
       license: this.state.license,
       state: this.state.state,
-      parkingData: this.props.location.state.parkingData
+      parkingData: this.props.location.state.finalRegistrationInfo
     };
     this.setState({
       toVehicleDetails: true,
@@ -105,7 +105,7 @@ class UserInfo extends Component {
         <Redirect
           to={{
             pathname: "/vehicleDetails",
-            state: this.state.finalRegistrationInfo
+            state: { finalRegistrationInfo: this.state.finalRegistrationInfo }
           }}
         />
       );

@@ -96,7 +96,7 @@ class ReservationDetails extends React.Component {
         <Redirect
           to={{
             pathname: "/userinfo",
-            state: this.state.finalRegistrationInfo
+            state: { finalRegistrationInfo: this.state.finalRegistrationInfo }
           }}
         />
       );
