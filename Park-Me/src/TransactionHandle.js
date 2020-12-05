@@ -32,6 +32,9 @@ class TransactionHandle extends Component {
     this.setState({ [itemName]: itemValue });
   }
 
+  sendEmail(e) {
+   
+  }
   handleSubmit(e) {
     var registrationInfo = {
       user: this.props.location.state.user,
@@ -51,20 +54,18 @@ class TransactionHandle extends Component {
       toReceipt: true,
       finalRegistrationInfo: registrationInfo,
     });
+    console.log("finalRegistrationInfo: ", this.state.finalRegistrationInfo)
       
     e.preventDefault();
     
 
       
-  //   emailjs.sendForm('gmail', 'template_9e9kmv4', (this.props.location.state.email).replace(/\$/g, '\\$'), 'user_takFl3TCtn7fzwHUaO7aj')
-  //   .then((result) => {
-  //     console.log(result.text);
-  // }, (error) => {
-  //     console.log(error.text);
-  // });
-
-
-  
+ /*    emailjs.sendForm('gmail', 'template_9e9kmv4', String(this.props.location.state.email), '')
+    .then((result) => {
+      console.log(result.text);
+  }, (error) => {
+      console.log(error.text);
+  }); */
   }
 
   render() {
@@ -86,7 +87,10 @@ class TransactionHandle extends Component {
       >
         <div className="container" style={{ padding: "0px" }}>
           <div className="row">
-           
+            {console.log(
+              "finalRegistrationInfo: ",
+              this.props.location.state
+            )}
             <div
               className="card bg-light"
               style={{
