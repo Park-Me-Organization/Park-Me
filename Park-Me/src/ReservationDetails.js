@@ -54,30 +54,43 @@ class ReservationDetails extends React.Component {
     this.setState({ selectedInterval }, () => {});
 
   handleClick(e) {
-    console.log(differenceInMinutes(this.state.selectedInterval[0], this.state.selectedInterval[1])/60.0)
+    console.log(
+      differenceInMinutes(
+        this.state.selectedInterval[0],
+        this.state.selectedInterval[1]
+      ) / 60.0
+    );
     this.setState({
       toUserInfo: true,
       finalRegistrationInfo: {
-        parkingData:{
+        parkingData: {
           lotName: this.props.location.state.parkingData.name,
-        hours: this.props.location.state.parkingData.hours,
-        address: this.props.location.state.parkingData.address,
-        startReservation: format(
-          this.state.selectedInterval[0],
-          " MMM dd, hh:mm a"
-        ),
-        endReservation: format(
-          this.state.selectedInterval[1],
-          " MMM dd, hh:mm a"
-        ), price: this.props.location.state.parkingData.price,
-        total: (this.props.location.state.parkingData.price * (differenceInMinutes(this.state.selectedInterval[0], this.state.selectedInterval[1])/60.0))*-1
+          hours: this.props.location.state.parkingData.hours,
+          address: this.props.location.state.parkingData.address,
+          startReservation: format(
+            this.state.selectedInterval[0],
+            " MMM dd, hh:mm a"
+          ),
+          endReservation: format(
+            this.state.selectedInterval[1],
+            " MMM dd, hh:mm a"
+          ),
+          price: this.props.location.state.parkingData.price,
+          total:
+            this.props.location.state.parkingData.price *
+            (differenceInMinutes(
+              this.state.selectedInterval[0],
+              this.state.selectedInterval[1]
+            ) /
+              60.0) *
+            -1
         }
-        
       }
     });
   }
 
   render() {
+    // redirect to userinfo.js and pass the parking lot information and reservation hours information
     if (this.state.toUserInfo === true) {
       return (
         <Redirect

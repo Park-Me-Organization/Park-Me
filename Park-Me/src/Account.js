@@ -19,32 +19,21 @@ class Account extends Component {
     
       if (user) {
         this.setState({
-        user: FBUser.displayName,
-        email: FBUser.email,
-        phonenumber: FBUser.DB_phonenumber
-
+        user: user.displayName,
+        email: user.email,
+        phonenumber: user.DB_phonenumber
         })
-        console.log(this.state.FBUser)
+        console.log(this.state.user)
         console.log(this.state.email)
-        console.log(FBUser.uid)
 
-        const userreference = firebase.database().ref().child("users");
-        userreference.on('value', (snapshot) =>{
-        console.log(snapshot.val());
-      })
       }
-      
-     
-      
-      
-
     });
   }
   
   render() {
     
     return (
-      <div className="center">
+      <div class="center">
         <h3>My account</h3>
           <div>
             <p>

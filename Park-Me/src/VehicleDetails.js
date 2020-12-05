@@ -8,7 +8,7 @@ import carModels from "./Data/CarModels.json";
 // console.log("make: ", carMake);
 // console.log("models: ", carModels);
 
-var validation = function(inputString, regex, me) {
+var validation = function(inputString, regex) {
   var alpha = true;
   for (var i = 0; i < inputString.length; i++) {
     if (!regex.test(inputString.charAt(i))) {
@@ -53,15 +53,13 @@ class VehicleDetails extends Component {
     const itemName = e.target.name;
     const itemValue = e.target.value;
 
-    this.setState({ [itemName]: itemValue }, ()=>{
-      if(validation(this.state.plate, /^[0-9A-Z]{1,20}/i) == false){
-        this.setState({error: "Incorrect License Plate Number. Please try again"})
+    this.setState({ [itemName]: itemValue }, () => {
+      if (validation(itemValue, /^[0-9A-Z]\{5,7\}/i) == false) {
+        this.setState({
+          error: "Incorrect License Plate Number. Please try again"
+        });
       }
     });
-
-    // this.setState({
-    //   make: e.target.value
-    // });
   }
 
   handleChange(e) {
@@ -75,12 +73,12 @@ class VehicleDetails extends Component {
 
   handleSubmit(e) {
     var registrationInfo = {
-      user: this.state.user,
-      lname: this.state.lname,
-      email: this.state.email,
-      phonenumber: this.state.phonenumber,
-      license: this.state.license,
-      state: this.state.state,
+      user: this.props.location.state.user,
+      lname: this.props.location.state.lname,
+      email: this.props.location.state.email,
+      phonenumber: this.props.location.state.phonenumber,
+      license: this.props.location.state.license,
+      state: this.props.location.state.state,
       parkingData: this.props.location.state.parkingData,
       vehicleMake: this.state.make,
       vehicleModel: this.state.model,

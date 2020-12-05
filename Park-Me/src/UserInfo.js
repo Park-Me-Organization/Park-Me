@@ -3,8 +3,10 @@ import FormError from "./FormError";
 import { Redirect } from "react-router-dom";
 import Button from "react-bootstrap/Button";
 import { getMatches, isValid } from "driver-license-validator";
+import PhoneInput from "react-phone-input-2";
+import "react-phone-input-2/lib/style.css";
 
-var validation = function(inputString, regex, me) {
+var validation = function(inputString, regex) {
   var alpha = true;
   if (regex === "license") {
     return isValid(inputString);
@@ -44,39 +46,34 @@ class UserInfo extends Component {
     });
   }
   handleChange(e) {
-    //Collects the value for each item name
-
+    // item being modified in input
     const itemName = e.target.name;
+    // input
     const itemValue = e.target.value;
 
     this.setState({ [itemName]: itemValue });
-    var me = this;
     if (
-      validation(this.state.user, /^[a-zA-Z -]*$/i) == false &&
+      validation(itemValue, /^[a-zA-Z -]*$/i) == false &&
       itemName == "user"
     ) {
-      console.log("first | ", itemName);
       this.setState({
         errorMessage:
           'Incorrect format for First Name. Only Letters, spaces " ", and hyphens "-" are accepted.'
       });
     } else if (
-      validation(this.state.lname, /^[a-zA-Z -]*$/i) == false &&
+      validation(itemValue, /^[a-zA-Z -]*$/i) == false &&
       itemName == "lname"
     ) {
-      console.log("second | ", itemName);
       this.setState({
         errorMessage:
           'Incorrect format for Last Name. Only Letters, spaces " ", and hyphens "-" are accepted.'
       });
     } else if (
-      validation(this.state.license, "license", me) == false &&
+      validation(itemValue, "license") == false &&
       itemName == "license"
     ) {
-      console.log("third | ", itemName);
       this.setState({
-        errorMessage:
-          'Incorrect format for License. Only Letters, spaces " ", and hyphens "-" are accepted.'
+        errorMessage: "Incorrect format for License number. Please try again."
       });
     } else {
       this.setState({
@@ -95,7 +92,6 @@ class UserInfo extends Component {
       state: this.state.state,
       parkingData: this.props.location.state.parkingData
     };
-    console.log("registrationInfo: ", registrationInfo);
     this.setState({
       toVehicleDetails: true,
       finalRegistrationInfo: registrationInfo
@@ -191,23 +187,15 @@ class UserInfo extends Component {
                   />
                 </section>
                 <section className="form-group">
-                  <label
-                    className="form-control-label sr-only"
-                    htmlFor="phonenumber"
-                  >
-                    PhoneNumber
-                  </label>
-                  <input
-                    className="form-control"
-                    type="tel"
-                    id="phonenumber"
-                    placeholder="Phone Number"
-                    required
-                    name="phonenumber"
+                  <PhoneInput
+                    country={"us"}
+                    placeholder="phone number"
+                    inputStyle={{ width: "100%" }}
                     value={this.state.phonenumber}
-                    onChange={this.handleChange}
+                    onChange={phonenumber => this.setState({ phonenumber })}
                   />
                 </section>
+
                 <div className="form-row">
                   <section className="col-sm-6 form-group">
                     <input

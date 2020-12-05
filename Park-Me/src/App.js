@@ -32,9 +32,9 @@ class App extends Component {
       user: null,
       displayName: null,
       userID: null,
-      lname:'',
-      email: '',
-      phonenumber:'',
+      lname: "",
+      email: "",
+      phonenumber: ""
     };
   }
 
@@ -42,11 +42,11 @@ class App extends Component {
     firebase.auth().onAuthStateChanged(FBUser => {
       if (FBUser) {
         this.setState({
-          //HERE IS WHERE THE FIREBASE USER SET 
+          //HERE IS WHERE THE FIREBASE USER SET
           user: FBUser.displayName,
           userID: FBUser.uid
         });
-        
+
         //Data insertion into DB
         // data.DB_user = this.state.user;
         //data.DB_userID = this.state.userID;
@@ -123,15 +123,11 @@ class App extends Component {
               render={props => <TransactionHandle {...props} />}
             />
             <Route path="/receipt" render={props => <Receipt {...props} />} />
-            <Route 
-            path="/account" 
-            component={Account}
-            render= {props => <Account {...props} />}/>
-
-            {/* <Route 
-            path="/Email" 
-            component={Email}
-            render= {props => <Account {...props} />}/> */}
+            <Route
+              path="/account"
+              component={Account}
+              render={props => <Account {...props} />}
+            />
           </Switch>
         </BrowserRouter>
       </div>

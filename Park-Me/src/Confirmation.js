@@ -6,7 +6,7 @@ import Button from "react-bootstrap/Button";
 class Confirmation extends Component {
   constructor(props) {
     super(props);
-    console.log(this.props.location.state.parkingData)
+    console.log(this.props.location.state.parkingData);
     this.state = {
       user: this.props.location.state.user,
       lname: this.props.location.state.lname,
@@ -20,18 +20,20 @@ class Confirmation extends Component {
       vehicleYear: this.props.location.state.vehicleYear,
       vehicleColor: this.props.location.state.vehicleColor,
       vehiclePlate: this.props.location.state.vehiclePlate,
-      vehiclePlate: this.props.location.state.plate, toTransactionHandle: false, toReservationDetails: false,
+      vehiclePlate: this.props.location.state.plate,
+      toTransactionHandle: false,
+      toReservationDetails: false
     };
     this.handleClick = this.handleClick.bind(this);
   }
 
-  handleClick(e){
+  handleClick(e) {
     var itemName = e.target.name;
 
-    if(itemName == "fix"){
-      this.setState({toReservationDetails: true})
-    }else{
-      this.setState({toTransactionHandle: true})
+    if (itemName == "fix") {
+      this.setState({ toReservationDetails: true });
+    } else {
+      this.setState({ toTransactionHandle: true });
     }
   }
   handleChange(e) {
@@ -77,7 +79,7 @@ class Confirmation extends Component {
           }}
         />
       );
-    }else if(this.state.toReservationDetails === true) {
+    } else if (this.state.toReservationDetails === true) {
       return (
         <Redirect
           to={{
@@ -86,7 +88,7 @@ class Confirmation extends Component {
           }}
         />
       );
-        }
+    }
     return (
       <div
         style={{
@@ -113,97 +115,94 @@ class Confirmation extends Component {
           <h1 style={{ fontFamily: "Roboto Slab" }}>
             Please Confirm Your Information
           </h1>
-          <hr style={{backgroundColor: "white"}}/>
-          <div style={{paddingLeft: "auto", paddingLeft: "10%"}}>
-          <div style={{textAlign: "left", float: "left"}}>
-            <h3><u>About You</u></h3>
-          <p>
-            Name:{" "}
-            {(this.props.location.state.user).toUpperCase() +
-              " " +
-              (this.props.location.state.lname).toUpperCase()}
-          </p>
-          <p>
-            Email:{" "}
-            {(this.props.location.state.email)}
-          </p>
-          <p>
-            Phone Number:{" "}
-            {(this.props.location.state.phonenumber)}
-          </p>
-          <p>
-            License Number:{" "}
-            {(this.props.location.state.license)}
-          </p>
-          <p>
-            State:{" "}
-            {(this.props.location.state.state)}
-          </p>
-          </div>
-          <div style={{textAlign: "left", float: "left", marginLeft: "20px"}}>
-            <h3><u>Vehicle</u></h3>
-          <p>
-            Make:{" "}
-            {this.props.location.state.vehicleMake}
-          </p>
-          <p>
-            model:{" "}
-            {(this.props.location.state.vehicleModel)}
-          </p>
-          <p>
-            year:{" "}
-            {(this.props.location.state.vehicleYear)}
-          </p>
-          <p>
-            Color:{" "}
-            {(this.props.location.state.vehicleColor)}
-          </p>
-          <p>
-            License Plate:{" "}
-            {(this.props.location.state.vehiclePlate)}
-          </p>
-          </div>
-          <div style={{textAlign: "left", float: "left", marginLeft: "40px", marginRight: "auto", width: "30%"}}>
-            <h3><u>Reservation</u></h3>
-          <p>
-            Name:{" "}
-            {this.props.location.state.parkingData.lotName}
-          </p>
-          <p>
-            {console.log(this.props.location.state.parkingData.hours)}
-            Hours:{" "}
-            {(this.props.location.state.parkingData.hours.opening + ":00 to " + this.props.location.state.parkingData.hours.closing + ":00")}
-          </p>
-          <p>
-            Address:{" "}
-            {(this.props.location.state.parkingData.address)}
-          </p>
-          <p>
-            Reservation:{" "}
-            {(this.props.location.state.parkingData.startReservation+ " to " + this.props.location.state.parkingData.endReservation)}
-          </p>
-          <p>
-            Price:{" "}
-            {("$" + this.props.location.state.parkingData.price + "/hr")}
-          </p>
-          <p>
-            Total:{" "}
-            {("$" + this.props.location.state.parkingData.total + "/hr")}
-          </p>
-          
-          </div>
+          <hr style={{ backgroundColor: "white" }} />
+          <div style={{ paddingLeft: "auto", paddingLeft: "10%" }}>
+            <div style={{ textAlign: "left", float: "left" }}>
+              <h3>
+                <u>About You</u>
+              </h3>
+              <p>
+                Name:{" "}
+                {this.props.location.state.user.toUpperCase() +
+                  " " +
+                  this.props.location.state.lname.toUpperCase()}
+              </p>
+              <p>Email: {this.props.location.state.email}</p>
+              <p>Phone Number: {this.props.location.state.phonenumber}</p>
+              <p>License Number: {this.props.location.state.license}</p>
+              <p>State: {this.props.location.state.state}</p>
+            </div>
+            <div
+              style={{ textAlign: "left", float: "left", marginLeft: "20px" }}
+            >
+              <h3>
+                <u>Vehicle</u>
+              </h3>
+              <p>Make: {this.props.location.state.vehicleMake}</p>
+              <p>model: {this.props.location.state.vehicleModel}</p>
+              <p>year: {this.props.location.state.vehicleYear}</p>
+              <p>Color: {this.props.location.state.vehicleColor}</p>
+              <p>License Plate: {this.props.location.state.vehiclePlate}</p>
+            </div>
+            <div
+              style={{
+                textAlign: "left",
+                float: "left",
+                marginLeft: "40px",
+                marginRight: "auto",
+                width: "30%"
+              }}
+            >
+              <h3>
+                <u>Reservation</u>
+              </h3>
+              <p>Name: {this.props.location.state.parkingData.lotName}</p>
+              <p>
+                {console.log(this.props.location.state.parkingData.hours)}
+                Hours:{" "}
+                {this.props.location.state.parkingData.hours.opening +
+                  ":00 to " +
+                  this.props.location.state.parkingData.hours.closing +
+                  ":00"}
+              </p>
+              <p>Address: {this.props.location.state.parkingData.address}</p>
+              <p>
+                Reservation:{" "}
+                {this.props.location.state.parkingData.startReservation +
+                  " to " +
+                  this.props.location.state.parkingData.endReservation}
+              </p>
+              <p>
+                Price:{" "}
+                {"$" + this.props.location.state.parkingData.price + "/hr"}
+              </p>
+              <p>
+                Total:{" "}
+                {"$" + this.props.location.state.parkingData.total + "/hr"}
+              </p>
+            </div>
           </div>
         </div>
-        <div style={{marginLeft: "auto", marginRight: "auto"}}>
-        <Button className="btn btn-primary" name="fix" onClick={this.handleClick}>Need to Fix</Button>&nbsp;&nbsp;&nbsp;
-        <Button className="btn btn-primary" name="confirm" onClick={this.handleClick}>Confirm</Button>
+        <div style={{ marginLeft: "auto", marginRight: "auto" }}>
+          <Button
+            className="btn btn-primary"
+            name="fix"
+            onClick={this.handleClick}
+          >
+            Need to Fix
+          </Button>
+          &nbsp;&nbsp;&nbsp;
+          <Button
+            className="btn btn-primary"
+            name="confirm"
+            onClick={this.handleClick}
+          >
+            Confirm
+          </Button>
         </div>
-        
       </div>
     );
   }
 }
 
 export default Confirmation;
-
-// this.props.location.state.property
